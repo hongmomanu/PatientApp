@@ -53,7 +53,7 @@ Ext.define('PatientApp.controller.Main', {
         // console.log(document.getElementById('map'));
         //alert(1);
         //this.makeLonlat();
-        //this.websocketInit();
+        this.websocketInit();
         //testobj = this;
     },
 
@@ -82,7 +82,6 @@ Ext.define('PatientApp.controller.Main', {
 
     websocketInit:function(){
         var url=Globle_Variable.serverurl;
-        //url=url?"ws://"+url.split("://")[1].split(":")[0]+":3001/":"ws://localhost:3001/";
         url=url.replace(/(:\d+)/g,":3001");
         url=url.replace("http","ws");
         this.socket = new WebSocket(url);
@@ -91,15 +90,15 @@ Ext.define('PatientApp.controller.Main', {
         this.socket.onmessage = function(event) {
             //alert(1111);
             var data=JSON.parse(event.data);
-            var doctorController=me.getApplication().getController('Doctors');
+            //var doctorController=me.getApplication().getController('Doctors');
             if(data.type=='doctorchat'){
 
-                doctorController.receiveMessageProcess(data.data,event);
+                //doctorController.receiveMessageProcess(data.data,event);
             }
             else if(data.type=='recommend'){
                 console.log('recommend');
                 console.log(data.data);
-                doctorController.receiveRecommendProcess(data.data,event);
+                //doctorController.receiveRecommendProcess(data.data,event);
 
             }else if(data.type=='recommendconfirm'){
 
@@ -118,7 +117,7 @@ Ext.define('PatientApp.controller.Main', {
         };
         this.socket.onopen = function() {
             me.socket.send(JSON.stringify({
-                type:"doctorconnect",
+                type:"patientconnect",
                 content: Globle_Variable.user._id
             }));
         };
