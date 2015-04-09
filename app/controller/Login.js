@@ -51,16 +51,20 @@ Ext.define('PatientApp.controller.Login', {
     },
     //doctor app init
     doPatientLogin:function(btn){
-       alert(1);
+
         var formpanel=this.getLoginformcontent();
         CommonUtil.addMessage();
         var me=this;
-        var valid = CommonUtil.valid('DoctorApp.model.login.Login', formpanel);
+        var valid = CommonUtil.valid('PatientApp.model.login.Login', formpanel);
         if(valid){
             var successFunc = function (response, action) {
                 var res=JSON.parse(response.responseText);
                 if(res.success){
                     console.log(res);
+                    Ext.Viewport.removeAt(0);
+                    Ext.Viewport.add(Ext.create('PatientApp.view.Main'));
+                    localStorage.user=JSON.stringify(res.user);
+                    Globle_Variable.user=res.user;
                    /* Ext.Viewport.removeAt(0);
                     Ext.Viewport.add(Ext.create('DoctorApp.view.Main'));
                     localStorage.user=JSON.stringify(res.user);

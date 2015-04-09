@@ -17,9 +17,11 @@ Ext.application({
         'Ext.MessageBox'
     ],
 
-    views: [
-        'Main'
+    controllers: [
+        'Login',
+        'Patient'
     ],
+
 
     icon: {
         '57': 'resources/icons/Icon.png',
