@@ -48,10 +48,35 @@
             "x-bootstrap": true
         },
         {
+            "path": "config.js",
+            "update": "delta"
+        },
+        {
             "path": "app.js",
             "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
             "update": "delta"
+        },
+        {
+            "path": "CommonUtil.js",
+            "update": "delta"
+        },
+        {
+            "path": "leaflet.js",
+            "update": "delta"
+        },
+        {
+            "path": "jquery-1.10.2.js",
+            "update": "delta"
+        },
+        {
+            "path": "jquery.qrcode.js",
+            "update": "delta"
+        },
+        {
+            "path": "qrcode.js",
+            "update": "delta"
         }
+
     ],
 
     /**
@@ -72,7 +97,15 @@
      */
     "css": [
         {
+            "path": "resources/css/leaflet.css",
+            "update": "delta"
+        },
+        {
             "path": "resources/css/app.css",
+            "update": "delta"
+        },
+        {
+            "path": "resources/css/chat.css",
             "update": "delta"
         }
     ],
