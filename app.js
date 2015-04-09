@@ -18,7 +18,11 @@ Ext.application({
     ],
 
     controllers: [
+        'Main',
         'Login',
+        'Doctor',
+        'Village',
+        'Settings',
         'Patient'
     ],
 
@@ -47,6 +51,8 @@ Ext.application({
 
         // Initialize the main view
         //Ext.Viewport.add(Ext.create('PatientApp.view.Main'));
+
+
         //make login here
         Ext.Viewport.add(Ext.create('PatientApp.view.login.Login'));
     },

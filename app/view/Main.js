@@ -38,20 +38,85 @@ Ext.define('PatientApp.view.Main', {
                 ]
             },
             {
-                title: 'Get Started',
+                title: '我的医生',
                 iconCls: 'action',
 
+                styleHtmlContent: true,
+                scrollable: true,
+                layout: 'fit',
                 items: [
+
                     {
-                        docked: 'top',
-                        xtype: 'titlebar',
-                        title: 'Getting Started'
-                    },
-                    {
-                        xtype: 'video',
-                        url: 'http://av.vimeo.com/64284/137/87347327.mp4?token=1330978144_f9b698fea38cd408d52a2393240c896c',
-                        posterUrl: 'http://b.vimeocdn.com/ts/261/062/261062119_640.jpg'
+                        xtype: 'navigationview',
+                        autoDestroy: false,
+
+                        //fullscreen: true,
+                        itemId: 'doctorsnavigationview',
+                        //inside this first item we are going to add a button
+                        items: [
+                            {
+                                xtype: 'doctors',
+                                title: '我的医生'
+                            }
+                        ]
+
+
                     }
+
+                ]
+            },
+            {
+                title: '社区急救',
+                iconCls: 'action',
+                styleHtmlContent: true,
+                scrollable: true,
+                layout: 'fit',
+                items: [
+
+                    {
+                        xtype: 'navigationview',
+                        autoDestroy: false,
+
+                        //fullscreen: true,
+                        itemId: 'villagenavigationview',
+                        //inside this first item we are going to add a button
+                        items: [
+                            {
+                                xtype: 'village',
+                                title: '社区急救'
+                            }
+                        ]
+
+
+                    }
+
+                ]
+            },
+            {
+                title: '我的设定',
+                iconCls: 'action',
+                styleHtmlContent: true,
+                scrollable: true,
+                layout: 'fit',
+                items: [
+
+                    {
+                        xtype: 'navigationview',
+                        autoDestroy: false,
+
+                        //fullscreen: true,
+                        itemId: 'settingnavigationview',
+                        //inside this first item we are going to add a button
+                        items: [
+                            {
+                                xtype: 'settingsform',
+                                title: '我的设定'
+                            }
+                        ]
+
+
+                    }
+
                 ]
             }
         ]

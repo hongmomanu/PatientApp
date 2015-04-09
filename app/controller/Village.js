@@ -2,7 +2,7 @@
  * Created by jack on 15-03-27.
  * main Controller used by Terminal app
  */
-Ext.define('PatientApp.controller.Doctor', {
+Ext.define('PatientApp.controller.Village', {
     extend: 'Ext.app.Controller',
     config: {
         views: [
@@ -10,32 +10,43 @@ Ext.define('PatientApp.controller.Doctor', {
 
         ],
         models: [
-            'doctor.Doctor'
+            'village.VillageDoctor'
 
         ],
         stores: [
 
-            'doctor.Doctors'
+            'village.VillageDoctors'
 
         ],
         control: {
-            doctorsnavview: {
+            villagenavview: {
                 push: 'onMainPush'
-
             },
-            doctorssview: {
-                itemtap: 'onDoctorSelect',
-                itemtaphold:'onDoctorHold',
+            villageview: {
+                itemtap: 'onVillageSelect',
+                itemtaphold:'onVillageHold',
                 viewshow:'listShow'
             }
 
         },
         refs: {
-            doctorssview: '#doctorsnavigationview #doctorlist',
-            doctorsnavview:'main #doctorsnavigationview'
+            villageview: '#villagenavigationview #villagelist',
+            villagenavview:'main #villagenavigationview'
         }
-    }
+    },
 
+    onVillageSelect: function(list){
+         //
+
+    },
+    onVillageHold:function(){
+
+
+    },
+    onMainPush:function(view, item){
+
+
+    }
 
 
 });
