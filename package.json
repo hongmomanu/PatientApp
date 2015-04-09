@@ -1,0 +1,8 @@
+{
+  "name": "nw-PatientApp",
+  "main": "index.html",
+  "window": {
+    "title": "PatientApp",
+    "toolbar": true
+  }
+}
