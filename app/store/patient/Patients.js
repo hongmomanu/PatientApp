@@ -7,7 +7,7 @@ Ext.define('PatientApp.store.patient.Patients', {
         sorters: 'name',
         grouper: {
             groupFn: function(record) {
-                return record.get('section');
+                return record.get('doctorinfo').userinfo.realname;
             }
         },
         proxy: {

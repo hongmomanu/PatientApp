@@ -178,7 +178,7 @@ Ext.define('PatientApp.controller.Patient', {
         store.load({
             //define the parameters of the store:
             params:{
-                id : Globle_Variable.user._id
+                patientid : Globle_Variable.user._id
             },
             scope: this,
             callback : function(records, operation, success) {
