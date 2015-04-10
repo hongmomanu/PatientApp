@@ -158,7 +158,7 @@ Ext.define('PatientApp.controller.Patient', {
     onPatientSelect: function (list, index, node, record) {
         if (!list.lastTapHold || ( new Date()-list.lastTapHold  > 1000)) {
 
-            if (!this.messageView)this.messageView = Ext.create('DoctorApp.view.patients.PatientsMessage');
+            if (!this.messageView)this.messageView = Ext.create('PatientApp.view.patient.PatientsMessage');
             //var messageView=Ext.create('DoctorApp.view.doctors.DoctorMessage');
 
             this.messageView.setTitle(record.get('realname'));
