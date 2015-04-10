@@ -101,7 +101,7 @@ Ext.define('PatientApp.controller.Main', {
             var doctorController=me.getApplication().getController('Doctor');
             if(data.type=='doctorchat'){
 
-                //doctorController.receiveMessageProcess(data.data,event);
+                doctorController.receiveMessageProcess(data.data,event);
             }
             else if(data.type=='recommend'){
                 console.log('recommend');
