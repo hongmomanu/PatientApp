@@ -48,16 +48,18 @@ Ext.define('PatientApp.controller.Patient', {
 
     sendMessage:function(btn){
         var content=Ext.String.trim(this.getMessagecontent().getValue());
+        testobj=btn;
 
         if(content&&content!=''){
             //alert(conten);
-            var myinfo= this.messageView.mydata;
+            var listview=btn.up('list');
+            var myinfo= listview.mydata;
 
-            var toinfo=this.messageView.data;
+            var toinfo=listview.data;
             var imgid='chatstatusimg'+(new Date()).getTime();
             var message=Ext.apply({message:content}, myinfo);
             //console.log(imgid);
-            Ext.getStore('PatientMessages').add(Ext.apply({local: true,imgid:imgid}, message));
+            listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
 
 
             /*var d = new Ext.util.DelayedTask(function(){
@@ -193,16 +195,20 @@ Ext.define('PatientApp.controller.Patient', {
     listShow:function(){
         //this.initPatientList();
     },
+    messageView:{},
     onPatientSelect: function (list, index, node, record) {
         if (!list.lastTapHold || ( new Date()-list.lastTapHold  > 1000)) {
 
-            if (!this.messageView)this.messageView = Ext.create('PatientApp.view.patient.PatientsMessage');
+            if (!this.messageView[record.get('patientinfo')._id]){
+                this.messageView[record.get('patientinfo')._id] =Ext.create('PatientApp.view.patient.PatientsMessage');
+
+            }
+            var selectview=this.messageView[record.get('patientinfo')._id];
             //var messageView=Ext.create('DoctorApp.view.doctors.DoctorMessage');
-            console.log(record);
-            this.messageView.setTitle(record.get('patientinfo').realname);
-            this.messageView.data=record;
-            this.messageView.mydata=Globle_Variable.user;
-            this.getPatientsnavview().push(this.messageView);
+            selectview.setTitle(record.get('patientinfo').realname);
+            selectview.data=record;
+            selectview.mydata=Globle_Variable.user;
+            this.getPatientsnavview().push(selectview);
 
         }
 

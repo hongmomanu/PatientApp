@@ -5,7 +5,7 @@ Ext.define('PatientApp.view.patient.PatientsMessage', {
     config: {
         disableSelection: true,
         title: 'Chat',
-        store: 'PatientMessages',
+        store: Ext.create('PatientApp.store.patient.PatientMessages'),
 
         itemTpl : new Ext.XTemplate(
             '<tpl if="local">',
