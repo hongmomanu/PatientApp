@@ -183,7 +183,7 @@ Ext.define('PatientApp.controller.Doctor', {
             selectview.setTitle(record.get('doctorinfo').userinfo.realname);
             selectview.data=record;
             selectview.mydata=Globle_Variable.user;
-            this.getPatientsnavview().push(selectview);
+            this.getDoctorsnavview().push(selectview);
 
         }
 
@@ -250,7 +250,6 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
             }else{
-                var doctorController=this.getApplication().getController('Doctor');
                 mainView.setActiveItem(1);
                 listView=this.getDoctorsview();
             }
