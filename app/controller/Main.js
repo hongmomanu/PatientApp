@@ -79,7 +79,15 @@ Ext.define('PatientApp.controller.Main', {
         var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
 
     },
-
+    hideloadingimg:function(imgid){
+        //console.log(imgid);
+        var store=Ext.getStore('PatientMessages');
+        store.data.each(function(a){
+            if(a.get('imgid')==imgid){
+                a.set('issend','none');
+            }
+        })
+    },
     websocketInit:function(){
         var url=Globle_Variable.serverurl;
         url=url.replace(/(:\d+)/g,":3001");
@@ -104,13 +112,15 @@ Ext.define('PatientApp.controller.Main', {
 
                 console.log('recommendconfirm');
                 console.log(data.data);
-            }else if(data.type=='patientchat'){
-
+            }else if(data.type=='chatsuc'){
+                console.log('recommendconfirm');
+                me.hideloadingimg(data.data)
 
             }
 
 
         };
+
         this.socket.onclose = function(event) {
 
             var d = new Ext.util.DelayedTask(function(){

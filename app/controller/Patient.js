@@ -58,17 +58,18 @@ Ext.define('PatientApp.controller.Patient', {
             var message=Ext.apply({message:content}, myinfo);
             //console.log(imgid);
             Ext.getStore('PatientMessages').add(Ext.apply({local: true,imgid:imgid}, message));
-            var d = new Ext.util.DelayedTask(function(){
+
+
+            /*var d = new Ext.util.DelayedTask(function(){
                 //me.websocketInit();
-                var img=Ext.get(imgid)
+                var img=Ext.get(imgid);
                 if(img.getStyleValue('display')!=='none'){
                     img.dom.setAttribute('src','111');
                 }
             });
             d.delay(10000);
 
-            console.log(myinfo);
-            console.log(toinfo);
+            console.log(imgid);*/
 
             var mainController=this.getApplication().getController('Main');
 
