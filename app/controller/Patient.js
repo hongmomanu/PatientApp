@@ -48,10 +48,8 @@ Ext.define('PatientApp.controller.Patient', {
 
     sendMessage:function(btn){
         var content=Ext.String.trim(this.getMessagecontent().getValue());
-        testobj=btn;
 
         if(content&&content!=''){
-            //alert(conten);
             var listview=btn.up('list');
             var myinfo= listview.mydata;
 
@@ -85,8 +83,6 @@ Ext.define('PatientApp.controller.Patient', {
                 content: content
             }));
 
-            //var loadingObj = new htmlloading(document.getElementById('canvas'),{radius:8,circleLineWidth:3});
-            //loadingObj.show();
 
 
         }else{
@@ -211,11 +207,7 @@ Ext.define('PatientApp.controller.Patient', {
             this.getPatientsnavview().push(selectview);
 
         }
-
-
-
         // Push the show contact view into the navigation view
-
     },
     initPatientList:function(){
 

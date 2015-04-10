@@ -79,14 +79,18 @@ Ext.define('PatientApp.controller.Main', {
         var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
 
     },
-    hideloadingimg:function(imgid){
+    hideloadingimg:function(data){
         //console.log(imgid);
-        var store=Ext.getStore('PatientMessages');
+        var doctorController=this.getApplication().getController('Doctor');
+        var patientController=this.getApplication().getController('Patient');
+        var store=doctorController.messageView[data["toid"]]?doctorController.messageView[data["toid"]].getStore():
+            patientController.messageView[data["toid"]].getStore();
+        //var store=Ext.getStore('PatientMessages');
         store.data.each(function(a){
-            if(a.get('imgid')==imgid){
+            if(a.get('imgid')==data["imgid"]){
                 a.set('issend','none');
             }
-        })
+        });
     },
     websocketInit:function(){
         var url=Globle_Variable.serverurl;
@@ -114,6 +118,7 @@ Ext.define('PatientApp.controller.Main', {
                 console.log(data.data);
             }else if(data.type=='chatsuc'){
                 console.log('recommendconfirm');
+
                 me.hideloadingimg(data.data)
 
             }

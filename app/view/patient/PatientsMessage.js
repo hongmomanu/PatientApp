@@ -16,9 +16,9 @@ Ext.define('PatientApp.view.patient.PatientsMessage', {
             '       <p class="x-button-label message">{message}</p>',
             '	</div>',
             '<tpl else>',
-            '	<div class="nick remote">{realname}</div>',
+            '	<div class="nick remote">{userinfo.realname}</div>',
             '	<div class="x-button remote"">',
-            '		<p class="x-button-label message">{message}</p>',
+            '		<p class="x-button-label message">{userinfo.message}</p>',
             '	</div>',
             '</tpl>'
         ),
