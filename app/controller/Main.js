@@ -70,8 +70,8 @@ Ext.define('PatientApp.controller.Main', {
         // onError Callback receives a PositionError object
         //
         function onError(error) {
-            alert('code: '    + error.code    + '\n' +
-            'message: ' + error.message + '\n');
+            /*alert('code: '    + error.code    + '\n' +
+            'message: ' + error.message + '\n');*/
         }
 
         // Options: throw an error if no update is received every 30 seconds.

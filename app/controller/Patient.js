@@ -6,16 +6,19 @@ Ext.define('PatientApp.controller.Patient', {
     extend: 'Ext.app.Controller',
     config: {
         views: [
-            'patient.Patients'
+            'patient.Patients',
+            'patient.PatientsMessage'
 
         ],
         models: [
-            'patient.Patient'
+            'patient.Patient',
+            'patient.PatientMessage'
 
         ],
         stores: [
 
-            'patient.Patients'
+            'patient.Patients',
+            'patient.PatientMessages'
 
         ],
         control: {
@@ -160,8 +163,8 @@ Ext.define('PatientApp.controller.Patient', {
 
             if (!this.messageView)this.messageView = Ext.create('PatientApp.view.patient.PatientsMessage');
             //var messageView=Ext.create('DoctorApp.view.doctors.DoctorMessage');
-
-            this.messageView.setTitle(record.get('realname'));
+            console.log(record);
+            this.messageView.setTitle(record.get('patientinfo').realname);
             this.messageView.data=record;
             this.messageView.mydata=Globle_Variable.user;
             this.getPatientsnavview().push(this.messageView);
