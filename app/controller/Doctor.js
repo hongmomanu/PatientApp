@@ -35,6 +35,101 @@ Ext.define('PatientApp.controller.Doctor', {
             doctorsnavview:'main #doctorsnavigationview'
         }
     },
+
+    receiveRecommendProcess:function(data,e){
+        //console.log(data);
+        //alert("1");
+        for(var i=0;i<data.length;i++){
+            //alert(i);
+            var recommend=data[i];
+            //message.message=message.content;
+            this.receiveRecommendNotification(recommend,e);
+        }
+        //listView.select(1);
+    },
+
+    receiveRecommendNotification:function(recommend,e){
+        var me=this;
+        try {
+
+            //Ext.Msg.alert('test', cordova.plugins.notification.local.schedule , Ext.emptyFn);
+            cordova.plugins.notification.local.schedule({
+                id: recommend._id ,
+                title: recommend.rectype==1?"医生:"+recommend.frominfo.userinfo.realname+"推荐的":
+                "患者:"+recommend.frominfo.realname+"推荐的",
+                text: "新医生:"+recommend.doctorinfo.userinfo.realname,
+                //firstAt: monday_9_am,
+                //every: "week",
+                //sound: "file://sounds/reminder.mp3",
+                //icon: "http://icons.com/?cal_id=1",
+                data: { meetingId:recommend._id }
+            });
+
+            cordova.plugins.notification.local.on("click", function (notification) {
+
+                me.receiveRecommendShow(recommend,e);
+
+            });
+
+        }catch (err){
+
+            me.receiveRecommendShow(recommend,e);
+
+        } finally{
+
+
+        }
+
+
+    },
+    receiveRecommendShow:function(recommend,e){
+        //alert(1);
+        //console.log(recommend);
+        Ext.Msg.confirm('消息','是否添加'+ (recommend.rectype==1?"医生:"+recommend.frominfo.userinfo.realname+"推荐":
+        "患者:"+recommend.frominfo.realname+"推荐")+"的医生:"+recommend.doctorinfo.userinfo.realname,function(buttonId){
+
+            if(buttonId=='yes'){
+
+                var successFunc = function (response, action) {
+
+                    var res=JSON.parse(response.responseText);
+
+                    if(res.success){
+
+                        Ext.Msg.show({
+                            title:'成功',
+                            message: (recommend.isdoctoraccepted||recommend.ispatientaccepted)?'已成功添加医生':
+                                '已接受推荐，等待对方同意',
+                            buttons: Ext.MessageBox.OK,
+                            fn:Ext.emptyFn
+                        });
+                        //Ext.Msg.alert('成功', '已接受推荐，等待对方同意', Ext.emptyFn);
+
+                    }else{
+                        Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+                    }
+
+                };
+                var failFunc=function(response, action){
+                    Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+                    //Ext.Msg.alert('test', 'test', Ext.emptyFn);
+                }
+                var url="patient/acceptrecommend";
+                var params={
+                    rid:recommend._id
+                };
+                CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+            }else{
+                var view=me.getDoctorsnavview();
+                view.pop();
+            }
+
+
+        });
+
+
+
+    },
     addtoblacklist:function(record,actionSheet){
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);

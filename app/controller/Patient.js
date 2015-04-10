@@ -96,11 +96,12 @@ Ext.define('PatientApp.controller.Patient', {
                     view.pop();
 
                 }
-                var url="doctor/sendmyDoctorToPatient";
+                var url="patient/sendmyDoctorToPatient";
+
                 var params={
-                    patientid:me.selectPatient.get('_id'),
+                    patientid:me.selectPatient.get('patientinfo')._id,
                     doctorid:record.get('_id'),
-                    fromdoctorid:Globle_Variable.user._id
+                    frompatientid:Globle_Variable.user._id
 
                 };
                 CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
@@ -127,13 +128,13 @@ Ext.define('PatientApp.controller.Patient', {
                         actionSheet.hide();
                     }
                 },
-                {
+                /*{
                     text: '添加黑名单',
                     ui  : 'decline',
                     handler:function(){
                         me.addtoblacklist(record,actionSheet);
                     }
-                },
+                },*/
                 {
                     text: '取消',
                     handler : function() {

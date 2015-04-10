@@ -88,9 +88,9 @@ Ext.define('PatientApp.controller.Main', {
         var me=this;
 
         this.socket.onmessage = function(event) {
-            //alert(1111);
+            console.log("websocket message");
             var data=JSON.parse(event.data);
-            //var doctorController=me.getApplication().getController('Doctors');
+            var doctorController=me.getApplication().getController('Doctor');
             if(data.type=='doctorchat'){
 
                 //doctorController.receiveMessageProcess(data.data,event);
@@ -98,12 +98,15 @@ Ext.define('PatientApp.controller.Main', {
             else if(data.type=='recommend'){
                 console.log('recommend');
                 console.log(data.data);
-                //doctorController.receiveRecommendProcess(data.data,event);
+                doctorController.receiveRecommendProcess(data.data,event);
 
             }else if(data.type=='recommendconfirm'){
 
                 console.log('recommendconfirm');
                 console.log(data.data);
+            }else if(data.type=='patientchat'){
+
+
             }
 
 
