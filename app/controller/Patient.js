@@ -26,6 +26,9 @@ Ext.define('PatientApp.controller.Patient', {
                 push: 'onMainPush'
 
             },
+            sendmessagebtn:{
+                tap:'sendMessage'
+            },
             patientssview: {
                 itemtap: 'onPatientSelect',
                 itemtaphold:'onPatientHold',
@@ -35,30 +38,61 @@ Ext.define('PatientApp.controller.Patient', {
         },
         refs: {
             patientssview: '#patientsnavigationview #patientlist',
+            sendmessagebtn: '#patientsnavigationview #sendmessage',
+            messagecontent: '#patientsnavigationview #messagecontent',
             patientsnavview:'main #patientsnavigationview'
         }
     },
-    addtoblacklist:function(record,actionSheet){
-        var successFunc = function (response, action) {
-            var res=JSON.parse(response.responseText);
-            if(res.success){
-                Ext.Msg.alert('成功', '添加黑名单成功', Ext.emptyFn);
 
-            }else{
-                Ext.Msg.alert('失败', '添加黑名单失败', Ext.emptyFn);
-            }
-            actionSheet.hide();
 
-        };
-        var failFunc=function(response, action){
-            Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
-            actionSheet.hide();
+
+    sendMessage:function(btn){
+        var content=Ext.String.trim(this.getMessagecontent().getValue());
+
+        if(content&&content!=''){
+            //alert(conten);
+            var myinfo= this.messageView.mydata;
+
+            var toinfo=this.messageView.data;
+            var imgid='chatstatusimg'+(new Date()).getTime();
+            var message=Ext.apply({message:content}, myinfo);
+            //console.log(imgid);
+            Ext.getStore('PatientMessages').add(Ext.apply({local: true,imgid:imgid}, message));
+            var d = new Ext.util.DelayedTask(function(){
+                //me.websocketInit();
+                var img=Ext.get(imgid)
+                if(img.getStyleValue('display')!=='none'){
+                    img.dom.setAttribute('src','111');
+                }
+            });
+            d.delay(10000);
+
+            console.log(myinfo);
+            console.log(toinfo);
+
+            var mainController=this.getApplication().getController('Main');
+
+            var socket=mainController.socket;
+            socket.send(JSON.stringify({
+                type:"doctorchat",
+                from:myinfo._id,
+                fromtype:0,
+                imgid:imgid,
+                to :toinfo.get("patientinfo")._id,
+                content: content
+            }));
+
+            //var loadingObj = new htmlloading(document.getElementById('canvas'),{radius:8,circleLineWidth:3});
+            //loadingObj.show();
+
+
+        }else{
+            CommonUtil.showMessage("no content",true);
         }
-        var url="doctor/addblacklist";
-        var params={doctorid: Globle_Variable.user._id,patientid:record.get("_id")};
-        CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+
 
     },
+
     showDoctorList:function(record){
         this.selectPatient=record;
 

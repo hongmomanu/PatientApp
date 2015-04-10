@@ -9,6 +9,7 @@ Ext.define('PatientApp.model.patient.PatientMessage', {
             'userinfo',
             'username',
             'realname',
+            'imgid',
             'message',
             'messagetype'
         ]

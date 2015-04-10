@@ -14,7 +14,8 @@ Ext.application({
     name: 'PatientApp',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox',
+        'Ext.util.DelayedTask'
     ],
 
     controllers: [
