@@ -14,7 +14,7 @@ Ext.define('PatientApp.view.Main', {
                 iconCls: 'action',
 
                 styleHtmlContent: true,
-                scrollable: true,
+                scrollable: false,
                 layout: 'fit',
                 items: [
 
@@ -42,7 +42,7 @@ Ext.define('PatientApp.view.Main', {
                 iconCls: 'action',
 
                 styleHtmlContent: true,
-                scrollable: true,
+                scrollable: false,
                 layout: 'fit',
                 items: [
 
@@ -69,7 +69,7 @@ Ext.define('PatientApp.view.Main', {
                 title: '社区急救',
                 iconCls: 'action',
                 styleHtmlContent: true,
-                scrollable: true,
+                scrollable: false,
                 layout: 'fit',
                 items: [
 
@@ -95,8 +95,8 @@ Ext.define('PatientApp.view.Main', {
             {
                 title: '我的设定',
                 iconCls: 'action',
-                styleHtmlContent: true,
-                scrollable: true,
+                //styleHtmlContent: true,
+                scrollable: false,
                 layout: 'fit',
                 items: [
 
