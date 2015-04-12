@@ -21,7 +21,6 @@ Ext.define('PatientApp.view.Main', {
                     {
                         xtype: 'navigationview',
                         autoDestroy: false,
-
                         //fullscreen: true,
                         itemId: 'patientsnavigationview',
                         //inside this first item we are going to add a button

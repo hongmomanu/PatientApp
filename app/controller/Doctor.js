@@ -132,7 +132,6 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
     },
-
     onDoctorHold:function(list,index, target, record, e) {
         //long patient hold
         var me=this;
