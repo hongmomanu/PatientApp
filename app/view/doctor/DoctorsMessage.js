@@ -31,18 +31,18 @@ Ext.define('PatientApp.view.doctor.DoctorsMessage', {
 
                         {
                             xtype:'button',
-                            iconCls:'tweak',
+                            iconCls:'action',
                             listeners: {
                                 element: 'element',
                                 taphold : function() {
-                                    Ext.Msg.alert('test', '语音接口', Ext.emptyFn);
+                                    Ext.Msg.alert('test', '', Ext.emptyFn);
                                 }
                             }
                         },
                         {
                             xtype:'button',
-                            iconCls:'photos2',
-
+                            iconCls:'time',
+                            itemId:'choosepic'
                         },
                         {
                             xtype: 'textfield',
