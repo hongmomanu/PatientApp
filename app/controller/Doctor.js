@@ -6,16 +6,19 @@ Ext.define('PatientApp.controller.Doctor', {
     extend: 'Ext.app.Controller',
     config: {
         views: [
-            'doctor.Doctors'
+            'doctor.Doctors',
+            'doctor.DoctorsMessage'
 
         ],
         models: [
-            'doctor.Doctor'
+            'doctor.Doctor',
+            'doctor.DoctorMessage'
 
         ],
         stores: [
 
-            'doctor.Doctors'
+            'doctor.Doctors',
+            'doctor.DoctorMessages'
 
         ],
         control: {
@@ -171,15 +174,17 @@ Ext.define('PatientApp.controller.Doctor', {
     onDoctorSelect: function (list, index, node, record) {
 
         if (!list.lastTapHold || ( new Date()-list.lastTapHold  > 1000)) {
+            console.log(record);
 
-            if (!this.messageView[record.get('doctorinfo')._id]){
-                this.messageView[record.get('doctorinfo')._id] =Ext.create('PatientApp.view.doctor.DoctorsMessage');
+
+            if (!this.messageView[record.get('_id')]){
+                this.messageView[record.get('_id')] =Ext.create('PatientApp.view.doctor.DoctorsMessage');
 
             }
-            var selectview=this.messageView[record.get('doctorinfo')._id];
+            var selectview=this.messageView[record.get('_id')];
 
 
-            selectview.setTitle(record.get('doctorinfo').userinfo.realname);
+            selectview.setTitle(record.get('userinfo').realname);
             selectview.data=record;
             selectview.mydata=Globle_Variable.user;
             this.getDoctorsnavview().push(selectview);
