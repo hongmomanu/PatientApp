@@ -45,8 +45,10 @@ Ext.define('PatientApp.controller.Patient', {
     },
 
 
-
     sendMessage:function(btn){
+
+
+
         var content=Ext.String.trim(this.getMessagecontent().getValue());
 
         if(content&&content!=''){

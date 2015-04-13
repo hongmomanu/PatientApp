@@ -24,21 +24,96 @@ Ext.define('PatientApp.controller.Doctor', {
         control: {
             doctorsnavview: {
                 push: 'onMainPush'
-
             },
             doctorsview: {
                 itemtap: 'onDoctorSelect',
                 itemtaphold:'onDoctorHold',
                 viewshow:'listShow'
+            },
+            sendmessagebtn:{
+                tap:'sendMessage'
             }
 
         },
         refs: {
             doctorsview: '#doctorsnavigationview #doctorlist',
             mainview: 'main',
+            messagecontent: '#doctorsnavigationview #messagecontent',
+            sendmessagebtn: '#doctorsnavigationview #sendmessage',
             patientsview: '#patientsnavigationview #patientlist',
             doctorsnavview:'main #doctorsnavigationview'
         }
+    },
+
+    applyfordoctor:function(btn,callback){
+        var listview=btn.up('list');
+        var myinfo= listview.mydata;
+
+        var toinfo=listview.data;
+        var me=this;
+        var successFunc = function (response, action) {
+
+            var res=JSON.parse(response.responseText);
+            if(res){
+                Ext.Msg.alert('成功', '推荐医生成功', Ext.emptyFn);
+                callback(btn);
+
+            }else{
+                Ext.Msg.alert('提示', '你还未申请诊疗', Ext.emptyFn);
+            }
+
+        };
+        var failFunc=function(response, action){
+            Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+        }
+        var url="patient/applyfordoctor";
+
+        var params={
+            patientid:myinfo._id,
+            doctorid:toinfo.get("_id")
+
+        };
+        CommonUtil.ajaxSend(params,url,successFunc,failFunc,'GET');
+    },
+
+    sendMessageControler:function(btn){
+
+
+    },
+
+    sendMessage:function(btn){
+        var content=Ext.String.trim(this.getMessagecontent().getValue());
+
+        if(content&&content!=''){
+            var listview=btn.up('list');
+            var myinfo= listview.mydata;
+
+            var toinfo=listview.data;
+            var imgid='chatstatusimg'+(new Date()).getTime();
+            var message=Ext.apply({message:content}, myinfo);
+            //console.log(imgid);
+            listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
+
+
+            var mainController=this.getApplication().getController('Main');
+
+            var socket=mainController.socket;
+            socket.send(JSON.stringify({
+                type:"doctorchat",
+                from:myinfo._id,
+                fromtype:0,
+                imgid:imgid,
+                to :toinfo.get("_id"),
+                content: content
+            }));
+
+
+
+        }else{
+            CommonUtil.showMessage("no content",true);
+        }
+
+
     },
 
     receiveRecommendProcess:function(data,e){
@@ -165,7 +240,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
     },
     onMainPush: function (view, item) {
-        this.getPatientssview().deselectAll();
+        //this.getDoctorsnavview().deselectAll();
     },
     listShow:function(){
         //this.initPatientList();
@@ -175,8 +250,6 @@ Ext.define('PatientApp.controller.Doctor', {
 
         if (!list.lastTapHold || ( new Date()-list.lastTapHold  > 1000)) {
             console.log(record);
-
-
             if (!this.messageView[record.get('_id')]){
                 this.messageView[record.get('_id')] =Ext.create('PatientApp.view.doctor.DoctorsMessage');
 
