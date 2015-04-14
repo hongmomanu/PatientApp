@@ -125,6 +125,8 @@ Ext.define('PatientApp.controller.Doctor', {
             var res=JSON.parse(response.responseText);
             if(res){
                 //Ext.Msg.alert('成功', '推荐医生成功', Ext.emptyFn);\
+                console.log(res);
+                CommonUtil.lefttime("22",res.applytime);
 
                 callback(btn);
 
