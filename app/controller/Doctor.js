@@ -203,7 +203,7 @@ Ext.define('PatientApp.controller.Doctor', {
                     var timecallback=function(t){
                         var m=Math.floor(t/1000/60%60);
                         var s=Math.floor(t/1000%60);
-                        applytimelabel.setHtml('<div>'+m + "分 "+s + "秒"+'</div>');
+                        applytimelabel.setHtml('<div>问诊时间剩余:'+m + "分 "+s + "秒"+'</div>');
                         applytimelabel.show();
 
                         //listview.setTitle(listview.getTitle()+"  "+ m + "分 "+s + "秒");
@@ -212,15 +212,8 @@ Ext.define('PatientApp.controller.Doctor', {
                     callback(btn);
                 }
 
-
-
-
             }else{
-
-
-
                   me.applyforpay(myinfo,toinfo);
-
             }
 
         };
@@ -243,11 +236,8 @@ Ext.define('PatientApp.controller.Doctor', {
     },
     scrollMsgList:function(){
         var scroller=this.getScroller();
-        //console.log("scroller");
-        //console.log(scroller);
-        console.log(this.getMaxPosition());
+
         var task = Ext.create('Ext.util.DelayedTask', function() {
-            //console.log("scroller");
             scroller.scrollToEnd(true);
         });
         task.delay(20);
