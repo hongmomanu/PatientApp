@@ -23,9 +23,27 @@ Ext.define('PatientApp.view.village.Village', {
 
         items: [{
             xtype: 'toolbar',
-            docked: 'top',
+            docked: 'bottom',
             items: [
 
+
+                {
+                    xtype: 'selectfield',
+                    label: '急救范围',
+                    options: [
+                        {text: '500米',  value: 500},
+                        {text: '1000米', value: 1000},
+                        {text: '1500米',  value: 1500}
+                    ]
+                }
+                ,
+                {
+                    xtype: 'button',
+                    itemId: 'seequick',
+                    ui: 'search',
+                    flex: 1,
+                    text: '查看'
+                },
                 {
                     xtype: 'button',
                     itemId: 'sendquick',

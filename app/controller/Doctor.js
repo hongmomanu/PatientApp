@@ -324,13 +324,8 @@ Ext.define('PatientApp.controller.Doctor', {
                     var timecallback=function(t,clearInterval){
                         if(t<=0){
                             clearInterval(asktimeinterval);
-
-
-
                             me.sendMessageControler(btn);
-
                             me.showDoctosView({fromid:toinfo.get("_id")});
-
 
                         }else{
                             var m=Math.floor(t/1000/60%60);

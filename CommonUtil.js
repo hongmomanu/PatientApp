@@ -81,18 +81,17 @@ Ext.define('CommonUtil', {
                 asktimeinterval = setInterval(function(){
 
                     var t=me.getovertime(askbegintime);
-                    if(t<=0){
+                    timecallback(t,asktimeinterval);
+                    /*if(t<=0){
                         clearInterval(asktimeinterval);
-                        console.log(222);
-                    }else{
-                        console.log(111)
-                        timecallback(t);
+                        timecallback(t,true);
 
-                        //document.getElementById("t_d").innerHTML = d + "天";
-                        //document.getElementById("t_h").innerHTML = h + "时";
-                        //document.getElementById("t_m").innerHTML = m + "分";
-                        //document.getElementById("t_s").innerHTML = s + "秒";
-                    }
+                    }else{
+
+                        timecallback(t,false);
+
+
+                    }*/
 
 
                 }, 1000);
