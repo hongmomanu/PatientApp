@@ -63,6 +63,98 @@ Ext.define('PatientApp.controller.Doctor', {
         }
     },
 
+    continueAsk:function(btn){
+        var me=this;
+        var listview=btn.up('list');
+        var myinfo= listview.mydata;
+
+        var toinfo=listview.data;
+        var successFunc = function (response, action) {
+
+            var res=JSON.parse(response.responseText);
+
+            if(res.success){
+
+                Ext.Msg.show({
+                    title:'成功',
+                    message: '继续问诊',
+                    buttons: Ext.MessageBox.OK,
+                    fn:function(){
+                        me.sendMessageControler(btn);
+                    }
+                });
+
+
+            }else{
+                Ext.Msg.alert('失败', res.message,function(){});
+            }
+
+        };
+        var failFunc=function(response, action){
+            Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', function(){
+
+            });
+            //Ext.Msg.alert('test', 'test', Ext.emptyFn);
+        }
+        var url="patient/continuewithapply";
+        var params={
+            userid:myinfo._id,
+            doctorid:toinfo.get("_id")
+        };
+        CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+
+
+    },
+    aliback:function(btn){
+        var listview=btn.up('list');
+        var myinfo= listview.mydata;
+
+        var toinfo=listview.data;
+        var me=this;
+
+        Ext.Msg.alert('提示', '这里模拟支付宝退款接口', function(){
+            //makemoneybyuserid
+
+            var successFunc = function (response, action) {
+
+                var res=JSON.parse(response.responseText);
+
+                if(res.success){
+
+                    Ext.Msg.show({
+                        title:'成功',
+                        message: '费用已退回',
+                        buttons: Ext.MessageBox.OK,
+                        fn:Ext.emptyFn
+                    });
+
+
+                }else{
+                    Ext.Msg.alert('失败', res.message,function(){
+
+                    });
+                }
+
+            };
+            var failFunc=function(response, action){
+                Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', function(){
+
+                });
+                //Ext.Msg.alert('test', 'test', Ext.emptyFn);
+            }
+            var url="patient/backmoneybyuseridwithapply";
+            var params={
+                userid:myinfo._id,
+                doctorid:toinfo.get("_id")
+            };
+            CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+
+        });
+
+
+    },
+
+
 
     alipay:function(btn){
 
@@ -196,17 +288,44 @@ Ext.define('PatientApp.controller.Doctor', {
             var res=JSON.parse(response.responseText);
             if(res){
                 //Ext.Msg.alert('成功', '推荐医生成功', Ext.emptyFn);\
+                console.log(res);
                 var t=CommonUtil.getovertime(res.applytime);
                 if(t<=0){
-                    me.applyforpay(myinfo,toinfo);
+                    if(res.nums==0){
+                        var actionSheet = Ext.create('Ext.ActionSheet', {
+                            items: [
+                                {
+                                    text: '继续问诊',
+                                    handler:function(){
+                                        //me.showPatientList(record);
+                                        me.continueAsk(btn);
+                                        actionSheet.hide();
+                                    }
+                                },
+
+                                {
+                                    text: '我要退款',
+                                    handler : function() {
+                                        me.aliback(btn);
+                                        actionSheet.hide();
+                                    },
+                                    ui  : 'confirm'
+                                }
+                            ]
+                        });
+
+                        Ext.Viewport.add(actionSheet);
+                        actionSheet.show();
+                    }else{
+                        me.applyforpay(myinfo,toinfo);
+                    }
+
                 }else{
                     var timecallback=function(t){
                         var m=Math.floor(t/1000/60%60);
                         var s=Math.floor(t/1000%60);
                         applytimelabel.setHtml('<div>问诊时间剩余:'+m + "分 "+s + "秒"+'</div>');
                         applytimelabel.show();
-
-                        //listview.setTitle(listview.getTitle()+"  "+ m + "分 "+s + "秒");
                     };
                     CommonUtil.lefttime(timecallback,res.applytime,toinfo.get("_id"));
                     callback(btn);
