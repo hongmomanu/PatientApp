@@ -10,7 +10,7 @@ Ext.define('PatientApp.view.village.Village', {
         itemId:'villagequickdoctors',
         //refreshHeightOnUpdate :false,
         scrollToTopOnRefresh :true,
-        grouped:true,
+        grouped:false,
         //indexBar:true,
         store: 'VillageDoctors',
 
@@ -30,6 +30,7 @@ Ext.define('PatientApp.view.village.Village', {
                 {
                     xtype: 'selectfield',
                     label: '急救范围',
+                    itemId:'distance',
                     options: [
                         {text: '500米',  value: 500},
                         {text: '1000米', value: 1000},
@@ -37,13 +38,14 @@ Ext.define('PatientApp.view.village.Village', {
                     ]
                 }
                 ,
-                {
+                /*{
                     xtype: 'button',
                     itemId: 'seequick',
                     ui: 'search',
+                    hidden:true,
                     flex: 1,
                     text: '查看'
-                },
+                },*/
                 {
                     xtype: 'button',
                     itemId: 'sendquick',

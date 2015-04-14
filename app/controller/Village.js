@@ -22,10 +22,14 @@ Ext.define('PatientApp.controller.Village', {
             villagenavview: {
                 push: 'onMainPush'
             },
+            distanceBox:{
+                change:'distanceSelected'
+
+            },
             villageview: {
                 itemtap: 'onVillageSelect',
                 itemtaphold:'onVillageHold',
-                viewshow:'listShow'
+                viewshow:'searchDoctor'
             },
             searchbtn:{
                 tap:'searchDoctor'
@@ -37,6 +41,7 @@ Ext.define('PatientApp.controller.Village', {
         refs: {
             villageview: '#villagenavigationview #villagequickdoctors',
             searchbtn: '#villagenavigationview #seequick',
+            distanceBox: '#villagenavigationview #distance',
             villagenavview:'main #villagenavigationview'
         }
     },
@@ -45,12 +50,33 @@ Ext.define('PatientApp.controller.Village', {
          //
 
     },
+
+    distanceSelected:function(box, newValue, oldValue ){
+        this.searchDoctor();
+    },
     searchDoctor:function(btn){
-        alert(1);
+
+        var view=this.getVillageview();
+        var store=view.getStore();
+        var distance=this.getDistanceBox().getValue();
+        store.load({
+            params : { lon : localStorage.lon,lat:localStorage.lat,
+                patientid:Globle_Variable.user._id,distance:distance}
+        })
+        //alert(1);
     },
     onVillageHold:function(){
 
 
+    },
+    initVillageList:function(){
+        /*var view=this.getVillageview();
+        var store=view.getStore();
+        var distance=this.getDistanceBox().getValue();
+        store.load({
+            params : { lon : localStorage.lon,lat:localStorage.lat,
+                patientid:Globle_Variable.user._id,distance:distance}
+        })*/
     },
     onMainPush:function(view, item){
 
