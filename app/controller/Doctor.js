@@ -321,11 +321,24 @@ Ext.define('PatientApp.controller.Doctor', {
                     }
 
                 }else{
-                    var timecallback=function(t){
-                        var m=Math.floor(t/1000/60%60);
-                        var s=Math.floor(t/1000%60);
-                        applytimelabel.setHtml('<div>问诊时间剩余:'+m + "分 "+s + "秒"+'</div>');
-                        applytimelabel.show();
+                    var timecallback=function(t,clearInterval){
+                        if(t<=0){
+                            clearInterval(asktimeinterval);
+
+
+
+                            me.sendMessageControler(btn);
+
+                            me.showDoctosView({fromid:toinfo.get("_id")});
+
+
+                        }else{
+                            var m=Math.floor(t/1000/60%60);
+                            var s=Math.floor(t/1000%60);
+                            applytimelabel.setHtml('<div>问诊时间剩余:'+m + "分 "+s + "秒"+'</div>');
+                            applytimelabel.show();
+                        }
+
                     };
                     CommonUtil.lefttime(timecallback,res.applytime,toinfo.get("_id"));
                     callback(btn);
@@ -347,6 +360,17 @@ Ext.define('PatientApp.controller.Doctor', {
 
         };
         CommonUtil.ajaxSend(params,url,successFunc,failFunc,'GET');
+    },
+
+    showDoctosView:function(message){
+        var mainView=this.getMainview();
+        mainView.setActiveItem(1);
+        var listView=this.getDoctorsview();
+        var store=listView.getStore();
+        var index =this.filterReceiveIndex(message,store);
+        listView.select(index);
+        listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);
+
     },
 
     sendMessageControler:function(btn){
@@ -598,8 +622,7 @@ Ext.define('PatientApp.controller.Doctor', {
             var mainView=this.getMainview();
             var listView=null;
             var messagestore=null;
-            console.log("message heheehe");
-            console.log(message)
+
 
             if(message.fromtype==0){
 
@@ -629,7 +652,6 @@ Ext.define('PatientApp.controller.Doctor', {
                 messagestore=doctorController.messageView[message.fromid].getStore();
             }
 
-            console.log(messagestore);
             messagestore.add(Ext.apply({local: false}, message));
         }
     },
