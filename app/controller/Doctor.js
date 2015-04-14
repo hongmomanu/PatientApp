@@ -113,7 +113,77 @@ Ext.define('PatientApp.controller.Doctor', {
         });
 
     },
+    applyforpay:function(myinfo,toinfo){
+        var me=this;
+        Ext.Msg.confirm('消息','是否现在挂号?',function(buttonId){
 
+            if(buttonId=='yes'){
+
+                var successFunc = function (response, action) {
+
+                    var res=JSON.parse(response.responseText);
+
+                    if(res.success){
+
+                        Ext.Msg.show({
+                            title:'成功',
+                            message: '现在可以问诊了',
+                            buttons: Ext.MessageBox.OK,
+                            fn:Ext.emptyFn
+                        });
+                        //Ext.Msg.alert('成功', '已接受推荐，等待对方同意', Ext.emptyFn);
+
+                    }else{
+                        Ext.Msg.alert('失败', res.message,function(){
+
+                            var actionSheet = Ext.create('Ext.ActionSheet', {
+                                items: [
+                                    {
+                                        text: '支付宝支付',
+                                        handler:function(){
+                                            me.alipay(btn);
+                                            actionSheet.hide();
+                                        }
+                                    },
+
+                                    {
+                                        text: '取消',
+                                        handler : function() {
+                                            actionSheet.hide();
+                                        },
+                                        ui  : 'confirm'
+                                    }
+                                ]
+                            });
+
+                            Ext.Viewport.add(actionSheet);
+                            actionSheet.show();
+
+                        });
+                    }
+
+                };
+                var failFunc=function(response, action){
+                    Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', function(){
+
+
+                    });
+                    //Ext.Msg.alert('test', 'test', Ext.emptyFn);
+                }
+                var url="patient/makeapplyfordoctor";
+                var params={
+                    patientid:myinfo._id,
+                    doctorid:toinfo.get("_id")
+                };
+                CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+            }else{
+                //var view=me.getDoctorsnavview();
+                //view.pop();
+            }
+
+
+        });
+    },
     applyfordoctor:function(btn,callback){
         var listview=btn.up('list');
         var myinfo= listview.mydata;
@@ -126,82 +196,22 @@ Ext.define('PatientApp.controller.Doctor', {
             if(res){
                 //Ext.Msg.alert('成功', '推荐医生成功', Ext.emptyFn);\
                 console.log(res);
-                CommonUtil.lefttime("22",res.applytime);
+                var t=CommonUtil.getovertime(res.applytime);
+                if(t<=0){
+                    me.applyforpay(myinfo,toinfo);
+                }else{
+                    CommonUtil.lefttime("22",res.applytime);
+                    callback(btn);
+                }
 
-                callback(btn);
+
+
 
             }else{
 
-                Ext.Msg.confirm('消息','是否现在挂号?',function(buttonId){
-
-                    if(buttonId=='yes'){
-
-                        var successFunc = function (response, action) {
-
-                            var res=JSON.parse(response.responseText);
-
-                            if(res.success){
-
-                                Ext.Msg.show({
-                                    title:'成功',
-                                    message: '现在可以问诊了',
-                                    buttons: Ext.MessageBox.OK,
-                                    fn:Ext.emptyFn
-                                });
-                                //Ext.Msg.alert('成功', '已接受推荐，等待对方同意', Ext.emptyFn);
-
-                            }else{
-                                Ext.Msg.alert('失败', res.message,function(){
-
-                                    var actionSheet = Ext.create('Ext.ActionSheet', {
-                                        items: [
-                                            {
-                                                text: '支付宝支付',
-                                                handler:function(){
-                                                    me.alipay(btn);
-                                                    actionSheet.hide();
-                                                }
-                                            },
-
-                                            {
-                                                text: '取消',
-                                                handler : function() {
-                                                    actionSheet.hide();
-                                                },
-                                                ui  : 'confirm'
-                                            }
-                                        ]
-                                    });
-
-                                    Ext.Viewport.add(actionSheet);
-                                    actionSheet.show();
-
-                                });
-                            }
-
-                        };
-                        var failFunc=function(response, action){
-                            Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', function(){
 
 
-                            });
-                            //Ext.Msg.alert('test', 'test', Ext.emptyFn);
-                        }
-                        var url="patient/makeapplyfordoctor";
-                        var params={
-                            patientid:myinfo._id,
-                            doctorid:toinfo.get("_id")
-                        };
-                        CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
-                    }else{
-                        //var view=me.getDoctorsnavview();
-                        //view.pop();
-                    }
-
-
-                });
-
-
+                  me.applyforpay(myinfo,toinfo);
 
             }
 
