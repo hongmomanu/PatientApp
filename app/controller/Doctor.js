@@ -321,7 +321,7 @@ Ext.define('PatientApp.controller.Doctor', {
                     }
 
                 }else{
-                    var timecallback=function(t,clearInterval){
+                    var timecallback=function(t,asktimeinterval){
                         if(t<=0){
                             clearInterval(asktimeinterval);
                             me.sendMessageControler(btn);

@@ -38,6 +38,10 @@ Ext.define('PatientApp.controller.Login', {
             newpatientbtn:{
 
                 tap:'doNewPatient'
+            },
+            loginformview:{
+                initialize:'initFunc'
+
             }
 
         },
@@ -49,7 +53,50 @@ Ext.define('PatientApp.controller.Login', {
             loginformview: 'loginform'
         }
     },
-    //doctor app init
+    // app init func
+
+    initFunc:function (){
+        this.autoLogin();
+        this.makeLocationListener();
+
+    },
+    autoLogin:function(){
+
+        var userinfo=JSON.parse(localStorage.user);
+
+        if(userinfo){
+            var formpanel=this.getLoginformcontent();
+            formpanel.setValues(userinfo);
+            this.doPatientLogin();
+
+        }
+
+    },
+    makeLocationListener:function(){
+
+        function onSuccess(position) {
+            /*var element = document.getElementById('geolocation');
+             element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
+             'Longitude: ' + position.coords.longitude     + '<br />' +
+             '<hr />'      + element.innerHTML;*/
+
+            localStorage.lat=position.coords.latitude;
+            localStorage.lon=position.coords.longitude;
+
+        }
+        // onError Callback receives a PositionError object
+        //
+        function onError(error) {
+
+            Ext.Msg.alert('警告', error.message, Ext.emptyFn);
+            localStorage.lat=30.0;
+            localStorage.lon=120.0;
+        }
+        // Options: throw an error if no update is received every 30 seconds.
+        //
+        var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 3000 });
+
+    },
     doPatientLogin:function(btn){
 
         var formpanel=this.getLoginformcontent();
@@ -60,7 +107,7 @@ Ext.define('PatientApp.controller.Login', {
             var successFunc = function (response, action) {
                 var res=JSON.parse(response.responseText);
                 if(res.success){
-                    console.log(res);
+
                     Ext.Viewport.removeAt(0);
                     Ext.Viewport.add(Ext.create('PatientApp.view.Main'));
                     localStorage.user=JSON.stringify(res.user);

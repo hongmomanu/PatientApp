@@ -49,7 +49,7 @@ Ext.define('PatientApp.controller.Main', {
 
     initRender: function () {
 
-        this.initLocation();
+        //this.initLocation();
         // console.log(document.getElementById('map'));
         //alert(1);
         //this.makeLonlat();
@@ -59,24 +59,7 @@ Ext.define('PatientApp.controller.Main', {
 
     initLocation:function(){
 
-        function onSuccess(position) {
-            /*var element = document.getElementById('geolocation');
-             element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
-             'Longitude: ' + position.coords.longitude     + '<br />' +
-             '<hr />'      + element.innerHTML;*/
-            alert(position.coords.longitude+","+position.coords.latitude);
-        }
 
-        // onError Callback receives a PositionError object
-        //
-        function onError(error) {
-            /*alert('code: '    + error.code    + '\n' +
-            'message: ' + error.message + '\n');*/
-        }
-
-        // Options: throw an error if no update is received every 30 seconds.
-        //
-        var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
 
     },
     hideloadingimg:function(data){
