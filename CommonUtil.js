@@ -62,29 +62,44 @@ Ext.define('CommonUtil', {
             });
 
         },
-        lefttime:function (itemid,begintime){
+        getovertime:function(begintime){
+            var EndTime= Ext.Date.add(new Date(begintime),Ext.Date.MINUTE,Globle_Variable.askmin);
+            var NowTime = new Date();
+            var t =EndTime.getTime() - NowTime.getTime();
+            return t;
+        },
+        intervalids:{},
+        lefttime:function (timecallback,begintime,intervalid){
             var me =this;
-            me.asktimetask={
-                run: function(){
-                    var begintime=new Date(begintime);
-                    var EndTime= Ext.Date.add(begintime,Ext.Date.MINUTE,Globle_Variable.askmin);
-                    var NowTime = new Date();
-                    var t =EndTime.getTime() - NowTime.getTime();
-                    if(t<=0){
+            var askbegintime=begintime;
+            var asktimeinterval=null;
+            if(me.intervalids[intervalid]){
+                clearInterval(me.intervalids[intervalid]);
+                me.intervalids[intervalid]=null;
+            }
+            (function(asktimeinterval,askbegintime,intervalid){
+                asktimeinterval = setInterval(function(){
 
+                    var t=me.getovertime(askbegintime);
+                    if(t<=0){
+                        clearInterval(asktimeinterval);
+                        console.log(222);
                     }else{
-                        var m=Math.floor(t/1000/60%60);
-                        var s=Math.floor(t/1000%60);
+                        console.log(111)
+                        timecallback(t);
 
                         //document.getElementById("t_d").innerHTML = d + "天";
                         //document.getElementById("t_h").innerHTML = h + "时";
                         //document.getElementById("t_m").innerHTML = m + "分";
                         //document.getElementById("t_s").innerHTML = s + "秒";
                     }
-                },
-                interval: 1000
-            }
-            Ext.TaskManager.start(me.asktimetask);
+
+
+                }, 1000);
+                me.intervalids[intervalid]=asktimeinterval;
+
+            })(asktimeinterval,askbegintime,intervalid);
+
 
         }
 

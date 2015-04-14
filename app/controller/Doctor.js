@@ -187,6 +187,7 @@ Ext.define('PatientApp.controller.Doctor', {
     applyfordoctor:function(btn,callback){
         var listview=btn.up('list');
         var myinfo= listview.mydata;
+        var applytimelabel=listview.down('label');
 
         var toinfo=listview.data;
         var me=this;
@@ -195,12 +196,19 @@ Ext.define('PatientApp.controller.Doctor', {
             var res=JSON.parse(response.responseText);
             if(res){
                 //Ext.Msg.alert('成功', '推荐医生成功', Ext.emptyFn);\
-                console.log(res);
                 var t=CommonUtil.getovertime(res.applytime);
                 if(t<=0){
                     me.applyforpay(myinfo,toinfo);
                 }else{
-                    CommonUtil.lefttime("22",res.applytime);
+                    var timecallback=function(t){
+                        var m=Math.floor(t/1000/60%60);
+                        var s=Math.floor(t/1000%60);
+                        applytimelabel.setHtml('<div>'+m + "分 "+s + "秒"+'</div>');
+                        applytimelabel.show();
+
+                        //listview.setTitle(listview.getTitle()+"  "+ m + "分 "+s + "秒");
+                    };
+                    CommonUtil.lefttime(timecallback,res.applytime,toinfo.get("_id"));
                     callback(btn);
                 }
 
@@ -235,6 +243,9 @@ Ext.define('PatientApp.controller.Doctor', {
     },
     scrollMsgList:function(){
         var scroller=this.getScroller();
+        //console.log("scroller");
+        //console.log(scroller);
+        console.log(this.getMaxPosition());
         var task = Ext.create('Ext.util.DelayedTask', function() {
             //console.log("scroller");
             scroller.scrollToEnd(true);
@@ -416,7 +427,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
             }
             var selectview=this.messageView[record.get('_id')];
-
+            testobj=this;
 
             selectview.setTitle(record.get('userinfo').realname);
             selectview.data=record;
