@@ -21,9 +21,26 @@ Ext.define('PatientApp.controller.Doctor', {
             'doctor.DoctorMessages'
 
         ],
+        maxPosition: 0,
+        scroller: null,
         control: {
             doctorsnavview: {
                 push: 'onMainPush'
+            },
+            'doctormessagelistview': {
+                initialize: function (list) {
+                    var me = this,
+                        scroller = list.getScrollable().getScroller();
+
+                    scroller.on('maxpositionchange', function (scroller, maxPos, opts) {
+                        me.setMaxPosition(maxPos.y);
+                    });
+                    //console.log(scroller);
+                    //testobj=list;
+                    me.setScroller(scroller);
+
+                    //me.getMessage().setValue(Ext.create('Chat.ux.LoremIpsum').getSentence());
+                }
             },
             doctorsview: {
                 itemtap: 'onDoctorSelect',
@@ -38,6 +55,7 @@ Ext.define('PatientApp.controller.Doctor', {
         refs: {
             doctorsview: '#doctorsnavigationview #doctorlist',
             mainview: 'main',
+            doctormessagelistview:'doctormessagelist',
             messagecontent: '#doctorsnavigationview #messagecontent',
             sendmessagebtn: '#doctorsnavigationview #sendmessage',
             patientsview: '#patientsnavigationview #patientlist',
@@ -106,7 +124,8 @@ Ext.define('PatientApp.controller.Doctor', {
 
             var res=JSON.parse(response.responseText);
             if(res){
-                Ext.Msg.alert('成功', '推荐医生成功', Ext.emptyFn);
+                //Ext.Msg.alert('成功', '推荐医生成功', Ext.emptyFn);\
+
                 callback(btn);
 
             }else{
@@ -199,10 +218,17 @@ Ext.define('PatientApp.controller.Doctor', {
     },
 
     sendMessageControler:function(btn){
-        this.applyfordoctor(btn,this.sendMessage);
-
+        var me=this;
+        me.applyfordoctor(btn,Ext.bind(me.sendMessage, me));
     },
-
+    scrollMsgList:function(){
+        var scroller=this.getScroller();
+        var task = Ext.create('Ext.util.DelayedTask', function() {
+            //console.log("scroller");
+            scroller.scrollToEnd(true);
+        });
+        task.delay(20);
+    },
     sendMessage:function(btn){
         var content=Ext.String.trim(this.getMessagecontent().getValue());
 
@@ -216,6 +242,7 @@ Ext.define('PatientApp.controller.Doctor', {
             //console.log(imgid);
             listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
 
+            this.scrollMsgList();
 
             var mainController=this.getApplication().getController('Main');
 

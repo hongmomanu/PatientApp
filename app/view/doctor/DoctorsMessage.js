@@ -1,6 +1,6 @@
 Ext.define('PatientApp.view.doctor.DoctorsMessage', {
     extend: 'Ext.List',
-    xtype: 'patientmessagelist',
+    xtype: 'doctormessagelist',
 
     config: {
         disableSelection: true,
