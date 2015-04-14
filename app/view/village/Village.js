@@ -50,7 +50,8 @@ Ext.define('PatientApp.view.village.Village', {
                     xtype: 'button',
                     itemId: 'sendquick',
                     ui: 'action',
-                    flex: 1,
+                    iconCls:'action',
+                    //flex: 1,
                     text: '求救'
                 }
 

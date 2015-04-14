@@ -31,8 +31,8 @@ Ext.define('PatientApp.controller.Village', {
                 itemtaphold:'onVillageHold',
                 viewshow:'searchDoctor'
             },
-            searchbtn:{
-                tap:'searchDoctor'
+            sendbtn:{
+                tap:'askforDoctor'
 
             }
 
@@ -40,7 +40,7 @@ Ext.define('PatientApp.controller.Village', {
         },
         refs: {
             villageview: '#villagenavigationview #villagequickdoctors',
-            searchbtn: '#villagenavigationview #seequick',
+            sendbtn: '#villagenavigationview #sendquick',
             distanceBox: '#villagenavigationview #distance',
             villagenavview:'main #villagenavigationview'
         }
@@ -68,6 +68,9 @@ Ext.define('PatientApp.controller.Village', {
     onVillageHold:function(){
 
 
+    },
+    askforDoctor:function(){
+        alert(1);
     },
     initVillageList:function(){
         /*var view=this.getVillageview();
