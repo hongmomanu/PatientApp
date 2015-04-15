@@ -62,13 +62,14 @@ Ext.define('PatientApp.controller.Settings', {
         Ext.Msg.confirm("提醒","阿里支付接口未实现,这里模拟,确定充值么?",function (buttonid){
             if(buttonid=='yes'){
                 var form=btn.up('formpanel');
-                //var money=form.getValues().money;
+                var money=form.getValues().money;
                  var successFunc = function (response, action) {
                      var res=JSON.parse(response.responseText);
                      if(res.success){
                          Ext.Msg.alert('充值成功', res.message, function(){
                              var navView=me.getSettingnavview();
                              navView.pop();
+                             me.getMoneyInfo().setHtml('<div>我的余额:'+money+'</div>');
                          });
 
                      }else{
@@ -126,7 +127,7 @@ Ext.define('PatientApp.controller.Settings', {
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
             if(res.success){
-                 me.getMoneyInfo().setHtml('<div>我的余额'+res.money+'</div>')
+                 me.getMoneyInfo().setHtml('<div>我的余额:'+res.money+'</div>')
             }else{
 
             }
