@@ -6,7 +6,8 @@ Ext.define('PatientApp.controller.Settings', {
     extend: 'Ext.app.Controller',
     config: {
         views: [
-            'setting.Settings'
+            'setting.Settings',
+            'setting.AddMoneyForm'
         ],
         models: [
            // 'settings.BlackList'
@@ -25,6 +26,9 @@ Ext.define('PatientApp.controller.Settings', {
             addmoneybtn:{
                 'tap':'showAddMoneyForm'
             },
+            addmoneyconfirmbtn:{
+                'tap':'showAlipayView'
+            },
             doctorCodepicSmallView:{
                 'tap':'showBigCode'
             },
@@ -36,6 +40,9 @@ Ext.define('PatientApp.controller.Settings', {
             settingsformview: 'settingsform',
             pushsetbtn: 'settingsform #pushsetbtn',
             addmoneybtn: 'settingsform #addmoneybtn',
+            userInfo:'settingsform #userInfo',
+            moneyInfo:'settingsform #moneyInfo',
+            addmoneyconfirmbtn: 'addmoneyform #confirmbtn',
             custompushformview: 'custompushform',
             custompushconfirmbtn: 'custompushform #confirmbtn',
             settingnavview:'main #settingnavigationview',
@@ -43,32 +50,45 @@ Ext.define('PatientApp.controller.Settings', {
         }
     },
     showAddMoneyForm:function(btn){
-        alert(1);
+
+        var navView=this.getSettingnavview();
+        var form=Ext.widget('AddMoneyForm');
+        navView.push(form);
+
+
     },
-    showPushForm:function(btn){
-         var navView=this.getSettingnavview();
-         var form=Ext.widget('CustomPushForm');
-         navView.push(form);
-        var successFunc = function (response, action) {
-            var res=JSON.parse(response.responseText);
-            if(res.success){
-                localStorage.custompush=JSON.stringify(res.data);
-                res.data.sendtime=new Date(res.data.sendtime);
+    showAlipayView:function(btn){
+        var me=this;
+        Ext.Msg.confirm("提醒","阿里支付接口未实现,这里模拟,确定充值么?",function (buttonid){
+            if(buttonid=='yes'){
+                var form=btn.up('formpanel');
+                //var money=form.getValues().money;
+                 var successFunc = function (response, action) {
+                     var res=JSON.parse(response.responseText);
+                     if(res.success){
+                         Ext.Msg.alert('充值成功', res.message, function(){
+                             var navView=me.getSettingnavview();
+                             navView.pop();
+                         });
 
-                form.setValues(res.data);
+                     }else{
+                         Ext.Msg.alert('充值失败', res.message, Ext.emptyFn);
+                     }
 
-            }else{
-                Ext.Msg.alert('失败', '获取设置定制失败', Ext.emptyFn);
+                 };
+                var failFunc=function(response, action){
+                    Ext.Msg.alert('登录失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+                }
+                var url="patient/makemoneybyuserid";
+                var params=Ext.apply(form.getValues(),{userid:Globle_Variable.user._id});
+                CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+
             }
 
-        };
-        var failFunc=function(response, action){
-            Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
-        }
-        var url="settings/getcustompush";
-        var params={doctorid: Globle_Variable.user._id};
-        CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+        })
+
     },
+
 
     makePushFire:function(){
         //res.data 86400000
@@ -83,6 +103,45 @@ Ext.define('PatientApp.controller.Settings', {
         //alert(111);
         /*var pic_view=this.getDoctorCodepicSmallView();
         console.log(pic_view);*/
+        /*$('#doctorCodepicSmall').html('');
+        $('#doctorCodepicSmall').qrcode({
+            text	: "http://jetienne.com",
+            width		: 64,
+            height		: 64
+        });*/
+    },
+
+    initSetting:function(){
+
+        this.makecode();
+        this.makeUserinfo()
+
+    },
+
+    makeUserinfo:function(){
+        var me=this;
+        me.getUserInfo().setHtml('<div>用户名:'+Globle_Variable.user.realname+'</div>'
+        +'<div>姓名:'+Globle_Variable.user.realname+'</div>');
+
+        var successFunc = function (response, action) {
+            var res=JSON.parse(response.responseText);
+            if(res.success){
+                 me.getMoneyInfo().setHtml('<div>我的余额'+res.money+'</div>')
+            }else{
+
+            }
+
+        };
+        var failFunc=function(response, action){
+            Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+        }
+        var url="patient/getmoneybyid";
+        var params={userid: Globle_Variable.user._id};
+        CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+
+    },
+
+    makecode:function(){
         $('#doctorCodepicSmall').html('');
         $('#doctorCodepicSmall').qrcode({
             text	: "http://jetienne.com",
@@ -90,6 +149,7 @@ Ext.define('PatientApp.controller.Settings', {
             height		: 64
         });
     },
+
     confirmPush:function(btn){
         var navView=this.getSettingnavview();
         var form=btn.up('formpanel');

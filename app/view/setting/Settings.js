@@ -29,7 +29,7 @@ Ext.define('PatientApp.view.setting.Settings', {
 
             {
                 xtype:'fieldset',
-                title: 'About You',
+                title: '个人信息',
                 defaults:{
                     labelWidth:'35%',
                     labelAlign:'top'
@@ -46,11 +46,16 @@ Ext.define('PatientApp.view.setting.Settings', {
                 items:[
                     {
                         html:'<div>hello jack</div>',
-                        itemId:'doctorInfo',
-                        flex:5
+                        itemId:'userInfo',
+                        flex:3
                     },
                     {
-                        flex:1,
+                        html:'<div>20</div>',
+                        itemId:'moneyInfo',
+                        flex:7
+                    },
+                    {
+                        flex:2,
                         xtype:'image',
                         itemId:'doctorCodepicSmall',
                         id:'doctorCodepicSmall',
