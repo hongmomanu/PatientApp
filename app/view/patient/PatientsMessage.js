@@ -5,6 +5,9 @@ Ext.define('PatientApp.view.patient.PatientsMessage', {
     config: {
         disableSelection: true,
         title: 'Chat',
+        variableHeights: true,
+        //refreshHeightOnUpdate :false,
+        scrollToTopOnRefresh :false,
         store: Ext.create('PatientApp.store.patient.PatientMessages'),
 
         itemTpl : new Ext.XTemplate(

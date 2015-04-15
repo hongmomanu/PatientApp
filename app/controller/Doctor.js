@@ -378,7 +378,8 @@ Ext.define('PatientApp.controller.Doctor', {
         var task = Ext.create('Ext.util.DelayedTask', function() {
             scroller.scrollToEnd(true);
         });
-        task.delay(20);
+        task.delay(50);
+
     },
     sendMessage:function(btn){
         var content=Ext.String.trim(this.getMessagecontent().getValue());
@@ -648,6 +649,12 @@ Ext.define('PatientApp.controller.Doctor', {
             }
 
             messagestore.add(Ext.apply({local: false}, message));
+            if(message.fromtype==0){
+                (Ext.bind(doctorController.scrollMsgList, patientController) ());
+            }else{
+                doctorController.scrollMsgList();
+            }
+
         }
     },
     filterReceiveIndex:function(data,store){
