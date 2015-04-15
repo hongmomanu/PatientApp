@@ -22,8 +22,8 @@ Ext.define('PatientApp.controller.Settings', {
             pushsetbtn:{
                 'tap':'showPushForm'
             },
-            blacklistbtn:{
-                'tap':'showBlackList'
+            addmoneybtn:{
+                'tap':'showAddMoneyForm'
             },
             doctorCodepicSmallView:{
                 'tap':'showBigCode'
@@ -35,18 +35,15 @@ Ext.define('PatientApp.controller.Settings', {
         refs: {
             settingsformview: 'settingsform',
             pushsetbtn: 'settingsform #pushsetbtn',
-            blacklistbtn: 'settingsform #blacklistbtn',
+            addmoneybtn: 'settingsform #addmoneybtn',
             custompushformview: 'custompushform',
             custompushconfirmbtn: 'custompushform #confirmbtn',
             settingnavview:'main #settingnavigationview',
             doctorCodepicSmallView: 'settingsform #doctorCodepicSmall'
         }
     },
-    showBlackList:function(btn){
-        var navView=this.getSettingnavview();
-        var list=Ext.widget('blacklist',{'title':'我的黑名单'});
-        navView.push(list);
-        this.initBlackList();
+    showAddMoneyForm:function(btn){
+        alert(1);
     },
     showPushForm:function(btn){
          var navView=this.getSettingnavview();
@@ -126,19 +123,6 @@ Ext.define('PatientApp.controller.Settings', {
     showBigCode:function(){
         alert(111);
 
-    },
-    initBlackList:function(){
-
-        var store=Ext.getStore('BlackLists');
-        store.load({
-            //define the parameters of the store:
-            params:{
-                id : Globle_Variable.user._id
-            },
-            scope: this,
-            callback : function(records, operation, success) {
-
-            }});
     }
 
 

@@ -62,15 +62,42 @@ Ext.define('PatientApp.controller.Village', {
         store.load({
             params : { lon : localStorage.lon,lat:localStorage.lat,
                 patientid:Globle_Variable.user._id,distance:distance}
-        })
+        });
         //alert(1);
     },
     onVillageHold:function(){
 
 
     },
-    askforDoctor:function(){
-        alert(1);
+    askforDoctor:function(btn){
+        var list=btn.up('list');
+        var store=list.getStore();
+        if(store.getCount()>0){
+            var doctorids=[];
+            store.data.each(function(item){
+               doctorids.push(item.get('_id'));
+            });
+            var successFunc = function (response, action) {
+                var res=JSON.parse(response.responseText);
+                if(res.success){
+                    Ext.Msg.alert('成功', '等待医生应答', Ext.emptyFn);
+
+                }else{
+                    Ext.Msg.alert('警告', '呼叫急救医生失败', Ext.emptyFn);
+                }
+
+            };
+            var failFunc=function(response, action){
+                Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+            }
+            var url="patient/applyforquickdoctorswhocanhelp";
+            var params={doctorid: Globle_Variable.user._id};
+            CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+
+        }else{
+            Ext.Msg.alert('警告', '范围内无医生可急救', Ext.emptyFn);
+        }
+
     },
     initVillageList:function(){
         /*var view=this.getVillageview();

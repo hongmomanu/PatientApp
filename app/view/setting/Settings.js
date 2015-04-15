@@ -71,9 +71,9 @@ Ext.define('PatientApp.view.setting.Settings', {
                 items:[
                     {
                         xtype:'button',
-                        itemId:'blacklistbtn',
+                        itemId:'addmoneybtn',
                         //label:'我的账户'
-                        text:'我的黑名单'
+                        text:'我要充值'
                     }
                 ]
             },
