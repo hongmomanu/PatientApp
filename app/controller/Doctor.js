@@ -364,7 +364,7 @@ Ext.define('PatientApp.controller.Doctor', {
         var store=listView.getStore();
         var index =this.filterReceiveIndex(message,store);
         listView.select(index);
-        listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);
+        listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index));
 
     },
 

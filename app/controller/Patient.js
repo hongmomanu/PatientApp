@@ -38,6 +38,8 @@ Ext.define('PatientApp.controller.Patient', {
         },
         refs: {
             patientssview: '#patientsnavigationview #patientlist',
+            doctorsview: '#doctorsnavigationview #doctorlist',
+            mainview:'main',
             sendmessagebtn: '#patientsnavigationview #sendmessage',
             messagecontent: '#patientsnavigationview #messagecontent',
             patientsnavview:'main #patientsnavigationview'
@@ -268,8 +270,33 @@ Ext.define('PatientApp.controller.Patient', {
 
     receiveQuickAcceptShow:function(recommend,e){
 
+        var mainView=this.getMainview();
+        mainView.setActiveItem(1);
+        var list=this.getDoctorsview();
+        var store=list.getStore();
+        var flag=true;
+        console.log(store.data);
+        for(var i=0;i<store.data.items.length;i++){
+
+            if(recommend._id==store.data.items[i].get("_id")){
+                flag=false;
+                break;
+            }
+        }
+        if(flag){
+            recommend.userinfo.sectionname="临时急救---"+recommend.userinfo.sectionname;
+            store.add(recommend);
+        }
+        var doctorController=this.getApplication().getController('Doctor');
+        try{
+
+            doctorController.showDoctosView({fromid:recommend._id});
+        }catch (err){
 
 
+        }finally{
+            doctorController.sendMessageControler(doctorController.getSendmessagebtn());
+        }
 
     }
 
