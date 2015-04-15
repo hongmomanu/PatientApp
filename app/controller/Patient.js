@@ -212,6 +212,8 @@ Ext.define('PatientApp.controller.Patient', {
         // Push the show contact view into the navigation view
     },
 
+
+
     initPatientList:function(){
 
         var store=Ext.getStore('Patients');

@@ -40,7 +40,9 @@ Ext.define('PatientApp.controller.Village', {
         },
         refs: {
             villageview: '#villagenavigationview #villagequickdoctors',
+            mainview: 'main',
             sendbtn: '#villagenavigationview #sendquick',
+            applytimeinfo: '#villagenavigationview #applytimeinfo',
             distanceBox: '#villagenavigationview #distance',
             villagenavview:'main #villagenavigationview'
         }
@@ -69,9 +71,70 @@ Ext.define('PatientApp.controller.Village', {
 
 
     },
+    applywaitinginfo:function(time){
+        var applytimelabel=this.getApplytimeinfo();
+        var timecallback=function(t,asktimeinterval){
+            if(t<=0){
+                clearInterval(asktimeinterval);
+                Ext.Msg.alert('提示', '无医生应答', Ext.emptyFn);
+            }else{
+                var m=Math.floor(t/1000/60%60);
+                var s=Math.floor(t/1000%60);
+                applytimelabel.setHtml('<div style="color:lightblue">急救应答时间剩余:'+m + "分 "+s + "秒"+'</div>');
+                applytimelabel.show();
+            }
+
+        };
+        CommonUtil.lefttime(timecallback,time,Globle_Variable.user._id);
+
+    },
+
+    applywaitinginfoShow:function(message){
+
+        var mainView=this.getMainview();
+        mainView.setActiveItem(2);
+        this.applywaitinginfo(message.applytime);
+    },
+
+
+
+    receiveQuickApplyingProcess:function(recommend,e){
+        var me=this;
+        try {
+
+            //Ext.Msg.alert('test', cordova.plugins.notification.local.schedule , Ext.emptyFn);
+            cordova.plugins.notification.local.schedule({
+                id: recommend._id ,
+                title: "急救申请消息",
+                text: "时间:"+recommend.applytime,
+                //firstAt: monday_9_am,
+                //every: "week",
+                //sound: "file://sounds/reminder.mp3",
+                //icon: "http://icons.com/?cal_id=1",
+                data: { meetingId:recommend._id }
+            });
+
+            cordova.plugins.notification.local.on("click", function (notification) {
+
+                me.applywaitinginfoShow(recommend,e);
+
+            });
+
+        }catch (err){
+
+            me.applywaitinginfoShow(recommend,e);
+
+        } finally{
+
+
+        }
+
+
+    },
     askforDoctor:function(btn){
         var list=btn.up('list');
         var store=list.getStore();
+        var me =this;
         if(store.getCount()>0){
             var doctorids=[];
             store.data.each(function(item){
@@ -80,9 +143,11 @@ Ext.define('PatientApp.controller.Village', {
             var successFunc = function (response, action) {
                 var res=JSON.parse(response.responseText);
                 if(res.success){
-                    Ext.Msg.alert('成功', '等待医生应答', Ext.emptyFn);
-
+                    Ext.Msg.alert('成功', '等待医生应答', function(){
+                      me.applywaitinginfo(new Date());
+                    });
                 }else{
+
                     Ext.Msg.alert('警告', '呼叫急救医生失败', Ext.emptyFn);
                 }
 
@@ -91,7 +156,10 @@ Ext.define('PatientApp.controller.Village', {
                 Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
             }
             var url="patient/applyforquickdoctorswhocanhelp";
-            var params={doctorid: Globle_Variable.user._id};
+            var params={
+                patientid: Globle_Variable.user._id,
+                doctorids:doctorids
+            };
             CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
 
         }else{

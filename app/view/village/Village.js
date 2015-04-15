@@ -53,6 +53,9 @@ Ext.define('PatientApp.view.village.Village', {
                     iconCls:'action',
                     //flex: 1,
                     text: '求救'
+                },{
+                    xtype:'label',
+                    itemId:'applytimeinfo'
                 }
 
 
