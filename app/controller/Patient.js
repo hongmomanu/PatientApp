@@ -94,6 +94,7 @@ Ext.define('PatientApp.controller.Patient', {
 
     },
 
+
     showDoctorList:function(record){
         this.selectPatient=record;
 
@@ -227,7 +228,51 @@ Ext.define('PatientApp.controller.Patient', {
 
             }});
 
+    },
+    receiveQuickAcceptProcess:function(recommend,e){
+
+        var me=this;
+
+        try {
+
+            //Ext.Msg.alert('test', cordova.plugins.notification.local.schedule , Ext.emptyFn);
+            cordova.plugins.notification.local.schedule({
+                id: recommend._id ,
+                title: "正在进行的问诊..",
+                text: recommend.userinfo.sectionname+"医生:"+recommend.userinfo.realname,
+                //firstAt: monday_9_am,
+                //every: "week",
+                //sound: "file://sounds/reminder.mp3",
+                //icon: "http://icons.com/?cal_id=1",
+                data: { data:recommend}
+            });
+
+            cordova.plugins.notification.local.on("click", function (notification) {
+
+                me.receiveQuickAcceptShow(recommend,e);
+
+            });
+
+        }catch (err){
+
+            me.receiveQuickAcceptShow(recommend,e);
+
+        } finally{
+
+
+        }
+
+
+
+    },
+
+    receiveQuickAcceptShow:function(recommend,e){
+
+
+
+
     }
+
 
 
 });

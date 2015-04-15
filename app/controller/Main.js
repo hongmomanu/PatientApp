@@ -86,6 +86,7 @@ Ext.define('PatientApp.controller.Main', {
             var data=JSON.parse(event.data);
             var doctorController=me.getApplication().getController('Doctor');
             var villageController=me.getApplication().getController('Village');
+            var patientController=me.getApplication().getController('Patient');
             if(data.type=='doctorchat'){
 
                 doctorController.receiveMessageProcess(data.data,event);
@@ -101,10 +102,16 @@ Ext.define('PatientApp.controller.Main', {
                 villageController.receiveQuickApplyingProcess(data.data,event)
 
 
-            }else if(data.type=='recommendconfirm'){
+            }else if(data.type=='quickaccept'){
 
-                console.log('recommendconfirm');
+                console.log('quickaccept');
+
                 console.log(data.data);
+
+                patientController.receiveQuickAcceptProcess(data.data,event);
+
+
+
             }else if(data.type=='chatsuc'){
                 console.log('recommendconfirm');
                 me.hideloadingimg(data.data)
