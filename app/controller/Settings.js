@@ -146,7 +146,7 @@ Ext.define('PatientApp.controller.Settings', {
         var cont=$('#'+id);
         cont.html('');
         cont.qrcode({
-            text	: "http://jetienne.com",
+            text	: Globle_Variable.user.username,
             width		: width,
             height		: height
         });

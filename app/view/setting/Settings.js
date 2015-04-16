@@ -45,14 +45,42 @@ Ext.define('PatientApp.view.setting.Settings', {
                 layout: 'hbox',
                 items:[
                     {
-                        html:'<div>hello jack</div>',
-                        itemId:'userInfo',
-                        flex:3
+                        layout:'vbox',
+                        items:[
+                            {
+                                xtype: 'textfield',
+                                label: '用户名',
+                                disabled:true,
+                                name: 'username'
+
+                            },
+                            {
+                                xtype: 'textfield',
+                                label: '姓名',
+                                name: 'realname'
+
+                            }
+
+                        ],
+                        /*html:'<div>hello jack</div>',
+                        itemId:'userInfo',*/
+                        flex:5
                     },
                     {
-                        html:'<div>20</div>',
-                        itemId:'moneyInfo',
-                        flex:7
+                        //html:'<div>20</div>',
+                        //itemId:'moneyInfo',
+                        layout:'vbox',
+                        items:[
+
+                            {
+                                xtype: 'textfield',
+                                label: '我的余额',
+                                disabled:true,
+                                itemId:'moneyInfo'
+                            }
+
+                        ],
+                        flex:5
                     },
                     {
                         flex:2,
