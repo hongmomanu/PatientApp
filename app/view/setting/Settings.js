@@ -51,7 +51,8 @@ Ext.define('PatientApp.view.setting.Settings', {
                             {
                                 xtype: 'textfield',
                                 label: '用户名',
-                                disabled:true,
+                                //disabled:true,
+                                readOnly:true,
                                 itemId:'username',
                                 name: 'username'
 
@@ -59,6 +60,8 @@ Ext.define('PatientApp.view.setting.Settings', {
                             {
                                 xtype: 'textfield',
                                 label: '姓名',
+                                //disabled:true,
+                                readOnly:true,
                                 itemId:'realname',
                                 name: 'realname'
 
@@ -67,7 +70,8 @@ Ext.define('PatientApp.view.setting.Settings', {
                                 xtype: 'textfield',
                                 label: '我的余额',
                                 name:'money',
-                                disabled:true,
+                                readOnly:true,
+                                //disabled:true,
                                 itemId:'moneyInfo'
                             }
 
