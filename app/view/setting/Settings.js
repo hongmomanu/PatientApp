@@ -128,9 +128,27 @@ Ext.define('PatientApp.view.setting.Settings', {
                 items:[
                     {
                         xtype:'button',
-                        label:'扫描二维码',
+                        ui  : 'confirm',
                         itemId:'scanbtn',
                         text:'扫描二维码'
+                    }
+
+                ]
+
+            }
+            ,
+            {
+                xtype:'fieldset',
+                defaults:{
+                    labelWidth:'35%',
+                    labelAlign:'top'
+                },
+                items:[
+                    {
+                        xtype:'button',
+                        itemId:'logouttn',
+                        ui  : 'decline',
+                        text:'退出'
                     }
 
                 ]
