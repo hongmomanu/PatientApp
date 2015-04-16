@@ -38,6 +38,7 @@ Ext.define('PatientApp.controller.Settings', {
         },
         refs: {
             settingsformview: 'settingsform',
+
             pushsetbtn: 'settingsform #pushsetbtn',
             addmoneybtn: 'settingsform #addmoneybtn',
             userInfo:'settingsform #userInfo',
@@ -121,13 +122,21 @@ Ext.define('PatientApp.controller.Settings', {
 
     makeUserinfo:function(){
         var me=this;
-        me.getUserInfo().setHtml('<div style="height: 100%;"><table  ><tr><td><a>用户名:</a></td><td><a>'+Globle_Variable.user.username+'</a></td></tr></div>'
+       /* me.getUserInfo().setHtml('<div style="height: 100%;"><table  ><tr><td><a>用户名:</a></td><td><a>'+Globle_Variable.user.username+'</a></td></tr></div>'
         +'<div><tr><td><a>姓名:</a></td><td><a>'+Globle_Variable.user.realname+'</a></td></tr></table></div>');
+*/
+        var form=this.getSettingsformview();
+        testobjs=me;
 
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
             if(res.success){
-                 me.getMoneyInfo().setHtml('<div>我的余额:'+res.money+'</div>')
+                 //me.getMoneyInfo().setHtml('<div>我的余额:'+res.money+'</div>')
+                form.setValues({
+                    money:res.money,
+                    username:Globle_Variable.user.username,
+                    realname:Globle_Variable.user.realname
+                });
             }else{
 
             }

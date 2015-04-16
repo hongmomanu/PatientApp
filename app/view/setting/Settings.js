@@ -1,6 +1,6 @@
 Ext.define('PatientApp.view.setting.Settings', {
 
-    extend: 'Ext.Container',
+    extend: 'Ext.form.Panel',
     xtype: 'settingsform',
     //alias: 'widget.RegisterPanel',
     //itemId: 'registerpanel',
@@ -30,13 +30,14 @@ Ext.define('PatientApp.view.setting.Settings', {
             {
                 xtype:'fieldset',
                 title: '个人信息',
+
                 defaults:{
                     labelWidth:'35%',
                     labelAlign:'top'
                 },
                 listeners: {
                     tap: function(){
-                        alert('hey!');
+                        //alert('hey!');
                         //var main = this.up('main');
                         //testobj=this;
                         //this.fireEvent('viewshow', this);
@@ -51,45 +52,49 @@ Ext.define('PatientApp.view.setting.Settings', {
                                 xtype: 'textfield',
                                 label: '用户名',
                                 disabled:true,
+                                itemId:'username',
                                 name: 'username'
 
                             },
                             {
                                 xtype: 'textfield',
                                 label: '姓名',
+                                itemId:'realname',
                                 name: 'realname'
 
-                            }
-
-                        ],
-                        /*html:'<div>hello jack</div>',
-                        itemId:'userInfo',*/
-                        flex:5
-                    },
-                    {
-                        //html:'<div>20</div>',
-                        //itemId:'moneyInfo',
-                        layout:'vbox',
-                        items:[
-
+                            },
                             {
                                 xtype: 'textfield',
                                 label: '我的余额',
+                                name:'money',
                                 disabled:true,
                                 itemId:'moneyInfo'
                             }
 
                         ],
-                        flex:5
-                    },
-                    {
-                        flex:2,
-                        xtype:'image',
-                        itemId:'doctorCodepicSmall',
-                        id:'doctorCodepicSmall',
-                        height: 64,
-                        width : 64
+                        /*html:'<div>hello jack</div>',
+                        itemId:'userInfo',*/
+                        flex:3
                     }
+                    ,
+                    {
+                        flex:1,
+                        xtype:'container',
+                        //padding:'15 0 0 20',
+                        layout: {
+                            type: 'vbox',
+                            align: 'middle'
+                        },
+                        items:[
+                            {
+                                centered:true,
+                                xtype:'image',
+                                itemId:'doctorCodepicSmall',
+                                id:'doctorCodepicSmall'
+                            }
+                        ]
+                    }
+
 
                 ],
                 label:'我的账户'
@@ -126,7 +131,8 @@ Ext.define('PatientApp.view.setting.Settings', {
 
                 ]
 
-            }/*,
+            }
+            /*,
             {
                 xtype:'fieldset',
                 defaults:{
