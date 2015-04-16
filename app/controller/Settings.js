@@ -64,12 +64,11 @@ Ext.define('PatientApp.controller.Settings', {
     logoutFunc:function(btn){
         Ext.Msg.confirm("提示","确定退出?",function (buttonid){
             if(buttonid=='yes'){
-
-
+                Globle_Variable.user=null;
+                localStorage.user="";
+                window.location.reload();
             }
-        })
-
-
+        });
     },
     showAlipayView:function(btn){
         var me=this;

@@ -31,10 +31,7 @@ Ext.define('PatientApp.view.setting.Settings', {
                 xtype:'fieldset',
                 title: '个人信息',
 
-                defaults:{
-                    labelWidth:'35%',
-                    labelAlign:'top'
-                },
+
                 listeners: {
                     tap: function(){
                         //alert('hey!');
@@ -47,6 +44,9 @@ Ext.define('PatientApp.view.setting.Settings', {
                 items:[
                     {
                         layout:'vbox',
+                        defaults:{
+                            labelWidth:'120px'
+                        },
                         items:[
                             {
                                 xtype: 'textfield',
@@ -106,10 +106,8 @@ Ext.define('PatientApp.view.setting.Settings', {
             },
             {
                 xtype:'fieldset',
-                defaults:{
-                    labelWidth:'35%',
-                    labelAlign:'top'
-                },
+
+
                 items:[
                     {
                         xtype:'button',
