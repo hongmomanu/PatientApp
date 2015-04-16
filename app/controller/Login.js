@@ -118,17 +118,7 @@ Ext.define('PatientApp.controller.Login', {
                     patientCotroller.initPatientList();
                     doctorCotroller.initDoctorList();
                     settingCotroller.initSetting();
-                   /* Ext.Viewport.removeAt(0);
-                    Ext.Viewport.add(Ext.create('DoctorApp.view.Main'));
-                    localStorage.user=JSON.stringify(res.user);
-                    Globle_Variable.user=res.user;
 
-                    var doctorCotroller=me.getApplication().getController('Doctors');
-                    var patientCotroller=me.getApplication().getController('Patients');
-                    //var settingCotroller=me.getApplication().getController('Settings');
-                    doctorCotroller.initDoctorList();
-                    patientCotroller.initPatientList();
-                    //settingCotroller.initBlackList();*/
 
                 }else{
                     Ext.Msg.alert('登录失败', '用户名密码错误', Ext.emptyFn);
@@ -149,7 +139,6 @@ Ext.define('PatientApp.controller.Login', {
     doNewPatient:function(btn){
         var view=this.getLoginformview();
         var registerView=Ext.create('PatientApp.view.register.Register');
-
         view.push(registerView);
     }
 });

@@ -15,46 +15,56 @@ Ext.define('PatientApp.view.register.Register', {
         style:{
             'padding':'1px'
         },
+        layout: 'fit',
         fullscreen: true,
         items:[
             {
-                xtype:'fieldset',
-                instructions:'请填写信息',
-                defaults:{
-                    labelWidth:'150px'
-                },
-                items:[{
-                    xtype:'textfield',
-                    name:'name',
-                    label:'姓名',
-                    placeHolder:'请输入名',
-                    value:1,
-                    required:true,
-                    clearIcon:true,
-                    labelAlign:'left'
-                },
-                {
-                    xtype:'passwordfield',
-                    name:'password',
-                    label:'密码',
-                    placeHolder:'请输入密码',
-                    required:true,
-                    clearIcon:true
-                },
-                {
-                    xtype:'passwordfield',
-                    name:'passwordagain',
-                    label:'密码',
-                    placeHolder:'请输入密码',
-                    required:true,
-                    clearIcon:true
-                }
+                xtype: 'container',
+                layout: 'fit',
+                items:[
+                    {
+                        xtype:'fieldset',
+                        instructions:'请填写信息',
+                        centered: true,
+                        defaults:{
+                            labelWidth:'150px'
+                        },
+                        items:[{
+                            xtype:'textfield',
+                            name:'name',
+                            label:'姓名',
+                            placeHolder:'请输入名',
+                            required:true,
+                            clearIcon:true,
+                            labelAlign:'left'
+                        },
+                            {
+                                xtype:'passwordfield',
+                                name:'password',
+                                label:'密码',
+                                placeHolder:'请输入密码',
+                                required:true,
+                                clearIcon:true
+                            },
+                            {
+                                xtype:'passwordfield',
+                                name:'passwordagain',
+                                label:'密码确认',
+                                placeHolder:'请重复输入密码',
+                                required:true,
+                                clearIcon:true
+                            }
+                        ]
+                    }
                 ]
+
             },
+
             {
-                xtype:'container',
-                layout:{
-                    type:'vbox'
+                xtype   : 'toolbar',
+                docked  : 'bottom',
+                layout  : {
+                    pack  : 'center'
                 },
                 items:[
                     {

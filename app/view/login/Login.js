@@ -80,7 +80,7 @@ Ext.define('PatientApp.view.login.Login', {
                             {
                                 xtype: 'button',
                                 text: '注册',
-                                itemId: 'newpatientr'
+                                itemId: 'newpatient'
                             }]
                     }
                     ]
