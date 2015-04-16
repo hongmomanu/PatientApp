@@ -26,6 +26,9 @@ Ext.define('PatientApp.controller.Settings', {
             addmoneybtn:{
                 'tap':'showAddMoneyForm'
             },
+            logoutbtn:{
+              'tap':'logoutFunc'
+            },
             addmoneyconfirmbtn:{
                 'tap':'showAlipayView'
             },
@@ -38,8 +41,8 @@ Ext.define('PatientApp.controller.Settings', {
         },
         refs: {
             settingsformview: 'settingsform',
-
             pushsetbtn: 'settingsform #pushsetbtn',
+            logoutbtn: 'settingsform #logoutbtn',
             addmoneybtn: 'settingsform #addmoneybtn',
             userInfo:'settingsform #userInfo',
             moneyInfo:'settingsform #moneyInfo',
@@ -55,6 +58,16 @@ Ext.define('PatientApp.controller.Settings', {
         var navView=this.getSettingnavview();
         var form=Ext.widget('AddMoneyForm');
         navView.push(form);
+
+
+    },
+    logoutFunc:function(btn){
+        Ext.Msg.confirm("提示","确定退出?",function (buttonid){
+            if(buttonid=='yes'){
+
+
+            }
+        })
 
 
     },

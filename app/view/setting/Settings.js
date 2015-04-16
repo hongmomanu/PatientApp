@@ -132,9 +132,7 @@ Ext.define('PatientApp.view.setting.Settings', {
                         itemId:'scanbtn',
                         text:'扫描二维码'
                     }
-
                 ]
-
             }
             ,
             {
@@ -146,13 +144,11 @@ Ext.define('PatientApp.view.setting.Settings', {
                 items:[
                     {
                         xtype:'button',
-                        itemId:'logouttn',
+                        itemId:'logoutbtn',
                         ui  : 'decline',
                         text:'退出'
                     }
-
                 ]
-
             }
             /*,
             {
