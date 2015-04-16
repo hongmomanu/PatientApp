@@ -131,6 +131,10 @@
         {
             "path": "resources/css/chat.css",
             "update": "delta"
+        },
+        {
+            "path": "resources/css/main.css",
+            "update": "delta"
         }
     ],
 

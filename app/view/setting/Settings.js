@@ -91,14 +91,14 @@ Ext.define('PatientApp.view.setting.Settings', {
                 items:[
                     {
                         xtype:'button',
-                        label:'我的定制',
-                        itemId:'pushsetbtn',
-                        text:'定制推送'
+                        label:'扫描二维码',
+                        itemId:'scanbtn',
+                        text:'扫描二维码'
                     }
 
                 ]
 
-            },
+            }/*,
             {
                 xtype:'fieldset',
                 defaults:{
@@ -133,7 +133,7 @@ Ext.define('PatientApp.view.setting.Settings', {
                         itemId:'settingsok'
                     }
                 ]
-            }
+            }*/
         ]
 
 

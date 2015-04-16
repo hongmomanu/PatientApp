@@ -11,7 +11,7 @@ Ext.define('PatientApp.view.setting.AddMoneyForm', {
     ],
 
     config: {
-        title:'推送定制',
+        title:'充值',
         style:{
             'padding':'1px'
         },

@@ -66,10 +66,10 @@ Ext.define('PatientApp.controller.Settings', {
                  var successFunc = function (response, action) {
                      var res=JSON.parse(response.responseText);
                      if(res.success){
-                         Ext.Msg.alert('充值成功', res.message, function(){
+                         Ext.Msg.alert('充值成功', '总金额:'+res.message, function(){
                              var navView=me.getSettingnavview();
                              navView.pop();
-                             me.getMoneyInfo().setHtml('<div>我的余额:'+money+'</div>');
+                             me.getMoneyInfo().setHtml('<div>我的余额:'+res.message+'</div>');
                          });
 
                      }else{
@@ -114,15 +114,15 @@ Ext.define('PatientApp.controller.Settings', {
 
     initSetting:function(){
 
-        this.makecode();
+        this.makecode(64,64,'doctorCodepicSmall');
         this.makeUserinfo()
 
     },
 
     makeUserinfo:function(){
         var me=this;
-        me.getUserInfo().setHtml('<div>用户名:'+Globle_Variable.user.realname+'</div>'
-        +'<div>姓名:'+Globle_Variable.user.realname+'</div>');
+        me.getUserInfo().setHtml('<div style="height: 100%;"><table  ><tr><td><a>用户名:</a></td><td><a>'+Globle_Variable.user.username+'</a></td></tr></div>'
+        +'<div><tr><td><a>姓名:</a></td><td><a>'+Globle_Variable.user.realname+'</a></td></tr></table></div>');
 
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);
@@ -142,12 +142,13 @@ Ext.define('PatientApp.controller.Settings', {
 
     },
 
-    makecode:function(){
-        $('#doctorCodepicSmall').html('');
-        $('#doctorCodepicSmall').qrcode({
+    makecode:function(width,height,id){
+        var cont=$('#'+id);
+        cont.html('');
+        cont.qrcode({
             text	: "http://jetienne.com",
-            width		: 64,
-            height		: 64
+            width		: width,
+            height		: height
         });
     },
 
@@ -181,8 +182,45 @@ Ext.define('PatientApp.controller.Settings', {
             }
         })
     },
-    showBigCode:function(){
-        alert(111);
+    showBigCode:function(item){
+
+        var overlay = Ext.Viewport.add({
+            xtype: 'panel',
+
+            // We give it a left and top property to make it floating by default
+            left: 0,
+            top: 0,
+
+            // Make it modal so you can click the mask to hide the overlay
+            modal: true,
+            hideOnMaskTap: true,
+
+            // Make it hidden by default
+            hidden: true,
+
+            // Set the width and height of the panel
+            width: 280,
+            height: 280,
+
+            // Here we specify the #id of the element we created in `index.html`
+            contentEl: 'content',
+
+            // Style the content and make it scrollable
+            styleHtmlContent: true,
+            scrollable: true,
+
+            // Insert a title docked at the top with a title
+            items: [
+                {
+                    //docked: 'top',
+                    xtype: 'panel',
+                    html:'<div id="biggercode"></div>',
+                    title: 'Overlay Title'
+                }
+            ]
+        });
+        this.makecode(220,220,"biggercode");
+        overlay.showBy(item);
 
     }
 
