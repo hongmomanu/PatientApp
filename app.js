@@ -21,6 +21,7 @@ Ext.application({
     controllers: [
         'Main',
         'Login',
+        'Register',
         'Doctor',
         'Village',
         'Settings',

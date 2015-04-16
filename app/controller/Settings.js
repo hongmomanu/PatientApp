@@ -59,7 +59,6 @@ Ext.define('PatientApp.controller.Settings', {
         var form=Ext.widget('AddMoneyForm');
         navView.push(form);
 
-
     },
     logoutFunc:function(btn){
         Ext.Msg.confirm("提示","确定退出?",function (buttonid){
@@ -82,7 +81,7 @@ Ext.define('PatientApp.controller.Settings', {
                          Ext.Msg.alert('充值成功', '总金额:'+res.message, function(){
                              var navView=me.getSettingnavview();
                              navView.pop();
-                             me.getMoneyInfo().setHtml('<div>我的余额:'+res.message+'</div>');
+                             me.getMoneyInfo().setValue(res.message);
                          });
 
                      }else{
