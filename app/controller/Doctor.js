@@ -168,18 +168,14 @@ Ext.define('PatientApp.controller.Doctor', {
                 //makemoneybyuserid
 
             var successFunc = function (response, action) {
-
                 var res=JSON.parse(response.responseText);
-
                 if(res.success){
-
                     Ext.Msg.show({
                         title:'成功',
                         message: '现在可以问诊了',
                         buttons: Ext.MessageBox.OK,
                         fn:Ext.emptyFn //任务描述这里可以输入默认信息
                     });
-
 
                 }else{
                     Ext.Msg.alert('失败', res.message,function(){
