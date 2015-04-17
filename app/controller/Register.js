@@ -74,7 +74,6 @@ Ext.define('PatientApp.controller.Register', {
             };
             var failFunc=function(response, action){
                 Ext.Msg.alert('登录失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
-
             };
 
             var url="patient/newpatient";
