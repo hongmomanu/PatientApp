@@ -88,10 +88,11 @@ Ext.define('PatientApp.controller.Main', {
             var villageController=me.getApplication().getController('Village');
             var patientController=me.getApplication().getController('Patient');
             if(data.type=='doctorchat'){
-
+                //聊天咨询
                 doctorController.receiveMessageProcess(data.data,event);
             }
             else if(data.type=='recommend'){
+                //推荐
                 console.log('recommend');
                 console.log(data.data);
                 doctorController.receiveRecommendProcess(data.data,event);
@@ -104,7 +105,7 @@ Ext.define('PatientApp.controller.Main', {
 
 
             }else if(data.type=='quickaccept'){
-
+                //急救应答
                 console.log('quickaccept');
 
                 console.log(data.data);

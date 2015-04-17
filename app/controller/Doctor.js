@@ -177,7 +177,7 @@ Ext.define('PatientApp.controller.Doctor', {
                         title:'成功',
                         message: '现在可以问诊了',
                         buttons: Ext.MessageBox.OK,
-                        fn:Ext.emptyFn
+                        fn:Ext.emptyFn //任务描述这里可以输入默认信息
                     });
 
 
