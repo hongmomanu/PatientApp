@@ -295,7 +295,7 @@ Ext.define('PatientApp.controller.Doctor', {
                         var actionSheet = Ext.create('Ext.ActionSheet', {
                             items: [
                                 {
-                                    text: '继续问诊',
+                                    text: '继续问诊(已挂号)',
                                     handler:function(){
                                         //me.showPatientList(record);
                                         me.continueAsk(btn);

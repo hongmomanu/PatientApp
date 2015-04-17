@@ -131,6 +131,10 @@ Ext.define('PatientApp.controller.Village', {
 
 
     },
+    enoughMoney:function(){
+
+
+    },
     askforDoctor:function(btn){
         var list=btn.up('list');
         var store=list.getStore();

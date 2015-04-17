@@ -37,18 +37,12 @@ Ext.define('PatientApp.controller.Register', {
     },
 
     doPatientRegister:function(btn){
-        /*testobj=btn;
-        var me = btn.up('panel');
-        var formObj = me;
-        var formData = formObj.getValues();
-        console.log(formData);*/
-        //alert(111);
+
         formpanel=btn.up('panel');
         CommonUtil.addMessage();
         var valid = CommonUtil.valid('PatientApp.model.register.Register', formpanel);
         var me =this;
         if(valid){
-
 
             var successFunc = function (response, action) {
                 var res=JSON.parse(response.responseText);
