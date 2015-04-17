@@ -98,14 +98,14 @@ Ext.define('PatientApp.controller.Main', {
                 doctorController.receiveRecommendProcess(data.data,event);
 
             }else if(data.type=='quickapplying'){
-                //医生问诊开始应答
+                //医生问诊急救开始应答
                 console.log('quickapplying');
                 console.log(data.data);
                 villageController.receiveQuickApplyingProcess(data.data,event)
 
 
             }else if(data.type=='quickaccept'){
-                //急救应答
+                //门诊应答
                 console.log('quickaccept');
 
                 console.log(data.data);
