@@ -93,8 +93,8 @@ Ext.define('PatientApp.view.setting.Settings', {
                             {
                                 centered:true,
                                 xtype:'image',
-                                itemId:'doctorCodepicSmall',
-                                id:'doctorCodepicSmall'
+                                itemId:'patientCodepicSmall',
+                                id:'patientCodepicSmall'
                             }
                         ]
                     }

@@ -31,9 +31,17 @@ Ext.define('PatientApp.view.register.Register', {
                         },
                         items:[{
                             xtype:'textfield',
-                            name:'name',
+                            name:'username',
+                            label:'用户名',
+                            placeHolder:'请输入用户名',
+                            required:true,
+                            clearIcon:true,
+                            labelAlign:'left'
+                        },{
+                            xtype:'textfield',
+                            name:'realname',
                             label:'姓名',
-                            placeHolder:'请输入名',
+                            placeHolder:'请输入姓名',
                             required:true,
                             clearIcon:true,
                             labelAlign:'left'
@@ -73,7 +81,8 @@ Ext.define('PatientApp.view.register.Register', {
                         itemId:'patientregister'
                     }
                 ]
-            }]
+            }
+        ]
 
 
     }

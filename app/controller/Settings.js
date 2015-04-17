@@ -32,7 +32,7 @@ Ext.define('PatientApp.controller.Settings', {
             addmoneyconfirmbtn:{
                 'tap':'showAlipayView'
             },
-            doctorCodepicSmallView:{
+            patientCodepicSmallView:{
                 'tap':'showBigCode'
             },
             custompushconfirmbtn:{
@@ -50,7 +50,7 @@ Ext.define('PatientApp.controller.Settings', {
             custompushformview: 'custompushform',
             custompushconfirmbtn: 'custompushform #confirmbtn',
             settingnavview:'main #settingnavigationview',
-            doctorCodepicSmallView: 'settingsform #doctorCodepicSmall'
+            patientCodepicSmallView: 'settingsform #patientCodepicSmall'
         }
     },
     showAddMoneyForm:function(btn){
@@ -126,7 +126,7 @@ Ext.define('PatientApp.controller.Settings', {
 
     initSetting:function(){
 
-        this.makecode(64,64,'doctorCodepicSmall');
+        this.makecode(64,64,'patientCodepicSmall');
         this.makeUserinfo()
 
     },
@@ -137,7 +137,6 @@ Ext.define('PatientApp.controller.Settings', {
         +'<div><tr><td><a>姓名:</a></td><td><a>'+Globle_Variable.user.realname+'</a></td></tr></table></div>');
 */
         var form=this.getSettingsformview();
-        testobjs=me;
 
         var successFunc = function (response, action) {
             var res=JSON.parse(response.responseText);

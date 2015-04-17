@@ -75,11 +75,13 @@ Ext.define('PatientApp.view.login.Login', {
                         items:[ {
                             xtype: 'button',
                             text: '登录',
+                            ui:'confirm',
                             itemId: 'patientlogin'
                         },
                             {
                                 xtype: 'button',
                                 text: '注册',
+                                ui:'decline',
                                 itemId: 'newpatient'
                             }]
                     }
