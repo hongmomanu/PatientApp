@@ -50,6 +50,10 @@ Ext.define('PatientApp.controller.Doctor', {
             sendmessagebtn:{
                 tap:'sendMessageControler'
             }
+            ,
+            choosepicbtn:{
+                tap:'doImgCLick'
+            }
 
         },
         refs: {
@@ -57,10 +61,67 @@ Ext.define('PatientApp.controller.Doctor', {
             mainview: 'main',
             doctormessagelistview:'doctormessagelist',
             messagecontent: '#doctorsnavigationview #messagecontent',
+            choosepicbtn: '#doctorsnavigationview #choosepic',
             sendmessagebtn: '#doctorsnavigationview #sendmessage',
             patientsview: '#patientsnavigationview #patientlist',
             doctorsnavview:'main #doctorsnavigationview'
         }
+    },
+
+    doImgCLick: function (btn) {
+        var me = this;
+        var actionSheet = Ext.create('Ext.ActionSheet', {
+            items: [
+                {
+                    text: '相机拍照',
+                    handler: function () {
+                        //alert(1);
+
+                        imagfunc('camera');
+                    }
+                    //ui  : 'decline'
+                },
+                {
+                    text: '图片库',
+                    handler: function () {
+                        //alert(2);
+                        imagfunc('library');
+                    }
+                },
+                {
+                    text: '取消',
+                    handler: function () {
+                        actionSheet.hide();
+                    },
+                    ui: 'decline'
+                }
+            ]
+        });
+
+        Ext.Viewport.add(actionSheet);
+        actionSheet.show();
+
+        var imagfunc = function (type) {
+            actionSheet.hide();
+            //var imgpanel = me.getImgpanel();
+            //alert(1);
+            Ext.device.Camera.capture({
+                source: type,
+                destination: 'file',
+                //encoding:'png',
+                success: function (imgdata) {
+                    //show the newly captured image in a full screen Ext.Img component:
+                    //var a=Ext.getCmp('imagerc');
+                    //imgpanel.setSrc("data:image/png;base64,"+imgdata);
+                    //imgpanel.setSrc(imgdata)
+                    me.getMessagecontent().setValue('<img height="200" width="200" src="'+imgdata+'">')  ;
+                    me.sendMessageControler(btn);
+
+                }
+            });
+        };
+
+
     },
 
     continueAsk:function(btn){
@@ -157,9 +218,10 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
     alipay:function(btn){
-
+        Ext.Msg.alert('提示');
         var listview=btn.up('list');
         var myinfo= listview.mydata;
+        Ext.Msg.alert('提示2');
 
         var toinfo=listview.data;
         var me=this;
@@ -201,7 +263,7 @@ Ext.define('PatientApp.controller.Doctor', {
         });
 
     },
-    applyforpay:function(myinfo,toinfo){
+    applyforpay:function(myinfo,toinfo,btn){
         var me=this;
         Ext.Msg.confirm('消息','是否现在挂号?',function(buttonId){
 
@@ -313,7 +375,7 @@ Ext.define('PatientApp.controller.Doctor', {
                         Ext.Viewport.add(actionSheet);
                         actionSheet.show();
                     }else{
-                        me.applyforpay(myinfo,toinfo);
+                        me.applyforpay(myinfo,toinfo,btn);
                     }
 
                 }else{
@@ -336,7 +398,7 @@ Ext.define('PatientApp.controller.Doctor', {
                 }
 
             }else{
-                  me.applyforpay(myinfo,toinfo);
+                  me.applyforpay(myinfo,toinfo,btn);
             }
 
         };
@@ -579,24 +641,29 @@ Ext.define('PatientApp.controller.Doctor', {
         var me=this;
         try {
 
-            cordova.plugins.notification.local.schedule({
-                id: message._id,
-                title: (message.fromtype==0?'病友 ':'医生 ')+
-                message.userinfo.realname+' 来消息啦!' ,
-                text: message.message,
-                //firstAt: monday_9_am,
-                //every: "week",
-                //sound: "file://sounds/reminder.mp3",
-                //icon: "http://icons.com/?cal_id=1",
-                data: message
-            });
 
-            cordova.plugins.notification.local.on("click", function (notification) {
-                //joinMeeting(notification.data.meetingId);
-                //Ext.Msg.alert('Title', notification.data.meetingId, Ext.emptyFn);
-                me.receiveMessageShow(notification.data.message,e);
+            (function(message){
 
-            });
+                cordova.plugins.notification.local.schedule({
+                    id: message._id,
+                    title: (message.fromtype==0?'病友 ':'医生 ')+ message.userinfo.realname+' 来消息啦!' ,
+                    text: message.message,
+                    //firstAt: monday_9_am,
+                    //every: "week",
+                    //sound: "file://sounds/reminder.mp3",
+                    //icon: "http://icons.com/?cal_id=1",
+                    data: message
+                });
+
+                cordova.plugins.notification.local.on("click", function (notification) {
+                    //joinMeeting(notification.data.meetingId);
+                    //Ext.Msg.alert('Title', notification.data.meetingId, Ext.emptyFn);
+                    me.receiveMessageShow(message,e);
+
+                });
+
+            } )(message)  ;
+
 
         }catch (err){
             console.log(message) ;
