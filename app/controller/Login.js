@@ -55,9 +55,61 @@ Ext.define('PatientApp.controller.Login', {
     },
     // app init func
 
-    initFunc:function (){
+    initFunc:function (item,e){
         this.autoLogin();
-        this.makeLocationListener();
+        //this.makeLocationListener();
+        this.pauseListener();
+        this.resumeListener();
+        this.initNotificationClick(e);
+
+    },
+    initNotificationClick:function(e){
+
+
+
+
+            ///Ext.Msg.alert('clicked event0', 'is clicked');
+
+            var doctorController=this.getApplication().getController('Doctor');
+            cordova.plugins.notification.local.on("click", function (notification) {
+                //joinMeeting(notification.data.meetingId);
+                //Ext.Msg.alert('Title', notification.data.meetingId, Ext.emptyFn);
+
+
+                 //Ext.Msg.alert('clicked event', 'is clicked');
+
+
+
+                //var dialog = new Windows.UI.Popups.MessageDialog("111");
+                //alert(2);
+
+                /* var task = Ext.create('Ext.util.DelayedTask', function() {
+                 //scroller.scrollToEnd(true);
+                 Ext.Msg.alert('clicked event', 'is clicked');
+                 });
+                 task.delay(5000);*/
+                var message=JSON.parse(notification.data).data;
+                doctorController.receiveMessageShow(message,e);
+
+                //(Ext.bind(doctorController.receiveMessageShow, doctorController) (notification.data,e)) ;
+
+            });
+
+            cordova.plugins.notification.local.on('trigger', function (notification) {
+
+                //Ext.Msg.alert('clicked event', '22222');
+                //Ext.Msg.alert('clicked event', JSON.stringify(notification.data));
+                var message=JSON.parse(notification.data).data;
+                doctorController.receiveMessageShow(message,e);
+                //doctorController.receiveMessageShow, doctorController) (notification.data,e))
+                //Ext.Msg.alert('clicked eventrr', 'is clicked');
+            });
+
+            //Ext.Msg.alert('clicked event1', 'is clicked');
+
+
+
+
 
     },
     autoLogin:function(){
@@ -72,6 +124,29 @@ Ext.define('PatientApp.controller.Login', {
         }
 
     },
+    pauseListener:function(){
+        document.addEventListener("pause", onPause, false);
+
+        function onPause() {
+            // Handle the pause event
+            //Ext.Msg.alert('停止测试', '停止测试', Ext.emptyFn);
+            Globle_Variable.isactived=false;
+        }
+
+    },
+
+    resumeListener:function(){
+        document.addEventListener("resume", onResume, false);
+
+        function onResume() {
+            // Handle the resume event
+            //Ext.Msg.alert('恢复测试', Globle_Variable.isactived+'121', Ext.emptyFn);
+            Globle_Variable.isactived=true;
+        }
+
+    },
+
+
     makeLocationListener:function(){
 
         function onSuccess(position) {

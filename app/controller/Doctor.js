@@ -603,6 +603,7 @@ Ext.define('PatientApp.controller.Doctor', {
     },
     listShow:function(){
         //this.initPatientList();
+        //Ext.Msg.alert('侧额额', 'cess 说', Ext.emptyFn);
     },
     messageView:{},
     onDoctorSelect: function (list, index, node, record) {
@@ -641,28 +642,29 @@ Ext.define('PatientApp.controller.Doctor', {
         var me=this;
         try {
 
+            if(Globle_Variable.isactived){
+                me.receiveMessageShow(message,e);
 
-            (function(message){
+            }else{
 
-                cordova.plugins.notification.local.schedule({
-                    id: message._id,
-                    title: (message.fromtype==0?'病友 ':'医生 ')+ message.userinfo.realname+' 来消息啦!' ,
-                    text: message.message,
-                    //firstAt: monday_9_am,
-                    //every: "week",
-                    //sound: "file://sounds/reminder.mp3",
-                    //icon: "http://icons.com/?cal_id=1",
-                    data: message
-                });
+                (function(message){
 
-                cordova.plugins.notification.local.on("click", function (notification) {
-                    //joinMeeting(notification.data.meetingId);
-                    //Ext.Msg.alert('Title', notification.data.meetingId, Ext.emptyFn);
-                    me.receiveMessageShow(message,e);
+                    cordova.plugins.notification.local.schedule({
+                        id: message._id,
+                        title: (message.fromtype==0?'病友 ':'医生 ')+ message.userinfo.realname+' 来消息啦!' ,
+                        text: message.message,
+                        //firstAt: monday_9_am,
+                        //every: "week",
+                        //sound: "file://sounds/reminder.mp3",
+                        //icon: "http://icons.com/?cal_id=1",
+                        data: { data: message }
+                    });
 
-                });
 
-            } )(message)  ;
+                } )(message)  ;
+
+            }
+
 
 
         }catch (err){
@@ -676,6 +678,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
     },
+
     receiveMessageShow:function(message,e){
         try{
             var mainView=this.getMainview();
@@ -705,12 +708,14 @@ Ext.define('PatientApp.controller.Doctor', {
         }finally{
             var doctorController=this.getApplication().getController('Doctor');
             var patientController=this.getApplication().getController('Patient');
+
             if(message.fromtype==0){
                 messagestore=patientController.messageView[message.fromid].getStore()
             }else{
+                //Ext.Msg.alert('clicked event',JSON.stringify(message));
                 messagestore=doctorController.messageView[message.fromid].getStore();
             }
-
+            //Ext.Msg.alert('store added', 'is clicked');
             messagestore.add(Ext.apply({local: false}, message));
             if(message.fromtype==0){
                 (Ext.bind(doctorController.scrollMsgList, patientController) ());
