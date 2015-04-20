@@ -480,13 +480,14 @@ Ext.define('PatientApp.controller.Doctor', {
 
                 var options = new FileUploadOptions();
                 options.fileKey = "file";
-                options.fileName = content.substr(content.lastIndexOf('/') + 1);
+                options.fileName = content.substr(btn.fileurl.lastIndexOf('/') + 1);
 
 
 
 
                 var ft = new FileTransfer();
-                ft.upload(content, encodeURI(Globle_Variable.serverurl+'common/uploadfile'), win, fail, options);
+                //Ext.Msg.alert('seccess',Globle_Variable.serverurl+'common/uploadfile');
+                ft.upload(btn.fileurl, encodeURI(Globle_Variable.serverurl+'common/uploadfile'), win, fail, options);
 
                 btn.isfile=false;
 
