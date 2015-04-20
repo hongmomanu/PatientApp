@@ -115,7 +115,10 @@ Ext.define('PatientApp.controller.Doctor', {
                 success: function (imgdata) {
 
                     //var srcdata="data:image/png;base64,"+imgdata;
-                    //me.getMessagecontent().setValue('<img height="200" width="200" src="'+imgdata+'">')  ;
+                    me.getMessagecontent().setValue('<img height="200" width="200" src="'+imgdata+'">')  ;
+                    btn.isfile=true;
+                    btn.fileurl=imgdata;
+
                     me.sendMessageControler(btn);
 
                 }
@@ -459,20 +462,48 @@ Ext.define('PatientApp.controller.Doctor', {
 
             var socket=mainController.socket;
 
-            Ext.Msg.alert('tip',JSON.stringify({
+            /*Ext.Msg.alert('tip',JSON.stringify({
                 type:"doctorchat",
 
                 to :toinfo.get("_id")
-            }));
+            }));*/
+            if(btn.isfile){
 
-            socket.send(JSON.stringify({
-                type:"doctorchat",
-                from:myinfo._id,
-                fromtype:0,
-                imgid:imgid,
-                to :toinfo.get("_id"),
-                content: content
-            }));
+                var win = function (r) {
+                    Ext.Msg.alert('seccess',r.response);
+                }
+
+                var fail = function (error) {
+                    Ext.Msg.alert('error',"An error has occurred: Code = " + error.code);
+
+                }
+
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = (new Date()).getTime();
+
+
+
+
+                var ft = new FileTransfer();
+                ft.upload(content, encodeURI(Globle_Variable.serverurl+'common/uploadfile'), win, fail, options);
+
+                btn.isfile=false;
+
+
+            }else{
+                socket.send(JSON.stringify({
+                    type:"doctorchat",
+                    from:myinfo._id,
+                    fromtype:0,
+                    imgid:imgid,
+                    to :toinfo.get("_id"),
+                    content: content
+                }));
+
+            }
+
+
 
 
 
