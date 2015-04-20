@@ -88,8 +88,15 @@ Ext.define('PatientApp.controller.Login', {
                  Ext.Msg.alert('clicked event', 'is clicked');
                  });
                  task.delay(5000);*/
-                var message=JSON.parse(notification.data).data;
-                doctorController.receiveMessageShow(message,e);
+                var data=JSON.parse(notification.data);
+                var message=data.data;
+                var type=data.type;
+                if(type=='recommend'){
+                    doctorController.receiveRecommendShow(message,e);
+                }else{
+                    doctorController.receiveMessageShow(message,e);
+                }
+
 
                 //(Ext.bind(doctorController.receiveMessageShow, doctorController) (notification.data,e)) ;
 
@@ -99,8 +106,14 @@ Ext.define('PatientApp.controller.Login', {
 
                 //Ext.Msg.alert('clicked event', '22222');
                 //Ext.Msg.alert('clicked event', JSON.stringify(notification.data));
-                var message=JSON.parse(notification.data).data;
-                doctorController.receiveMessageShow(message,e);
+                var data=JSON.parse(notification.data);
+                var message=data.data;
+                var type=data.type;
+                if(type=='recommend'){
+                    doctorController.receiveRecommendShow(message,e);
+                }else{
+                    doctorController.receiveMessageShow(message,e);
+                }
                 //doctorController.receiveMessageShow, doctorController) (notification.data,e))
                 //Ext.Msg.alert('clicked eventrr', 'is clicked');
             });

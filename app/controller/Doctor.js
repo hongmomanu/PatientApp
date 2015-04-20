@@ -68,7 +68,10 @@ Ext.define('PatientApp.controller.Doctor', {
         }
     },
 
-    doImgCLick: function (btn) {
+    doImgCLick: function (item) {
+        var list=item.up('list');
+        var btn=list.down('#sendmessage');
+        testobj=btn;
         var me = this;
         var actionSheet = Ext.create('Ext.ActionSheet', {
             items: [
@@ -91,6 +94,7 @@ Ext.define('PatientApp.controller.Doctor', {
                 {
                     text: '取消',
                     handler: function () {
+
                         actionSheet.hide();
                     },
                     ui: 'decline'
@@ -108,13 +112,10 @@ Ext.define('PatientApp.controller.Doctor', {
             Ext.device.Camera.capture({
                 source: type,
                 destination: 'file',
-                //encoding:'png',
                 success: function (imgdata) {
-                    //show the newly captured image in a full screen Ext.Img component:
-                    //var a=Ext.getCmp('imagerc');
-                    //imgpanel.setSrc("data:image/png;base64,"+imgdata);
-                    //imgpanel.setSrc(imgdata)
-                    me.getMessagecontent().setValue('<img height="200" width="200" src="'+imgdata+'">')  ;
+
+                    //var srcdata="data:image/png;base64,"+imgdata;
+                    //me.getMessagecontent().setValue('<img height="200" width="200" src="'+imgdata+'">')  ;
                     me.sendMessageControler(btn);
 
                 }
@@ -457,6 +458,13 @@ Ext.define('PatientApp.controller.Doctor', {
             var mainController=this.getApplication().getController('Main');
 
             var socket=mainController.socket;
+
+            Ext.Msg.alert('tip',JSON.stringify({
+                type:"doctorchat",
+
+                to :toinfo.get("_id")
+            }));
+
             socket.send(JSON.stringify({
                 type:"doctorchat",
                 from:myinfo._id,
@@ -494,21 +502,21 @@ Ext.define('PatientApp.controller.Doctor', {
             //Ext.Msg.alert('test', cordova.plugins.notification.local.schedule , Ext.emptyFn);
             cordova.plugins.notification.local.schedule({
                 id: recommend._id ,
-                title: recommend.rectype==1?"医生:"+recommend.frominfo.userinfo.realname+"推荐的":
-                "患者:"+recommend.frominfo.realname+"推荐的",
+                title: recommend.rectype==1?("医生:"+recommend.frominfo.userinfo.realname+"推荐的"):
+                    ("患者:"+recommend.frominfo.realname+"推荐的"),
                 text: "新医生:"+recommend.doctorinfo.userinfo.realname,
                 //firstAt: monday_9_am,
                 //every: "week",
                 //sound: "file://sounds/reminder.mp3",
                 //icon: "http://icons.com/?cal_id=1",
-                data: { meetingId:recommend._id }
+                data: { data:recommend,type:'recommend'}
             });
 
-            cordova.plugins.notification.local.on("click", function (notification) {
+            /*cordova.plugins.notification.local.on("click", function (notification) {
 
                 me.receiveRecommendShow(recommend,e);
 
-            });
+            });*/
 
         }catch (err){
 

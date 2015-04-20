@@ -35,6 +35,9 @@ Ext.define('PatientApp.controller.Settings', {
             patientCodepicSmallView:{
                 'tap':'showBigCode'
             },
+            scanbtn:{
+                'tap':'showScan'
+            },
             custompushconfirmbtn:{
                 'tap':'confirmPush'
             }
@@ -42,6 +45,7 @@ Ext.define('PatientApp.controller.Settings', {
         refs: {
             settingsformview: 'settingsform',
             pushsetbtn: 'settingsform #pushsetbtn',
+            scanbtn: 'settingsform #scanbtn',
             logoutbtn: 'settingsform #logoutbtn',
             addmoneybtn: 'settingsform #addmoneybtn',
             userInfo:'settingsform #userInfo',
@@ -58,6 +62,64 @@ Ext.define('PatientApp.controller.Settings', {
         var navView=this.getSettingnavview();
         var form=Ext.widget('AddMoneyForm');
         navView.push(form);
+
+    },
+    showScan:function(btn){
+        var me=this;
+        cordova.plugins.barcodeScanner.scan(
+            function (result) {
+                var url=result.text.split('?');
+                var params=Ext.urlDecode(url[1]);
+                var type=params.type;
+                var realname=params.realname;
+                var userid=params.userid;
+
+                if(type=='doctor'){
+
+                    var successFunc = function (response, action) {
+
+                        var res=JSON.parse(response.responseText);
+                        if(res.success){
+                            Ext.Msg.alert('成功', '添加医生:'+realname+'成功', function(){
+                                var doctorCotroller=me.getApplication().getController('Doctor');
+                                var mainView = doctorCotroller.getMainview();
+                                mainView.setActiveItem(1);
+                                doctorCotroller.initDoctorList();
+                            });
+
+                        }else{
+                            Ext.Msg.alert('提示', res.message, Ext.emptyFn);
+                        }
+                        //view.pop();
+
+                    };
+                    var failFunc=function(response, action){
+                        Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+                        //Ext.Msg.alert('test', 'test', Ext.emptyFn);
+                        view.pop();
+
+                    }
+                    var url="patient/adddoctorbyid";
+
+                    var params={
+                        patientid:Globle_Variable.user._id,
+                        doctorid:userid
+
+                    };
+                    CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+
+
+
+                }
+
+
+
+            },
+            function (error) {
+                Ext.Msg.alert('充值失败', "Scanning failed: " + error, Ext.emptyFn);
+                // alert("Scanning failed: " + error);
+            }
+        );
 
     },
     logoutFunc:function(btn){
@@ -165,7 +227,7 @@ Ext.define('PatientApp.controller.Settings', {
         var cont=$('#'+id);
         cont.html('');
         cont.qrcode({
-            text	: Globle_Variable.user.username,
+            text	: JSON.stringify({username:Globle_Variable.user.username,type:'patient',userid:Globle_Variable.user._id}),
             width		: width,
             height		: height
         });

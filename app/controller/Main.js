@@ -74,6 +74,7 @@ Ext.define('PatientApp.controller.Main', {
                 a.set('issend','none');
             }
         });
+        doctorController.getMessagecontent().setValue('');
     },
     websocketInit:function(){
         var url=Globle_Variable.serverurl;
