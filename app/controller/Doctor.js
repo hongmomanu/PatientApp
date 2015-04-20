@@ -480,7 +480,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
                 var options = new FileUploadOptions();
                 options.fileKey = "file";
-                options.fileName = (new Date()).getTime();
+                options.fileName = content.substr(content.lastIndexOf('/') + 1);
 
 
 
