@@ -57,9 +57,12 @@ Ext.define('PatientApp.view.doctor.DoctorsMessage', {
                                 element: 'element',
                                 touchstart : function() {
 
-                                    var me=this;
 
-                                    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,gotFS , function(){
+                                    var list=this.up('list');
+                                    list.fireEvent('touchstart', list);
+
+
+                                    /*window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,gotFS , function(){
 
                                     });
                                     function gotFS(fileSystem) {
@@ -125,7 +128,7 @@ Ext.define('PatientApp.view.doctor.DoctorsMessage', {
 
 
                                         }
-                                    }
+                                    }*/
 
                                     /*window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
                                         //Ext.Msg.alert("got the file", dir)
@@ -199,6 +202,9 @@ Ext.define('PatientApp.view.doctor.DoctorsMessage', {
 
                                 },
                                 touchend : function() {
+
+                                    var list=this.up('list');
+                                    list.fireEvent('touchend', list);
                                     //this.mediaRec.stopRecord();
                                     //Ext.Msg.alert('end', 'finished', Ext.emptyFn);
                                 }
