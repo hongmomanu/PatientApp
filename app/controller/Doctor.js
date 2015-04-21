@@ -172,7 +172,7 @@ Ext.define('PatientApp.controller.Doctor', {
         //me.getMessagecontent().setValue('<audio  src="'+me.voicerecordsrc+'" controls>')  ;
 
         var btn=item.down('#sendmessage');
-        testobj=btn;
+
         btn.isfile=true;
         btn.filetype='voice';
         btn.fileurl=me.voicerecordsrc;
@@ -251,7 +251,7 @@ Ext.define('PatientApp.controller.Doctor', {
                 success: function (imgdata) {
 
                     //var srcdata="data:image/png;base64,"+imgdata;
-                    me.getMessagecontent().setValue('<img height="200" width="200" src="'+imgdata+'">')  ;
+                    //me.getMessagecontent().setValue('<img height="200" width="200" src="'+imgdata+'">')  ;
                     btn.isfile=true;
                     btn.filetype='image';
                     btn.fileurl=imgdata;
@@ -631,10 +631,13 @@ Ext.define('PatientApp.controller.Doctor', {
                         content: res.filename
                     }));
 
+                    me.voicefileentry.remove(function(){},function(){});
+
                 }
 
                 var fail = function (error) {
-                    Ext.Msg.alert('error',"An error has occurred: Code = " + error.code);
+                    me.voicefileentry.remove(function(){},function(){});
+                    //Ext.Msg.alert('error',"An error has occurred: Code = " + error.code);
 
                 }
 
