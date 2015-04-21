@@ -470,7 +470,7 @@ Ext.define('PatientApp.controller.Doctor', {
             if(btn.isfile){
 
                 var win = function (r) {
-                    Ext.Msg.alert('seccess',r.response);
+                    //Ext.Msg.alert('seccess',r.response);
                     var res=JSON.parse(r.response);
 
                     socket.send(JSON.stringify({
