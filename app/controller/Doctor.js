@@ -471,6 +471,18 @@ Ext.define('PatientApp.controller.Doctor', {
 
                 var win = function (r) {
                     Ext.Msg.alert('seccess',r.response);
+                    var res=JSON.parse(r.response);
+
+                    socket.send(JSON.stringify({
+                        type:"doctorchat",
+                        from:myinfo._id,
+                        fromtype:0,
+                        imgid:imgid,
+                        type:'image',
+                        to :toinfo.get("_id"),
+                        content: res.filename
+                    }));
+
                 }
 
                 var fail = function (error) {
@@ -673,6 +685,9 @@ Ext.define('PatientApp.controller.Doctor', {
         for(var i=0;i<data.length;i++){
             var message=data[i];
             message.message=message.content;
+            if(message.type=='image'){
+                message.message='<img height="200" width="200" src="'+Globle_Variable+'files/'+message.content+'">';
+            }
             this.receiveMessageNotification(message,e);
         }
         //listView.select(1);
