@@ -165,7 +165,7 @@ Ext.define('PatientApp.controller.Doctor', {
         var me=this;
         this.voiceoverlay.hide();
 
-        Ext.Msg.alert('end', me.voicerecordsrc, Ext.emptyFn);
+        //Ext.Msg.alert('end', me.voicerecordsrc, Ext.emptyFn);
         this.mediaRec.stopRecord();
         me.mediaRec.release();
 
@@ -616,8 +616,8 @@ Ext.define('PatientApp.controller.Doctor', {
                     }else if(btn.filetype=='voice'){
                         messagestr='<audio  src="'+Globle_Variable.serverurl+'files/'+res.filename+'" controls>';
                     }
-
-                    listview.getStore().add(Ext.apply({local: true,imgid:imgid}, messagestr));
+                    message.message=messagestr;
+                    listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
 
                     me.scrollMsgList();
 
