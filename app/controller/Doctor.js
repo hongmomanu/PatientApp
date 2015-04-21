@@ -492,7 +492,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
                 var options = new FileUploadOptions();
                 options.fileKey = "file";
-                options.fileName = content.substr(btn.fileurl.lastIndexOf('/') + 1);
+                options.fileName = btn.fileurl.substr(btn.fileurl.lastIndexOf('/') + 1);
 
 
 
@@ -686,7 +686,7 @@ Ext.define('PatientApp.controller.Doctor', {
             var message=data[i];
             message.message=message.content;
             if(message.type=='image'){
-                message.message='<img height="200" width="200" src="'+Globle_Variable+'files/'+message.content+'">';
+                message.message='<img height="200" width="200" src="'+Globle_Variable.serverurl+'files/'+message.content+'">';
             }
             this.receiveMessageNotification(message,e);
         }
