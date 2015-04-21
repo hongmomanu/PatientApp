@@ -111,14 +111,96 @@ Ext.define('PatientApp.controller.Doctor', {
         }
 
         this.voiceoverlay.show();
+        this.makerecording();
+
+
+
+    },
+
+    makerecording:function(){
+        var me=this;
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,gotFS , function(){});
+         function gotFS(fileSystem) {
+
+            fileSystem.root.getFile("blank.mp3", {create: true, exclusive: false}, gotFileEntry,  function(){
+
+         });
+
+         function gotFileEntry(fileEntry) {
+
+             me.voicefileentry=fileEntry;
+             me.voicerecordsrc=fileEntry.toInternalURL();
+             //Ext.Msg.alert("filepath",src);
+
+             me.mediaRec = new Media(me.voicerecordsrc,
+             // success callback
+             function() {
+             //Ext.Msg.alert("success","recordAudio():Audio Success");
+             },
+
+             // error callback
+             function(err) {
+             //console.log("recordAudio():Audio Error: "+ err.code);
+             Ext.Msg.alert("success","recordAudio():Audio Success"+ err.code);
+             });
+
+             // Record audio
+             me.mediaRec.startRecord();
+
+             setTimeout(function() {
+
+
+             }, 3000);
+
+
+
+         }
+         }
 
 
 
     },
 
     voicetouchend:function(item){
-
+        var me=this;
         this.voiceoverlay.hide();
+
+        Ext.Msg.alert('end', me.voicerecordsrc, Ext.emptyFn);
+        this.mediaRec.stopRecord();
+        me.mediaRec.release();
+
+        //me.getMessagecontent().setValue('<audio  src="'+me.voicerecordsrc+'" controls>')  ;
+
+        var btn=item.down('#sendmessage');
+        testobj=btn;
+        btn.isfile=true;
+        btn.filetype='voice';
+        btn.fileurl=me.voicerecordsrc;
+
+        me.sendMessageControler(btn);
+
+
+
+/*
+
+        var win = function (r) {
+            Ext.Msg.alert('seccess',r.response);
+            //me.voicefileentry.remove(function(){},function(){});
+        }
+
+        var fail = function (error) {
+            Ext.Msg.alert('error',"An error has occurred: Code = " + error.code);
+            //me.voicefileentry.remove(function(){},function(){});
+
+        }
+
+        var options = new FileUploadOptions();
+        options.fileKey = "file";
+        options.fileName = me.voicerecordsrc.substr(me.voicerecordsrc.lastIndexOf('/') + 1);
+        options.mimeType = "audio/mp3";
+        var ft = new FileTransfer();
+        ft.upload(me.voicerecordsrc, encodeURI(Globle_Variable.serverurl+'common/uploadfile'), win, fail, options);
+*/
 
     },
 
@@ -171,6 +253,7 @@ Ext.define('PatientApp.controller.Doctor', {
                     //var srcdata="data:image/png;base64,"+imgdata;
                     me.getMessagecontent().setValue('<img height="200" width="200" src="'+imgdata+'">')  ;
                     btn.isfile=true;
+                    btn.filetype='image';
                     btn.fileurl=imgdata;
 
                     me.sendMessageControler(btn);
@@ -498,9 +581,10 @@ Ext.define('PatientApp.controller.Doctor', {
 
     },
     sendMessage:function(btn){
+        var me=this;
         var content=Ext.String.trim(this.getMessagecontent().getValue());
 
-        if(content&&content!=''){
+        if((content&&content!='')||btn.isfile){
             var listview=btn.up('list');
             var myinfo= listview.mydata;
 
@@ -508,7 +592,7 @@ Ext.define('PatientApp.controller.Doctor', {
             var imgid='chatstatusimg'+(new Date()).getTime();
             var message=Ext.apply({message:content}, myinfo);
             //console.log(imgid);
-            listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
+            if(!btn.isfile)listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
 
             this.scrollMsgList();
 
@@ -526,13 +610,23 @@ Ext.define('PatientApp.controller.Doctor', {
                 var win = function (r) {
                     //Ext.Msg.alert('seccess',r.response);
                     var res=JSON.parse(r.response);
+                    var messagestr="";
+                    if(btn.filetype=='image'){
+                        messagestr='<img height="200" width="200" src="'+Globle_Variable.serverurl+'files/'+res.filename+'">';
+                    }else if(btn.filetype=='voice'){
+                        messagestr='<audio  src="'+Globle_Variable.serverurl+'files/'+res.filename+'" controls>';
+                    }
+
+                    listview.getStore().add(Ext.apply({local: true,imgid:imgid}, messagestr));
+
+                    me.scrollMsgList();
 
                     socket.send(JSON.stringify({
                         type:"doctorchat",
                         from:myinfo._id,
                         fromtype:0,
                         imgid:imgid,
-                        type:'image',
+                        type:btn.filetype,
                         to :toinfo.get("_id"),
                         content: res.filename
                     }));
@@ -547,9 +641,6 @@ Ext.define('PatientApp.controller.Doctor', {
                 var options = new FileUploadOptions();
                 options.fileKey = "file";
                 options.fileName = btn.fileurl.substr(btn.fileurl.lastIndexOf('/') + 1);
-
-
-
 
                 var ft = new FileTransfer();
                 //Ext.Msg.alert('seccess',Globle_Variable.serverurl+'common/uploadfile');
@@ -741,6 +832,8 @@ Ext.define('PatientApp.controller.Doctor', {
             message.message=message.content;
             if(message.type=='image'){
                 message.message='<img height="200" width="200" src="'+Globle_Variable.serverurl+'files/'+message.content+'">';
+            }else if(message.type=='voice'){
+                message.message='<audio  src="'+Globle_Variable.serverurl+'files/'+message.content+'" controls>';
             }
             this.receiveMessageNotification(message,e);
         }
