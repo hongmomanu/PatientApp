@@ -267,14 +267,14 @@ Ext.define('PatientApp.controller.Patient', {
                 //every: "week",
                 //sound: "file://sounds/reminder.mp3",
                 //icon: "http://icons.com/?cal_id=1",
-                data: { data:recommend}
+                data: { data:recommend,type:'quickaccept'}
             });
 
-            cordova.plugins.notification.local.on("click", function (notification) {
+            /*cordova.plugins.notification.local.on("click", function (notification) {
 
                 me.receiveQuickAcceptShow(recommend,e);
 
-            });
+            });*/
 
         }catch (err){
 

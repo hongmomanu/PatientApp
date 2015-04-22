@@ -114,14 +114,14 @@ Ext.define('PatientApp.controller.Village', {
                 //every: "week",
                 //sound: "file://sounds/reminder.mp3",
                 //icon: "http://icons.com/?cal_id=1",
-                data: { meetingId:recommend._id }
+                data: { data:recommend,type:'quickapplying' }
             });
 
-            cordova.plugins.notification.local.on("click", function (notification) {
+            /*cordova.plugins.notification.local.on("click", function (notification) {
 
                 me.applywaitinginfoShow(recommend,e);
 
-            });
+            });*/
 
         }catch (err){
 

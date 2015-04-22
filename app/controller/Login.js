@@ -71,29 +71,20 @@ Ext.define('PatientApp.controller.Login', {
             ///Ext.Msg.alert('clicked event0', 'is clicked');
 
             var doctorController=this.getApplication().getController('Doctor');
+            var villageController=this.getApplication().getController('Village');
             cordova.plugins.notification.local.on("click", function (notification) {
-                //joinMeeting(notification.data.meetingId);
-                //Ext.Msg.alert('Title', notification.data.meetingId, Ext.emptyFn);
 
-
-                 //Ext.Msg.alert('clicked event', 'is clicked');
-
-
-
-                //var dialog = new Windows.UI.Popups.MessageDialog("111");
-                //alert(2);
-
-                /* var task = Ext.create('Ext.util.DelayedTask', function() {
-                 //scroller.scrollToEnd(true);
-                 Ext.Msg.alert('clicked event', 'is clicked');
-                 });
-                 task.delay(5000);*/
                 var data=JSON.parse(notification.data);
                 var message=data.data;
                 var type=data.type;
                 if(type=='recommend'){
                     doctorController.receiveRecommendShow(message,e);
-                }else{
+                }else if(type=='quickapplying'){
+                    villageController.applywaitinginfoShow(message,e)
+                }else if(type=='quickaccept'){
+                    villageController.receiveQuickAcceptShow(message,e)
+                }
+                else{
                     doctorController.receiveMessageShow(message,e);
                 }
 
@@ -111,6 +102,9 @@ Ext.define('PatientApp.controller.Login', {
                 var type=data.type;
                 if(type=='recommend'){
                     doctorController.receiveRecommendShow(message,e);
+                }else if(type=='quickapplying'){
+
+
                 }else{
                     doctorController.receiveMessageShow(message,e);
                 }

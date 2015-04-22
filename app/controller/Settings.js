@@ -96,7 +96,7 @@ Ext.define('PatientApp.controller.Settings', {
                     var failFunc=function(response, action){
                         Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
                         //Ext.Msg.alert('test', 'test', Ext.emptyFn);
-                        view.pop();
+                        //view.pop();
 
                     }
                     var url="patient/adddoctorbyid";
@@ -110,13 +110,16 @@ Ext.define('PatientApp.controller.Settings', {
 
 
 
+                }else{
+                    Ext.Msg.alert('提示', '病人无扫码功能', Ext.emptyFn);
+
                 }
 
 
 
             },
             function (error) {
-                Ext.Msg.alert('充值失败', "Scanning failed: " + error, Ext.emptyFn);
+                Ext.Msg.alert('失败', "Scanning failed: " + error, Ext.emptyFn);
                 // alert("Scanning failed: " + error);
             }
         );
@@ -227,7 +230,8 @@ Ext.define('PatientApp.controller.Settings', {
         var cont=$('#'+id);
         cont.html('');
         cont.qrcode({
-            text	: JSON.stringify({username:Globle_Variable.user.username,type:'patient',userid:Globle_Variable.user._id}),
+            text	: Globle_Variable.serverurl+'download/patient.apk?type=patient&userid='+Globle_Variable.user._id
+            +'&realname='+Globle_Variable.user.realname,
             width		: width,
             height		: height
         });
