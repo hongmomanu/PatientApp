@@ -4,6 +4,9 @@
  */
 Ext.define('PatientApp.controller.Village', {
     extend: 'Ext.app.Controller',
+    requires: [
+        'Ext.field.Number'
+    ],
     config: {
         views: [
             'village.Village'
@@ -96,6 +99,8 @@ Ext.define('PatientApp.controller.Village', {
         this.applywaitinginfo(message.applytime);
     },
 
+
+
     receiveQuickApplyingProcess:function(recommend,e){
         var me=this;
         try {
@@ -141,24 +146,23 @@ Ext.define('PatientApp.controller.Village', {
 
 
         var overlay = Ext.Viewport.add({
-            xtype: 'panel',
+            xtype: 'formpanel',
             // We give it a left and top property to make it floating by default
-            left: 0,
-            top: 0,
+            centered:true,
 
             // Make it modal so you can click the mask to hide the overlay
             modal: true,
-            hideOnMaskTap: true,
+            hideOnMaskTap: false,
 
             // Make it hidden by default
             hidden: true,
 
             // Set the width and height of the panel
-            width: 210,
+            width: 240,
             height: 140,
 
             // Here we specify the #id of the element we created in `index.html`
-            //contentEl: 'content',
+            contentEl: 'content',
 
             // Style the content and make it scrollable
             styleHtmlContent: true,
@@ -166,7 +170,15 @@ Ext.define('PatientApp.controller.Village', {
 
             // Insert a title docked at the top with a title
             items: [
-
+                {
+                    xtype: 'numberfield',
+                    label: '加急金额',
+                    labelWidth:'40%',
+                    minValue: 0,
+                    value:0,
+                    maxValue: 30,
+                    name: 'addmoney'
+                },
                 {
                     xtype   : 'toolbar',
                     docked  : 'bottom',
@@ -179,6 +191,43 @@ Ext.define('PatientApp.controller.Village', {
                             ui:'confirm',
                             handler:function(btn){
                                 overlay.hide();
+                                var form=btn.up('formpanel');
+                                //testobj=form;
+                                var money=form.getValues().addmoney;
+                                if(money!=null){
+                                    if(store.getCount()>0){
+                                        var doctorids=[];
+                                        store.data.each(function(item){
+                                            doctorids.push(item.get('_id'));
+                                        });
+                                        var successFunc = function (response, action) {
+                                            var res=JSON.parse(response.responseText);
+                                            if(res.success){
+                                                Ext.Msg.alert('成功', '等待医生应答', function(){
+                                                    me.applywaitinginfo(new Date());
+                                                });
+                                            }else{
+                                                Ext.Msg.alert('警告', '呼叫急救医生失败'+res.message, Ext.emptyFn);
+                                            }
+
+                                        };
+                                        var failFunc=function(response, action){
+                                            Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+                                        }
+                                        var url="patient/applyforquickdoctorswhocanhelp";
+                                        var params={
+                                            patientid: Globle_Variable.user._id,
+                                            doctorids:JSON.stringify(doctorids),
+                                            addmoney:money
+                                        };
+                                        CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+
+                                    }else{
+                                        Ext.Msg.alert('警告', '范围内无医生可急救', Ext.emptyFn);
+                                    }
+
+                                }
+                                //form.getValues();
                             },
                             text:'确定'
                         }
@@ -186,39 +235,10 @@ Ext.define('PatientApp.controller.Village', {
                 }
             ]
         });
-        overlay.showBy();
+        overlay.show();
 
 
-        /*if(store.getCount()>0){
-            var doctorids=[];
-            store.data.each(function(item){
-               doctorids.push(item.get('_id'));
-            });
-            var successFunc = function (response, action) {
-                var res=JSON.parse(response.responseText);
-                if(res.success){
-                    Ext.Msg.alert('成功', '等待医生应答', function(){
-                      me.applywaitinginfo(new Date());
-                    });
-                }else{
-                    Ext.Msg.alert('警告', '呼叫急救医生失败'+res.message, Ext.emptyFn);
-                }
-
-            };
-            var failFunc=function(response, action){
-                Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
-            }
-            var url="patient/applyforquickdoctorswhocanhelp";
-            var params={
-                patientid: Globle_Variable.user._id,
-                doctorids:JSON.stringify(doctorids),
-                addmoney:0
-            };
-            CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
-
-        }else{
-            Ext.Msg.alert('警告', '范围内无医生可急救', Ext.emptyFn);
-        }*/
+        /**/
 
     },
     initVillageList:function(){

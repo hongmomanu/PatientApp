@@ -3,6 +3,7 @@ Ext.define('PatientApp.view.Main', {
     xtype: 'main',
     requires: [
         'Ext.TitleBar',
+
         'Ext.Video'
     ],
     config: {
