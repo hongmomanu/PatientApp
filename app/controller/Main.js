@@ -90,6 +90,8 @@ Ext.define('PatientApp.controller.Main', {
             var patientController=me.getApplication().getController('Patient');
             if(data.type=='doctorchat'){
                 //聊天咨询
+                console.log("doctorchat");
+                console.log(data.data);
                 doctorController.receiveMessageProcess(data.data,event);
             }
             else if(data.type=='recommend'){

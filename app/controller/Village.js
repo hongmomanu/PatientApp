@@ -207,7 +207,33 @@ Ext.define('PatientApp.controller.Village', {
                                                     me.applywaitinginfo(new Date());
                                                 });
                                             }else{
-                                                Ext.Msg.alert('警告', '呼叫急救医生失败'+res.message, Ext.emptyFn);
+                                                Ext.Msg.alert('警告', '呼叫急救医生失败,'+res.message, function(){
+
+                                                    var actionSheet = Ext.create('Ext.ActionSheet', {
+                                                        items: [
+                                                            {
+                                                                text: '支付宝支付',
+                                                                handler:function(){
+                                                                    me.addMoney(btn);
+                                                                    actionSheet.hide();
+                                                                }
+                                                            },
+
+                                                            {
+                                                                text: '取消',
+                                                                handler : function() {
+                                                                    actionSheet.hide();
+                                                                },
+                                                                ui  : 'confirm'
+                                                            }
+                                                        ]
+                                                    });
+
+                                                    Ext.Viewport.add(actionSheet);
+                                                    actionSheet.show();
+
+
+                                                });
                                             }
 
                                         };
@@ -241,6 +267,38 @@ Ext.define('PatientApp.controller.Village', {
         /**/
 
     },
+
+    addMoney:function(){
+
+
+        Ext.Msg.alert("提示","模拟充值",function(){
+            var successFunc = function (response, action) {
+                var res=JSON.parse(response.responseText);
+                if(res.success){
+                    Ext.Msg.alert('充值成功', res.message+"元", Ext.emptyFn);
+
+                }else{
+                    Ext.Msg.alert('充值失败', res.message, Ext.emptyFn);
+                }
+
+            };
+            var failFunc=function(response, action){
+                Ext.Msg.alert('充值失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+
+            }
+            var url="patient/makemoneybyuserid";
+            var params={userid:Globle_Variable.user._id,money:20};
+            CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
+
+
+        })
+
+
+
+
+
+    },
+
     initVillageList:function(){
         /*var view=this.getVillageview();
         var store=view.getStore();

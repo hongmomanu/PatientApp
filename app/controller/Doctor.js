@@ -359,10 +359,10 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
     alipay:function(btn){
-        Ext.Msg.alert('提示');
+        //Ext.Msg.alert('提示');
         var listview=btn.up('list');
         var myinfo= listview.mydata;
-        Ext.Msg.alert('提示2');
+        //Ext.Msg.alert('提示2');
 
         var toinfo=listview.data;
         var me=this;
@@ -504,6 +504,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
                                 {
                                     text: '我要退款',
+                                    disabled:res.isreply,
                                     handler : function() {
                                         me.aliback(btn);
                                         actionSheet.hide();
