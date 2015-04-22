@@ -139,12 +139,11 @@ Ext.define('PatientApp.controller.Village', {
         var list=btn.up('list');
         var store=list.getStore();
         var me =this;
+
+
         if(store.getCount()>0){
-
-
             var doctorids=[];
             store.data.each(function(item){
-
                doctorids.push(item.get('_id'));
             });
             var successFunc = function (response, action) {
@@ -154,7 +153,6 @@ Ext.define('PatientApp.controller.Village', {
                       me.applywaitinginfo(new Date());
                     });
                 }else{
-
                     Ext.Msg.alert('警告', '呼叫急救医生失败'+res.message, Ext.emptyFn);
                 }
 
@@ -169,7 +167,6 @@ Ext.define('PatientApp.controller.Village', {
                 addmoney:0
             };
             CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
-
 
         }else{
             Ext.Msg.alert('警告', '范围内无医生可急救', Ext.emptyFn);
