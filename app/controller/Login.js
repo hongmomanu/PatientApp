@@ -84,6 +84,10 @@ Ext.define('PatientApp.controller.Login', {
                 }else if(type=='quickaccept'){
                     villageController.receiveQuickAcceptShow(message,e)
                 }
+                else if(type=='recommendconfirm'){
+
+                    doctorController.receiverecommendConfirmShow(message, e);
+                }
                 else{
                     doctorController.receiveMessageShow(message,e);
                 }

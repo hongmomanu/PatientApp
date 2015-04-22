@@ -676,6 +676,45 @@ Ext.define('PatientApp.controller.Doctor', {
 
     },
 
+    recommendConfirmProcess:function(recommend,e){
+        var me = this;
+        try {
+            //Ext.Msg.alert('test', cordova.plugins.notification.local.schedule , Ext.emptyFn);
+            cordova.plugins.notification.local.schedule({
+                id: recommend._id,
+                title: "新患者",
+                text:  patientinfo.realname ,
+
+                //firstAt: monday_9_am,
+                //every: "week",
+                //sound: "file://sounds/reminder.mp3",
+                //icon: "http://icons.com/?cal_id=1",
+                data: {data: recommend,type:'recommendconfirm'}
+            });
+
+            /*cordova.plugins.notification.local.on("click", function (notification) {
+
+             me.receiveQuickApplyShow(notification.data.data, e);
+
+             });*/
+
+        } catch (err) {
+
+            me.receiverecommendConfirmShow(recommend, e);
+
+        } finally {
+
+
+        }
+
+    },
+
+    receiverecommendConfirmShow:function(recommend, e){
+        var mainView = this.getMainview();
+        mainView.setActiveItem(1);
+       this.initDoctorList();
+    },
+
     receiveRecommendProcess:function(data,e){
         //console.log(data);
         //alert("1");

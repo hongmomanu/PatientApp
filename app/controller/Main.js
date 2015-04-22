@@ -100,7 +100,12 @@ Ext.define('PatientApp.controller.Main', {
                 console.log(data.data);
                 doctorController.receiveRecommendProcess(data.data,event);
 
-            }else if(data.type=='quickapplying'){
+            }else if(data.type=='recommendconfirm'){
+
+                console.log('recommendconfirm')
+                doctorController.recommendConfirmProcess(data.data,event);
+            }
+            else if(data.type=='quickapplying'){
                 //医生问诊急救开始应答
                 console.log('quickapplying');
                 console.log(data.data);
@@ -116,8 +121,8 @@ Ext.define('PatientApp.controller.Main', {
                 patientController.receiveQuickAcceptProcess(data.data,event);
 
 
-
-            }else if(data.type=='chatsuc'){
+            }
+            else if(data.type=='chatsuc'){
                 console.log('recommendconfirm');
                 me.hideloadingimg(data.data)
 
