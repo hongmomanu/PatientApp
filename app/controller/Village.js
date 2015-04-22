@@ -96,8 +96,6 @@ Ext.define('PatientApp.controller.Village', {
         this.applywaitinginfo(message.applytime);
     },
 
-
-
     receiveQuickApplyingProcess:function(recommend,e){
         var me=this;
         try {
@@ -135,13 +133,63 @@ Ext.define('PatientApp.controller.Village', {
 
 
     },
+
     askforDoctor:function(btn){
         var list=btn.up('list');
         var store=list.getStore();
         var me =this;
 
 
-        if(store.getCount()>0){
+        var overlay = Ext.Viewport.add({
+            xtype: 'panel',
+            // We give it a left and top property to make it floating by default
+            left: 0,
+            top: 0,
+
+            // Make it modal so you can click the mask to hide the overlay
+            modal: true,
+            hideOnMaskTap: true,
+
+            // Make it hidden by default
+            hidden: true,
+
+            // Set the width and height of the panel
+            width: 210,
+            height: 140,
+
+            // Here we specify the #id of the element we created in `index.html`
+            //contentEl: 'content',
+
+            // Style the content and make it scrollable
+            styleHtmlContent: true,
+            scrollable: true,
+
+            // Insert a title docked at the top with a title
+            items: [
+
+                {
+                    xtype   : 'toolbar',
+                    docked  : 'bottom',
+                    layout  : {
+                        pack  : 'center'
+                    },
+                    items:[
+                        {
+                            xtype:'button',
+                            ui:'confirm',
+                            handler:function(btn){
+                                overlay.hide();
+                            },
+                            text:'确定'
+                        }
+                    ]
+                }
+            ]
+        });
+        overlay.showBy();
+
+
+        /*if(store.getCount()>0){
             var doctorids=[];
             store.data.each(function(item){
                doctorids.push(item.get('_id'));
@@ -170,7 +218,7 @@ Ext.define('PatientApp.controller.Village', {
 
         }else{
             Ext.Msg.alert('警告', '范围内无医生可急救', Ext.emptyFn);
-        }
+        }*/
 
     },
     initVillageList:function(){
