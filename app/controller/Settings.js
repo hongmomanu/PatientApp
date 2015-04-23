@@ -182,6 +182,8 @@ Ext.define('PatientApp.controller.Settings', {
 
     viewactived: function (view, item) {
 
+        this.makeUserinfo();
+
         //alert(111);
         /*var pic_view=this.getDoctorCodepicSmallView();
         console.log(pic_view);*/
@@ -196,7 +198,7 @@ Ext.define('PatientApp.controller.Settings', {
     initSetting:function(){
 
         this.makecode(64,64,'patientCodepicSmall');
-        this.makeUserinfo()
+        this.makeUserinfo();
 
     },
 

@@ -42,3 +42,9 @@
 }
 .x-tab .x-button-icon.picture:before,.x-button .x-button-icon.picture:before{position:absolute;top:0;right:0;bottom:0;left:0;text-align:center;font-family:"pictos";content:"P"}
 .x-tab .x-button-icon.voice:before,.x-button .x-button-icon.voice:before{position:absolute;top:0;right:0;bottom:0;left:0;text-align:center;font-family:"pictos";content:"m"}
+
+.x-tab .x-button-icon.doctors:before,.x-button .x-button-icon.doctors:before{position:absolute;top:0;right:0;bottom:0;left:0;text-align:center;font-family:"pictos";content:"U"}
+.x-tab .x-button-icon.patients:before,.x-button .x-button-icon.patients:before{position:absolute;top:0;right:0;bottom:0;left:0;text-align:center;font-family:"pictos";content:"k"}
+
+.x-tab .x-button-icon.users:before,.x-button .x-button-icon.users:before{position:absolute;top:0;right:0;bottom:0;left:0;text-align:center;font-family:"pictos";content:"g"}
+.x-tab .x-button-icon.quick:before,.x-button .x-button-icon.quick:before{position:absolute;top:0;right:0;bottom:0;left:0;text-align:center;font-family:"pictos";content:"Y"}

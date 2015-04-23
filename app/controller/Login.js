@@ -60,6 +60,7 @@ Ext.define('PatientApp.controller.Login', {
         this.makeLocationListener();
         this.pauseListener();
         this.resumeListener();
+        this.backbuttonListener();
         this.initNotificationClick(e);
 
     },
@@ -157,6 +158,17 @@ Ext.define('PatientApp.controller.Login', {
         }
 
     },
+    backbuttonListener:function(){
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        function onBackKeyDown() {
+            navigator.Backbutton.goHome(function() {
+                //console.log('success')
+            }, function() {
+                //console.log('fail')
+            });
+        }
+
+    },
 
 
     makeLocationListener:function(){
@@ -166,7 +178,7 @@ Ext.define('PatientApp.controller.Login', {
              element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
              'Longitude: ' + position.coords.longitude     + '<br />' +
              '<hr />'      + element.innerHTML;*/
-            //Ext.Msg.show('location suc',position.coords.latitude);
+            //Ext.Msg.alert('location suc',position.coords.latitude);
 
             localStorage.lat=position.coords.latitude;
             localStorage.lon=position.coords.longitude;
@@ -180,9 +192,9 @@ Ext.define('PatientApp.controller.Login', {
             localStorage.lat=30.0;
             localStorage.lon=120.0;
         }
-        // Options: throw an error if no update is received every 30 seconds.
+        // Options: throw an error if no update is received every 5 seconds.
         //
-        var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+        var watchID = navigator.geolocation.watchPosition(onSuccess, onError, {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true});
 
     },
     doPatientLogin:function(btn){

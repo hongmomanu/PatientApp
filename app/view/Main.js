@@ -12,7 +12,7 @@ Ext.define('PatientApp.view.Main', {
         items: [
             {
                 title: '患友圈',
-                iconCls: 'action',
+                iconCls: 'users',
 
                 styleHtmlContent: true,
                 scrollable: false,
@@ -39,7 +39,7 @@ Ext.define('PatientApp.view.Main', {
             },
             {
                 title: '我的医生',
-                iconCls: 'action',
+                iconCls: 'doctors',
 
                 styleHtmlContent: true,
                 scrollable: false,
@@ -67,7 +67,7 @@ Ext.define('PatientApp.view.Main', {
             },
             {
                 title: '社区急救',
-                iconCls: 'action',
+                iconCls: 'quick',
                 styleHtmlContent: true,
                 scrollable: false,
                 layout: 'fit',
