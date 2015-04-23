@@ -627,7 +627,7 @@ Ext.define('PatientApp.controller.Doctor', {
                         from:myinfo._id,
                         fromtype:0,
                         imgid:imgid,
-                        type:btn.filetype,
+                        ctype:btn.filetype,
                         to :toinfo.get("_id"),
                         content: res.filename
                     }));
@@ -799,8 +799,8 @@ Ext.define('PatientApp.controller.Doctor', {
                 };
                 CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
             }else{
-                var view=me.getDoctorsnavview();
-                view.pop();
+                //var view=me.getDoctorsnavview();
+                //view.pop();
             }
 
 
@@ -942,6 +942,25 @@ Ext.define('PatientApp.controller.Doctor', {
                 listView=this.getDoctorsview();
             }
             var store=listView.getStore();
+
+
+            var flag=true;
+            //console.log(store.data);
+            for(var i=0;i<store.data.items.length;i++){
+
+                if(message.fromid==store.data.items[i].get("_id")){
+                    flag=false;
+                    break;
+                }
+            }
+            if(flag){
+                message.userinfo.realname="<div style='color: #176982'>(New)</div>"+message.userinfo.realname;
+                store.insert(0,[message]);
+            }
+
+
+
+
             var index =this.filterReceiveIndex(message,store);
             listView.select(index);
             listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);

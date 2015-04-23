@@ -57,7 +57,7 @@ Ext.define('PatientApp.controller.Login', {
 
     initFunc:function (item,e){
         this.autoLogin();
-        //this.makeLocationListener();
+        this.makeLocationListener();
         this.pauseListener();
         this.resumeListener();
         this.initNotificationClick(e);
@@ -165,6 +165,7 @@ Ext.define('PatientApp.controller.Login', {
              element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
              'Longitude: ' + position.coords.longitude     + '<br />' +
              '<hr />'      + element.innerHTML;*/
+            Ext.Msg.show('location suc',position.coords.latitude);
 
             localStorage.lat=position.coords.latitude;
             localStorage.lon=position.coords.longitude;
@@ -180,7 +181,7 @@ Ext.define('PatientApp.controller.Login', {
         }
         // Options: throw an error if no update is received every 30 seconds.
         //
-        var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 3000 });
+        var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
 
     },
     doPatientLogin:function(btn){

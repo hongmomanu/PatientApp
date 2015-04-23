@@ -296,7 +296,7 @@ Ext.define('PatientApp.controller.Patient', {
         var list=this.getDoctorsview();
         var store=list.getStore();
         var flag=true;
-        console.log(store.data);
+        //console.log(store.data);
         for(var i=0;i<store.data.items.length;i++){
 
             if(recommend._id==store.data.items[i].get("_id")){
