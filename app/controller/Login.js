@@ -72,6 +72,7 @@ Ext.define('PatientApp.controller.Login', {
 
             var doctorController=this.getApplication().getController('Doctor');
             var villageController=this.getApplication().getController('Village');
+            var patientController=this.getApplication().getController('Patient');
             cordova.plugins.notification.local.on("click", function (notification) {
 
                 var data=JSON.parse(notification.data);
@@ -82,7 +83,7 @@ Ext.define('PatientApp.controller.Login', {
                 }else if(type=='quickapplying'){
                     villageController.applywaitinginfoShow(message,e)
                 }else if(type=='quickaccept'){
-                    villageController.receiveQuickAcceptShow(message,e)
+                    patientController.receiveQuickAcceptShow(message,e)
                 }
                 else if(type=='recommendconfirm'){
 
@@ -97,7 +98,7 @@ Ext.define('PatientApp.controller.Login', {
 
             });
 
-            cordova.plugins.notification.local.on('trigger', function (notification) {
+           /* cordova.plugins.notification.local.on('trigger', function (notification) {
 
                 //Ext.Msg.alert('clicked event', '22222');
                 //Ext.Msg.alert('clicked event', JSON.stringify(notification.data));
@@ -114,7 +115,7 @@ Ext.define('PatientApp.controller.Login', {
                 }
                 //doctorController.receiveMessageShow, doctorController) (notification.data,e))
                 //Ext.Msg.alert('clicked eventrr', 'is clicked');
-            });
+            });*/
 
             //Ext.Msg.alert('clicked event1', 'is clicked');
 
@@ -165,7 +166,7 @@ Ext.define('PatientApp.controller.Login', {
              element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
              'Longitude: ' + position.coords.longitude     + '<br />' +
              '<hr />'      + element.innerHTML;*/
-            Ext.Msg.show('location suc',position.coords.latitude);
+            //Ext.Msg.show('location suc',position.coords.latitude);
 
             localStorage.lat=position.coords.latitude;
             localStorage.lon=position.coords.longitude;

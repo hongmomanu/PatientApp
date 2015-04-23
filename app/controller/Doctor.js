@@ -578,7 +578,7 @@ Ext.define('PatientApp.controller.Doctor', {
         var task = Ext.create('Ext.util.DelayedTask', function() {
             scroller.scrollToEnd(true);
         });
-        task.delay(50);
+        task.delay(500);
 
     },
     sendMessage:function(btn){

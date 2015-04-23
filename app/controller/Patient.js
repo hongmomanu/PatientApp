@@ -290,7 +290,7 @@ Ext.define('PatientApp.controller.Patient', {
     },
 
     receiveQuickAcceptShow:function(recommend,e){
-
+       //Ext.Msg.alert("sss","sss");
         var mainView=this.getMainview();
         mainView.setActiveItem(1);
         var list=this.getDoctorsview();

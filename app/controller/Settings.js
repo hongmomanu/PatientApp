@@ -69,10 +69,13 @@ Ext.define('PatientApp.controller.Settings', {
         cordova.plugins.barcodeScanner.scan(
             function (result) {
                 var url=result.text.split('?');
-                var params=Ext.urlDecode(url[1]);
-                var type=params.type;
-                var realname=params.realname;
-                var userid=params.userid;
+                var urlparams=Ext.urlDecode(url[1]);
+
+                var type=urlparams.type;
+                var realname=urlparams.realname;
+                var userid=urlparams.userid;
+
+
 
                 if(type=='doctor'){
 
@@ -81,6 +84,7 @@ Ext.define('PatientApp.controller.Settings', {
                         var res=JSON.parse(response.responseText);
                         if(res.success){
                             Ext.Msg.alert('成功', '添加医生:'+realname+'成功', function(){
+                                //Ext.Msg.alert('22',JSON.stringify(params));
                                 var doctorCotroller=me.getApplication().getController('Doctor');
                                 var mainView = doctorCotroller.getMainview();
                                 mainView.setActiveItem(1);
