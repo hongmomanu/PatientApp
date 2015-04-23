@@ -188,9 +188,8 @@ Ext.define('PatientApp.controller.Login', {
         //
         function onError(error) {
 
-            Ext.Msg.alert('警告', error.message, Ext.emptyFn);
-            localStorage.lat=30.0;
-            localStorage.lon=120.0;
+            if(!localStorage.lat)localStorage.lat=30.0111;
+            if(!localStorage.lon)localStorage.lon=120.0111;
         }
         // Options: throw an error if no update is received every 5 seconds.
         //

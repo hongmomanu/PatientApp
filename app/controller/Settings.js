@@ -237,7 +237,7 @@ Ext.define('PatientApp.controller.Settings', {
         cont.html('');
         cont.qrcode({
             text	: Globle_Variable.serverurl+'download/patient.apk?type=patient&userid='+Globle_Variable.user._id
-            +'&realname='+Globle_Variable.user.realname,
+            +'&realname='+encodeURI(Globle_Variable.user.realname),
             width		: width,
             height		: height
         });
