@@ -58,10 +58,23 @@ Ext.define('PatientApp.controller.Login', {
     initFunc:function (item,e){
         this.autoLogin();
         this.makeLocationListener();
+        this.makeBackGroundListener();
         this.pauseListener();
         this.resumeListener();
         this.backbuttonListener();
         this.initNotificationClick(e);
+
+    },
+
+    makeBackGroundListener:function(){
+        document.addEventListener('deviceready', function () {
+            // cordova.plugins.backgroundMode is now available
+
+            cordova.plugins.backgroundMode.setDefaults({ text:'e医通正在运行'});
+            // Enable background mode
+            cordova.plugins.backgroundMode.enable();
+
+        }, false);
 
     },
     initNotificationClick:function(e){
