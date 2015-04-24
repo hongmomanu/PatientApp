@@ -16,7 +16,7 @@ Ext.define('PatientApp.view.login.Login', {
 
 
         //scrollable: false,
-        //scrollable: 'vertical',
+        scrollable: 'vertical',
         style: {
             'padding': '1px'
         },
@@ -32,6 +32,7 @@ Ext.define('PatientApp.view.login.Login', {
                     {
                         xtype: 'container',
                         layout: 'fit',
+                        //scrollable:true,
                         items:[
                             {
                                 xtype: 'fieldset',
@@ -49,6 +50,9 @@ Ext.define('PatientApp.view.login.Login', {
                                         placeHolder: '请输入用户名',
                                         required: true,
                                         clearIcon: true,
+
+
+
                                         labelAlign: 'left'
                                     },
                                     {

@@ -57,13 +57,38 @@ Ext.define('PatientApp.controller.Patient', {
             patientssview: '#patientsnavigationview #patientlist',
             patientmessagelistview:'patientmessagelist',
             doctorsview: '#doctorsnavigationview #doctorlist',
+
             mainview:'main',
             sendmessagebtn: '#patientsnavigationview #sendmessage',
             messagecontent: '#patientsnavigationview #messagecontent',
             patientsnavview:'main #patientsnavigationview'
         }
     },
+    doImgCLick:function(item){
 
+        var doctorController=this.getApplication().getController('Doctor');
+
+        (Ext.bind(doctorController.doImgCLick, this) (item));
+    },
+    voicetouchbegin:function(item){
+        var doctorController=this.getApplication().getController('Doctor');
+
+        (Ext.bind(doctorController.voicetouchbegin, this) (item));
+    },
+    voicetouchend:function(item){
+        var doctorController=this.getApplication().getController('Doctor');
+
+
+        (Ext.bind(doctorController.voicetouchend, this) (item));
+    },
+
+    sendMessageControler:function(btn){
+        //this.sendMessage(btn);
+        var doctorController=this.getApplication().getController('Doctor');
+        (Ext.bind(doctorController.sendMessage, doctorController) (btn));
+
+
+    },
 
     sendMessage:function(btn){
 

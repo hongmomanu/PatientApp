@@ -44,6 +44,7 @@ Ext.define('PatientApp.controller.Doctor', {
                 touchend:'voicetouchend',
                 touchstart:'voicetouchbegin'
             },
+
             doctorsview: {
                 itemtap: 'onDoctorSelect',
                 itemtaphold:'onDoctorHold',
@@ -55,6 +56,9 @@ Ext.define('PatientApp.controller.Doctor', {
             ,
             choosepicbtn:{
                 tap:'doImgCLick'
+            },
+            choosepicbtnp:{
+                tap:'doImgCLick'
             }
 
         },
@@ -64,6 +68,7 @@ Ext.define('PatientApp.controller.Doctor', {
             doctormessagelistview:'doctormessagelist',
             messagecontent: '#doctorsnavigationview #messagecontent',
             choosepicbtn: '#doctorsnavigationview #choosepic',
+            choosepicbtnp: '#patientsnavigationview #choosepic',
             sendmessagebtn: '#doctorsnavigationview #sendmessage',
             patientsview: '#patientsnavigationview #patientlist',
             doctorsnavview:'main #doctorsnavigationview'
@@ -206,7 +211,9 @@ Ext.define('PatientApp.controller.Doctor', {
 
     doImgCLick: function (item) {
         var list=item.up('list');
+
         var btn=list.down('#sendmessage');
+        var istopatient=item.istopatient;
         testobj=btn;
         var me = this;
         var actionSheet = Ext.create('Ext.ActionSheet', {
@@ -245,6 +252,7 @@ Ext.define('PatientApp.controller.Doctor', {
             actionSheet.hide();
             //var imgpanel = me.getImgpanel();
             //alert(1);
+            console.log(istopatient);
             Ext.device.Camera.capture({
                 source: type,
                 destination: 'file',
@@ -256,7 +264,14 @@ Ext.define('PatientApp.controller.Doctor', {
                     btn.filetype='image';
                     btn.fileurl=imgdata;
 
-                    me.sendMessageControler(btn);
+                    if(istopatient){
+                        Ext.Msg.alert("22","22");
+                        //me.sendMessage(btn);
+                    }else{
+                        Ext.Msg.alert("11","11");
+                        //me.sendMessageControler(btn);
+                    }
+
 
                 }
             });
@@ -878,6 +893,8 @@ Ext.define('PatientApp.controller.Doctor', {
             }else if(message.type=='voice'){
                 message.message='<audio  src="'+Globle_Variable.serverurl+'files/'+message.content+'" controls>';
             }
+            //console.log(1111111111);
+            //console.log(message);
             this.receiveMessageNotification(message,e);
         }
         //listView.select(1);
@@ -913,7 +930,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
         }catch (err){
-            console.log(message) ;
+            console.log("33333333333333") ;
            me.receiveMessageShow(message,e);
 
         } finally{
@@ -930,7 +947,6 @@ Ext.define('PatientApp.controller.Doctor', {
             var listView=null;
             var messagestore=null;
 
-
             if(message.fromtype==0){
 
                 mainView.setActiveItem(0);
@@ -943,12 +959,11 @@ Ext.define('PatientApp.controller.Doctor', {
             }
             var store=listView.getStore();
 
-
             var flag=true;
             //console.log(store.data);
             for(var i=0;i<store.data.items.length;i++){
-
-                if(message.fromid==store.data.items[i].get("_id")){
+                var fromid=message.fromtype==1?store.data.items[i].get('_id'):store.data.items[i].get('patientinfo')._id
+                if(message.fromid==fromid){
                     flag=false;
                     break;
                 }
@@ -960,8 +975,8 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
 
-
             var index =this.filterReceiveIndex(message,store);
+
             listView.select(index);
             listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);
 
@@ -974,7 +989,7 @@ Ext.define('PatientApp.controller.Doctor', {
             var patientController=this.getApplication().getController('Patient');
 
             if(message.fromtype==0){
-                messagestore=patientController.messageView[message.fromid].getStore()
+                messagestore=patientController.messageView[message.fromid].getStore();
             }else{
                 //Ext.Msg.alert('clicked event',JSON.stringify(message));
                 messagestore=doctorController.messageView[message.fromid].getStore();

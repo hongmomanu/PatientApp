@@ -15,6 +15,7 @@ Ext.application({
 
     requires: [
         'Ext.MessageBox',
+        'Ext.MessageBox',
         'Ext.util.DelayedTask'
     ],
 

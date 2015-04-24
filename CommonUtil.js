@@ -3,6 +3,7 @@
 Ext.define('CommonUtil', {
     statics: {
         /*为Ext.Viewport添加一个消息提示组件*/
+        loadmask:null,
         addMessage: function () {
             Ext.Viewport.setMasked({
                 xtype: 'loadmask',
@@ -58,7 +59,12 @@ Ext.define('CommonUtil', {
                 timeout: 5000,//default 5000 milliseconds
                 params: params,
                 success: sucFun,
-                failure: failFunc
+                failure: failFunc/*,
+                callback:function(){
+                    //Ext.Msg.alert('1');
+                    //me.loadmask.hide();
+                    //Ext.Msg.alert('hide');
+                }*/
             });
 
         },
