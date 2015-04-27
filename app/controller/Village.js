@@ -83,7 +83,7 @@ Ext.define('PatientApp.controller.Village', {
             }else{
                 var m=Math.floor(t/1000/60%60);
                 var s=Math.floor(t/1000%60);
-                applytimelabel.setHtml('<div style="color:lightblue">急救应答时间剩余:'+m + "分 "+s + "秒"+'</div>');
+                applytimelabel.setHtml('<div style="color:lightblue">时间:'+m + "分 "+s + "秒"+'</div>');
                 applytimelabel.show();
             }
 
