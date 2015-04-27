@@ -44,12 +44,18 @@ Ext.define('PatientApp.controller.Patient', {
                     me.setScroller(scroller);
 
                     //me.getMessage().setValue(Ext.create('Chat.ux.LoremIpsum').getSentence());
-                }
+                },
+                touchend:'voicetouchend',
+                touchstart:'voicetouchbegin'
+
             },
             patientssview: {
                 itemtap: 'onPatientSelect',
                 itemtaphold:'onPatientHold',
                 viewshow:'listShow'
+            },
+            choosepicbtn:{
+                tap:'doImgCLick'
             }
 
         },
@@ -57,6 +63,8 @@ Ext.define('PatientApp.controller.Patient', {
             patientssview: '#patientsnavigationview #patientlist',
             patientmessagelistview:'patientmessagelist',
             doctorsview: '#doctorsnavigationview #doctorlist',
+
+            choosepicbtn: '#patientsnavigationview #choosepic',
 
             mainview:'main',
             sendmessagebtn: '#patientsnavigationview #sendmessage',
@@ -66,37 +74,189 @@ Ext.define('PatientApp.controller.Patient', {
     },
     doImgCLick:function(item){
 
-        var doctorController=this.getApplication().getController('Doctor');
+        var list=item.up('list');
+        var btn=list.down('#sendmessage');
+        testobj=btn;
+        var me = this;
+        var actionSheet = Ext.create('Ext.ActionSheet', {
+            items: [
+                {
+                    text: '相机拍照',
+                    handler: function () {
+                        //alert(1);
 
-        (Ext.bind(doctorController.doImgCLick, this) (item));
+                        imagfunc('camera');
+                    }
+                    //ui  : 'decline'
+                },
+                {
+                    text: '图片库',
+                    handler: function () {
+                        //alert(2);
+                        imagfunc('library');
+                    }
+                },
+                {
+                    text: '取消',
+                    handler: function () {
+
+                        actionSheet.hide();
+                    },
+                    ui: 'decline'
+                }
+            ]
+        });
+
+        Ext.Viewport.add(actionSheet);
+        actionSheet.show();
+
+        var imagfunc = function (type) {
+            actionSheet.hide();
+            //var imgpanel = me.getImgpanel();
+            //alert(1);
+            Ext.device.Camera.capture({
+                source: type,
+                destination: 'file',
+                success: function (imgdata) {
+
+                    //var srcdata="data:image/png;base64,"+imgdata;
+                    //me.getMessagecontent().setValue('<img height="200" width="200" src="'+imgdata+'">')  ;
+                    btn.isfile=true;
+                    btn.filetype='image';
+                    btn.fileurl=imgdata;
+
+                    me.sendMessage(btn);
+
+                }
+            });
+        };
     },
     voicetouchbegin:function(item){
-        var doctorController=this.getApplication().getController('Doctor');
+        if(!this.voiceoverlay){
+            this.voiceoverlay = Ext.Viewport.add({
+                xtype: 'panel',
 
-        (Ext.bind(doctorController.voicetouchbegin, this) (item));
+                // We give it a left and top property to make it floating by default
+                /*left: 0,
+                 top: 0,*/
+                centered:true,
+
+                // Make it modal so you can click the mask to hide the overlay
+                modal: true,
+                hideOnMaskTap: true,
+
+                // Make it hidden by default
+                hidden: true,
+
+                // Set the width and height of the panel
+                width: 200,
+                height: 140,
+
+                // Here we specify the #id of the element we created in `index.html`
+                contentEl: 'content',
+
+                // Style the content and make it scrollable
+                styleHtmlContent: true,
+                scrollable: true,
+
+                // Insert a title docked at the top with a title
+                items: [
+                    {
+                        //docked: 'top',
+                        xtype: 'panel',
+                        html:'<div id="voicerecord">正在录音,松开发送...</div>',
+                        title: 'Overlay Title'
+                    }
+                ]
+            });
+
+        }
+
+        this.voiceoverlay.show();
+        this.makerecording();
+
+
+
     },
     voicetouchend:function(item){
-        var doctorController=this.getApplication().getController('Doctor');
+        var me=this;
+        this.voiceoverlay.hide();
+
+        //Ext.Msg.alert('end', me.voicerecordsrc, Ext.emptyFn);
+        this.mediaRec.stopRecord();
+        me.mediaRec.release();
+
+        //me.getMessagecontent().setValue('<audio  src="'+me.voicerecordsrc+'" controls>')  ;
+
+        var btn=item.down('#sendmessage');
+
+        btn.isfile=true;
+        btn.filetype='voice';
+        btn.fileurl=me.voicerecordsrc;
+
+        me.sendMessageControler(btn);
 
 
-        (Ext.bind(doctorController.voicetouchend, this) (item));
+
+
+
     },
 
-    sendMessageControler:function(btn){
-        //this.sendMessage(btn);
-        var doctorController=this.getApplication().getController('Doctor');
-        (Ext.bind(doctorController.sendMessage, doctorController) (btn));
+
+
+    makerecording:function(){
+        var me=this;
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,gotFS , function(){});
+        function gotFS(fileSystem) {
+
+            fileSystem.root.getFile("blank.mp3", {create: true, exclusive: false}, gotFileEntry,  function(){
+
+            });
+
+            function gotFileEntry(fileEntry) {
+
+                me.voicefileentry=fileEntry;
+                me.voicerecordsrc=fileEntry.toInternalURL();
+                //Ext.Msg.alert("filepath",src);
+
+                me.mediaRec = new Media(me.voicerecordsrc,
+                    // success callback
+                    function() {
+                        //Ext.Msg.alert("success","recordAudio():Audio Success");
+                    },
+
+                    // error callback
+                    function(err) {
+                        //console.log("recordAudio():Audio Error: "+ err.code);
+                        Ext.Msg.alert("success","recordAudio():Audio Success"+ err.code);
+                    });
+
+                // Record audio
+                me.mediaRec.startRecord();
+
+                setTimeout(function() {
+
+
+                }, 3000);
+
+
+
+            }
+        }
+
 
 
     },
+
+
 
     sendMessage:function(btn){
 
 
-
+        var me=this;
         var content=Ext.String.trim(this.getMessagecontent().getValue());
 
-        if(content&&content!=''){
+        if((content&&content!='')||btn.isfile){
             var listview=btn.up('list');
             var myinfo= listview.mydata;
 
@@ -104,7 +264,8 @@ Ext.define('PatientApp.controller.Patient', {
             var imgid='chatstatusimg'+(new Date()).getTime();
             var message=Ext.apply({message:content}, myinfo);
             //console.log(imgid);
-            listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
+            if(!btn.isfile)listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
+            //listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
 
             var doctorController=this.getApplication().getController('Doctor');
             (Ext.bind(doctorController.scrollMsgList, this) ());
@@ -124,14 +285,76 @@ Ext.define('PatientApp.controller.Patient', {
             var mainController=this.getApplication().getController('Main');
 
             var socket=mainController.socket;
-            socket.send(JSON.stringify({
+
+            if(btn.isfile){
+
+                var win = function (r) {
+                    //Ext.Msg.alert('seccess',r.response);
+                    var res=JSON.parse(r.response);
+                    var messagestr="";
+                    if(btn.filetype=='image'){
+                        messagestr='<img height="200" width="200" src="'+Globle_Variable.serverurl+'files/'+res.filename+'">';
+                    }else if(btn.filetype=='voice'){
+                        messagestr='<audio  src="'+Globle_Variable.serverurl+'files/'+res.filename+'" controls>';
+                    }
+                    message.message=messagestr;
+                    listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
+
+                    (Ext.bind(doctorController.scrollMsgList, me) ());
+
+                    socket.send(JSON.stringify({
+                        type:"doctorchat",
+                        from:myinfo._id,
+                        fromtype:0,
+                        imgid:imgid,
+                        ctype:btn.filetype,
+                        to :toinfo.get("patientinfo")._id,
+                        content: res.filename
+                    }));
+
+                    me.voicefileentry.remove(function(){},function(){});
+
+                }
+
+                var fail = function (error) {
+                    me.voicefileentry.remove(function(){},function(){});
+                    //Ext.Msg.alert('error',"An error has occurred: Code = " + error.code);
+
+                }
+
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                options.fileName = btn.fileurl.substr(btn.fileurl.lastIndexOf('/') + 1);
+
+                var ft = new FileTransfer();
+                //Ext.Msg.alert('seccess',Globle_Variable.serverurl+'common/uploadfile');
+                ft.upload(btn.fileurl, encodeURI(Globle_Variable.serverurl+'common/uploadfile'), win, fail, options);
+
+                btn.isfile=false;
+
+
+            }else{
+                socket.send(JSON.stringify({
+                    type:"doctorchat",
+                    from:myinfo._id,
+                    fromtype:0,
+                    imgid:imgid,
+                    to :toinfo.get("patientinfo")._id,
+                    content: content
+                }));
+
+            }
+
+
+
+            /*socket.send(JSON.stringify({
                 type:"doctorchat",
                 from:myinfo._id,
                 fromtype:0,
                 imgid:imgid,
                 to :toinfo.get("patientinfo")._id,
                 content: content
-            }));
+            }));*/
 
 
 

@@ -181,26 +181,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
 
-/*
 
-        var win = function (r) {
-            Ext.Msg.alert('seccess',r.response);
-            //me.voicefileentry.remove(function(){},function(){});
-        }
-
-        var fail = function (error) {
-            Ext.Msg.alert('error',"An error has occurred: Code = " + error.code);
-            //me.voicefileentry.remove(function(){},function(){});
-
-        }
-
-        var options = new FileUploadOptions();
-        options.fileKey = "file";
-        options.fileName = me.voicerecordsrc.substr(me.voicerecordsrc.lastIndexOf('/') + 1);
-        options.mimeType = "audio/mp3";
-        var ft = new FileTransfer();
-        ft.upload(me.voicerecordsrc, encodeURI(Globle_Variable.serverurl+'common/uploadfile'), win, fail, options);
-*/
 
     },
 
