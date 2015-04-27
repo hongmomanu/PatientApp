@@ -44,7 +44,6 @@ Ext.define('PatientApp.controller.Doctor', {
                 touchend:'voicetouchend',
                 touchstart:'voicetouchbegin'
             },
-
             doctorsview: {
                 itemtap: 'onDoctorSelect',
                 itemtaphold:'onDoctorHold',
@@ -56,9 +55,6 @@ Ext.define('PatientApp.controller.Doctor', {
             ,
             choosepicbtn:{
                 tap:'doImgCLick'
-            },
-            choosepicbtnp:{
-                tap:'doImgCLick'
             }
 
         },
@@ -68,7 +64,6 @@ Ext.define('PatientApp.controller.Doctor', {
             doctormessagelistview:'doctormessagelist',
             messagecontent: '#doctorsnavigationview #messagecontent',
             choosepicbtn: '#doctorsnavigationview #choosepic',
-            choosepicbtnp: '#patientsnavigationview #choosepic',
             sendmessagebtn: '#doctorsnavigationview #sendmessage',
             patientsview: '#patientsnavigationview #patientlist',
             doctorsnavview:'main #doctorsnavigationview'
@@ -211,9 +206,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
     doImgCLick: function (item) {
         var list=item.up('list');
-
         var btn=list.down('#sendmessage');
-        var istopatient=item.istopatient;
         testobj=btn;
         var me = this;
         var actionSheet = Ext.create('Ext.ActionSheet', {
@@ -252,7 +245,6 @@ Ext.define('PatientApp.controller.Doctor', {
             actionSheet.hide();
             //var imgpanel = me.getImgpanel();
             //alert(1);
-            console.log(istopatient);
             Ext.device.Camera.capture({
                 source: type,
                 destination: 'file',
@@ -264,14 +256,7 @@ Ext.define('PatientApp.controller.Doctor', {
                     btn.filetype='image';
                     btn.fileurl=imgdata;
 
-                    if(istopatient){
-                        Ext.Msg.alert("22","22");
-                        //me.sendMessage(btn);
-                    }else{
-                        Ext.Msg.alert("11","11");
-                        //me.sendMessageControler(btn);
-                    }
-
+                    me.sendMessageControler(btn);
 
                 }
             });

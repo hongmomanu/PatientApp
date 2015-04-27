@@ -71,8 +71,8 @@ Ext.define('PatientApp.controller.Login', {
             // cordova.plugins.backgroundMode is now available
 
             cordova.plugins.backgroundMode.setDefaults({
-                text:'e医通正在运行',
-                ticker:'e医通正在后台运行',
+                text:'e医通',
+                ticker:'e医通患者端正在后台运行',
                 title:'e医通患者端'
             });
 

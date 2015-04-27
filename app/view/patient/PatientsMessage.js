@@ -40,6 +40,7 @@ Ext.define('PatientApp.view.patient.PatientsMessage', {
                 {
                     xtype:'button',
                     iconCls:'voice',
+                    hidden:true,
                     listeners: {
                         element: 'element',
                         touchstart : function() {
@@ -201,7 +202,7 @@ Ext.define('PatientApp.view.patient.PatientsMessage', {
                 {
                     xtype:'button',
                     iconCls:'picture',
-                    istopatient:true,
+                    hidden:true,
                     itemId:'choosepic'
                 },
 
