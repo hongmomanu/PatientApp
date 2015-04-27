@@ -40,7 +40,7 @@ Ext.define('PatientApp.view.patient.PatientsMessage', {
                 {
                     xtype:'button',
                     iconCls:'voice',
-                    hidden:true,
+                    hidden:false,
                     listeners: {
                         element: 'element',
                         touchstart : function() {
@@ -49,152 +49,12 @@ Ext.define('PatientApp.view.patient.PatientsMessage', {
                             var list=this.up('list');
                             list.fireEvent('touchstart', list);
 
-
-                            /*window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,gotFS , function(){
-
-                             });
-                             function gotFS(fileSystem) {
-                             fileSystem.root.getFile("blank.wav", {create: true, exclusive: false}, gotFileEntry,  function(){
-
-                             });
-
-                             function gotFileEntry(fileEntry) {
-
-                             var src=fileEntry.toInternalURL();
-                             //Ext.Msg.alert("filepath",src);
-
-                             var mediaRec = new Media(src,
-                             // success callback
-                             function() {
-
-                             //Ext.Msg.alert("success","recordAudio():Audio Success");
-
-
-
-
-
-                             },
-
-                             // error callback
-                             function(err) {
-                             //console.log("recordAudio():Audio Error: "+ err.code);
-                             Ext.Msg.alert("success","recordAudio():Audio Success"+ err.code);
-                             });
-
-                             // Record audio
-                             mediaRec.startRecord();
-
-                             setTimeout(function() {
-                             Ext.Msg.alert('end', src, Ext.emptyFn);
-                             mediaRec.stopRecord();
-
-
-                             var win = function (r) {
-                             Ext.Msg.alert('seccess',r.response);
-                             }
-
-                             var fail = function (error) {
-                             Ext.Msg.alert('error',"An error has occurred: Code = " + error.code);
-
-                             }
-
-                             var options = new FileUploadOptions();
-                             options.fileKey = "file";
-                             options.fileName = src.substr(src.lastIndexOf('/') + 1);
-                             options.mimeType = "audio/wav";
-
-
-                             var ft = new FileTransfer();
-                             //Ext.Msg.alert('seccess',Globle_Variable.serverurl+'common/uploadfile');
-                             ft.upload(src, encodeURI(Globle_Variable.serverurl+'common/uploadfile'), win, fail, options);
-
-
-
-
-                             }, 3000);
-
-
-
-                             }
-                             }*/
-
-                            /*window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
-                             //Ext.Msg.alert("got the file", dir)
-                             dir.getFile("myrecording.wav", {create:true}, function(file) {
-
-                             var src=file.toInternalURL();
-                             //var src=file.toURL();
-                             me.mediaRec = new Media(src,
-                             // success callback
-                             function() {
-
-                             //Ext.Msg.alert("success","recordAudio():Audio Success");
-
-
-
-
-
-                             },
-
-                             // error callback
-                             function(err) {
-                             //console.log("recordAudio():Audio Error: "+ err.code);
-                             Ext.Msg.alert("success","recordAudio():Audio Success"+ err.code);
-                             });
-
-                             // Record audio
-                             me.mediaRec.startRecord();
-
-                             setTimeout(function() {
-                             Ext.Msg.alert('end', src, Ext.emptyFn);
-                             me.mediaRec.stopRecord();
-
-
-                             var win = function (r) {
-                             Ext.Msg.alert('seccess',r.response);
-                             }
-
-                             var fail = function (error) {
-                             Ext.Msg.alert('error',"An error has occurred: Code = " + error.code);
-
-                             }
-
-                             var options = new FileUploadOptions();
-                             options.fileKey = "file";
-                             options.fileName = src.substr(src.lastIndexOf('/') + 1);
-                             options.mimeType = "audio/wav";
-
-
-                             var ft = new FileTransfer();
-                             //Ext.Msg.alert('seccess',Globle_Variable.serverurl+'common/uploadfile');
-                             ft.upload(src, encodeURI(Globle_Variable.serverurl+'common/uploadfile'), win, fail, options);
-
-
-
-
-                             }, 10000);
-
-
-
-                             //Ext.Msg.alert("got the file", file.toURL())
-                             //console.log("got the file", file);
-
-
-
-
-                             });
-                             });*/
-
-
-
-
                         },
                         touchend : function() {
 
                             var list=this.up('list');
                             list.fireEvent('touchend', list);
-                            //this.mediaRec.stopRecord();
-                            //Ext.Msg.alert('end', 'finished', Ext.emptyFn);
+
                         }
 
                     }
@@ -202,7 +62,7 @@ Ext.define('PatientApp.view.patient.PatientsMessage', {
                 {
                     xtype:'button',
                     iconCls:'picture',
-                    hidden:true,
+                    hidden:false,
                     itemId:'choosepic'
                 },
 

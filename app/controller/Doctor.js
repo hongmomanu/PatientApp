@@ -926,11 +926,13 @@ Ext.define('PatientApp.controller.Doctor', {
             var store=listView.getStore();
 
             var flag=true;
-            //console.log(store.data);
+            console.log(store.data);
+            var index=0;
             for(var i=0;i<store.data.items.length;i++){
                 var fromid=message.fromtype==1?store.data.items[i].get('_id'):store.data.items[i].get('patientinfo')._id
                 if(message.fromid==fromid){
                     flag=false;
+                    index=i;
                     break;
                 }
             }
@@ -941,7 +943,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
 
-            var index =this.filterReceiveIndex(message,store);
+            //var index =this.filterReceiveIndex(message,store);
 
             listView.select(index);
             listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);

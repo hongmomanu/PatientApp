@@ -76,7 +76,7 @@ Ext.define('PatientApp.controller.Patient', {
 
         var list=item.up('list');
         var btn=list.down('#sendmessage');
-        testobj=btn;
+        //testobj=btn;
         var me = this;
         var actionSheet = Ext.create('Ext.ActionSheet', {
             items: [
@@ -164,7 +164,7 @@ Ext.define('PatientApp.controller.Patient', {
                     {
                         //docked: 'top',
                         xtype: 'panel',
-                        html:'<div id="voicerecord">正在录音,松开发送...</div>',
+                        html:'<div id="voicerecordtopatient">正在录音,松开发送...</div>',
                         title: 'Overlay Title'
                     }
                 ]
@@ -194,7 +194,7 @@ Ext.define('PatientApp.controller.Patient', {
         btn.filetype='voice';
         btn.fileurl=me.voicerecordsrc;
 
-        me.sendMessageControler(btn);
+        me.sendMessage(btn);
 
 
 
