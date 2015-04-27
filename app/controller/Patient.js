@@ -32,7 +32,7 @@ Ext.define('PatientApp.controller.Patient', {
                 tap:'sendMessage'
             },
             'patientmessagelistview': {
-                initialize: function (list) {
+                /*initialize: function (list) {
                     var me = this,
                         scroller = list.getScrollable().getScroller();
 
@@ -44,7 +44,8 @@ Ext.define('PatientApp.controller.Patient', {
                     me.setScroller(scroller);
 
                     //me.getMessage().setValue(Ext.create('Chat.ux.LoremIpsum').getSentence());
-                },
+                },*/
+
                 touchend:'voicetouchend',
                 touchstart:'voicetouchbegin'
 
@@ -254,7 +255,9 @@ Ext.define('PatientApp.controller.Patient', {
 
 
         var me=this;
-        var content=Ext.String.trim(this.getMessagecontent().getValue());
+        var message=btn.up('list').down('#messagecontent');
+        var content = Ext.String.trim(message.getValue());
+        //var content=Ext.String.trim(this.getMessagecontent().getValue());
 
         if((content&&content!='')||btn.isfile){
             var listview=btn.up('list');
@@ -268,7 +271,7 @@ Ext.define('PatientApp.controller.Patient', {
             //listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
 
             var doctorController=this.getApplication().getController('Doctor');
-            (Ext.bind(doctorController.scrollMsgList, this) ());
+            //(Ext.bind(doctorController.scrollMsgList, this) ());
 
 
             /*var d = new Ext.util.DelayedTask(function(){
@@ -300,7 +303,7 @@ Ext.define('PatientApp.controller.Patient', {
                     message.message=messagestr;
                     listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
 
-                    (Ext.bind(doctorController.scrollMsgList, me) ());
+                    //(Ext.bind(doctorController.scrollMsgList, me) ());
 
                     socket.send(JSON.stringify({
                         type:"doctorchat",

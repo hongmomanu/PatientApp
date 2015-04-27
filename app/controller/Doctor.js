@@ -28,7 +28,8 @@ Ext.define('PatientApp.controller.Doctor', {
                 push: 'onMainPush'
             },
             'doctormessagelistview': {
-                initialize: function (list) {
+
+                /*initialize: function (list) {
                     var me = this,
                         scroller = list.getScrollable().getScroller();
 
@@ -40,7 +41,7 @@ Ext.define('PatientApp.controller.Doctor', {
                     me.setScroller(scroller);
 
                     //me.getMessage().setValue(Ext.create('Chat.ux.LoremIpsum').getSentence());
-                },
+                },*/
                 touchend:'voicetouchend',
                 touchstart:'voicetouchbegin'
             },
@@ -564,7 +565,9 @@ Ext.define('PatientApp.controller.Doctor', {
     },
     sendMessage:function(btn){
         var me=this;
-        var content=Ext.String.trim(this.getMessagecontent().getValue());
+        //var content=Ext.String.trim(this.getMessagecontent().getValue());
+        var message=btn.up('list').down('#messagecontent');
+        var content = Ext.String.trim(message.getValue());
 
         if((content&&content!='')||btn.isfile){
             var listview=btn.up('list');
@@ -576,7 +579,7 @@ Ext.define('PatientApp.controller.Doctor', {
             //console.log(imgid);
             if(!btn.isfile)listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
 
-            this.scrollMsgList();
+            //this.scrollMsgList();
 
             var mainController=this.getApplication().getController('Main');
 
@@ -601,7 +604,7 @@ Ext.define('PatientApp.controller.Doctor', {
                     message.message=messagestr;
                     listview.getStore().add(Ext.apply({local: true,imgid:imgid}, message));
 
-                    me.scrollMsgList();
+                    //me.scrollMsgList();
 
                     socket.send(JSON.stringify({
                         type:"doctorchat",
@@ -964,11 +967,11 @@ Ext.define('PatientApp.controller.Doctor', {
             }
             //Ext.Msg.alert('store added', 'is clicked');
             messagestore.add(Ext.apply({local: false}, message));
-            if(message.fromtype==0){
+            /*if(message.fromtype==0){
                 (Ext.bind(doctorController.scrollMsgList, patientController) ());
             }else{
                 doctorController.scrollMsgList();
-            }
+            }*/
 
         }
     },

@@ -4,7 +4,19 @@ Ext.define('PatientApp.view.doctor.DoctorsMessage', {
     initialize : function() {
         var me = this;
         me.setStore(Ext.create('PatientApp.store.doctor.DoctorMessages'));
+        var scroller = this.getScrollable().getScroller();
+        scroller.on('refresh', this.scrollToBottom, this);
         me.callParent(arguments);
+    },
+    scrollToBottom: function() {
+        //alert(11);
+        var scroller = this.getScrollable().getScroller();
+
+        var task = Ext.create('Ext.util.DelayedTask', function() {
+            scroller.scrollToEnd(true);
+        });
+        task.delay(500);
+        //scroller.scrollToEnd(true);
     },
 
     config: {
