@@ -542,6 +542,7 @@ Ext.define('PatientApp.controller.Doctor', {
     showDoctosView:function(message){
         var mainView=this.getMainview();
         mainView.setActiveItem(1);
+
         var listView=this.getDoctorsview();
         var store=listView.getStore();
         var index =this.filterReceiveIndex(message,store);
@@ -836,6 +837,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
         if (!list.lastTapHold || ( new Date()-list.lastTapHold  > 1000)) {
             console.log(record);
+
             if (!this.messageView[record.get('_id')]){
                 this.messageView[record.get('_id')] =Ext.create('PatientApp.view.doctor.DoctorsMessage');
 
@@ -846,7 +848,13 @@ Ext.define('PatientApp.controller.Doctor', {
             selectview.setTitle(record.get('userinfo').realname);
             selectview.data=record;
             selectview.mydata=Globle_Variable.user;
+
+            console.log("this.getDoctorsnavview().getItems()");
+            console.log(this.getDoctorsnavview().getItems());
+            testobj=this.getDoctorsnavview();
+
             this.getDoctorsnavview().push(selectview);
+
 
         }
 
@@ -915,8 +923,25 @@ Ext.define('PatientApp.controller.Doctor', {
 
     },
 
+    messageshowfinal:function(message){
+        var messagestore=null;
+        var doctorController=this.getApplication().getController('Doctor');
+        var patientController=this.getApplication().getController('Patient');
+
+        if(message.fromtype==0){
+            messagestore=patientController.messageView[message.fromid].getStore();
+        }else{
+            //Ext.Msg.alert('clicked event',JSON.stringify(message));
+            messagestore=doctorController.messageView[message.fromid].getStore();
+        }
+        //Ext.Msg.alert('store added', 'is clicked');
+        messagestore.add(Ext.apply({local: false}, message));
+
+    },
     receiveMessageShow:function(message,e){
+        var me=this;
         try{
+
             var mainView=this.getMainview();
             var listView=null;
             var messagestore=null;
@@ -934,7 +959,7 @@ Ext.define('PatientApp.controller.Doctor', {
             var store=listView.getStore();
 
             var flag=true;
-            console.log(store.data);
+            //console.log(store.data);
             var index=0;
             for(var i=0;i<store.data.items.length;i++){
                 var fromid=message.fromtype==1?store.data.items[i].get('_id'):store.data.items[i].get('patientinfo')._id
@@ -952,31 +977,37 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
             //var index =this.filterReceiveIndex(message,store);
-
-            listView.select(index);
-            listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);
+            var nav =listView.getParent();
 
 
+
+            if(nav.getItems().length==3&&message.fromid!=(message.fromtype==1?nav.getActiveItem().data.get('_id'):nav.getActiveItem().data.get('patientinfo')._id)){
+                nav.pop();
+                setTimeout(function(){
+                    try{
+                        listView.select(index);
+                        listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);
+
+                    }catch(err){
+
+                    }finally{
+
+                        me.messageshowfinal(message);
+                    }
+
+                },500);
+            }
+            else{
+                listView.select(index);
+                listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);
+
+            }
+            //alert(1);
 
         }catch(err) {
 
         }finally{
-            var doctorController=this.getApplication().getController('Doctor');
-            var patientController=this.getApplication().getController('Patient');
-
-            if(message.fromtype==0){
-                messagestore=patientController.messageView[message.fromid].getStore();
-            }else{
-                //Ext.Msg.alert('clicked event',JSON.stringify(message));
-                messagestore=doctorController.messageView[message.fromid].getStore();
-            }
-            //Ext.Msg.alert('store added', 'is clicked');
-            messagestore.add(Ext.apply({local: false}, message));
-            /*if(message.fromtype==0){
-                (Ext.bind(doctorController.scrollMsgList, patientController) ());
-            }else{
-                doctorController.scrollMsgList();
-            }*/
+            this.messageshowfinal(message);
 
         }
     },
