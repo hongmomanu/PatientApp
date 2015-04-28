@@ -665,7 +665,8 @@ Ext.define('PatientApp.controller.Doctor', {
         try {
             //Ext.Msg.alert('test', cordova.plugins.notification.local.schedule , Ext.emptyFn);
             cordova.plugins.notification.local.schedule({
-                id: recommend._id,
+                //id: recommend._id,
+                id:me.messageid,
                 title: "新患者",
                 text:  patientinfo.realname ,
 
@@ -675,7 +676,7 @@ Ext.define('PatientApp.controller.Doctor', {
                 //icon: "http://icons.com/?cal_id=1",
                 data: {data: recommend,type:'recommendconfirm'}
             });
-
+            me.messageid++;
             /*cordova.plugins.notification.local.on("click", function (notification) {
 
              me.receiveQuickApplyShow(notification.data.data, e);
@@ -717,7 +718,8 @@ Ext.define('PatientApp.controller.Doctor', {
 
             //Ext.Msg.alert('test', cordova.plugins.notification.local.schedule , Ext.emptyFn);
             cordova.plugins.notification.local.schedule({
-                id: recommend._id ,
+                //id: recommend._id ,
+                id:me.messageid,
                 title: recommend.rectype==1?("医生:"+recommend.frominfo.userinfo.realname+"推荐的"):
                     ("患者:"+recommend.frominfo.realname+"推荐的"),
                 text: "新医生:"+recommend.doctorinfo.userinfo.realname,
@@ -727,7 +729,7 @@ Ext.define('PatientApp.controller.Doctor', {
                 //icon: "http://icons.com/?cal_id=1",
                 data: { data:recommend,type:'recommend'}
             });
-
+            me.messageid++;
             /*cordova.plugins.notification.local.on("click", function (notification) {
 
                 me.receiveRecommendShow(recommend,e);
@@ -868,6 +870,7 @@ Ext.define('PatientApp.controller.Doctor', {
         }
         //listView.select(1);
     },
+    messageid:0,
     receiveMessageNotification:function(message,e){
 
         var me=this;
@@ -878,10 +881,11 @@ Ext.define('PatientApp.controller.Doctor', {
 
             }else{
 
-                (function(message){
+                (function(message,cid){
 
                     cordova.plugins.notification.local.schedule({
-                        id: message._id,
+                        //id: message._id,
+                        id: cid,
                         title: (message.fromtype==0?'病友 ':'医生 ')+ message.userinfo.realname+' 来消息啦!' ,
                         text: message.message,
                         //firstAt: monday_9_am,
@@ -892,7 +896,8 @@ Ext.define('PatientApp.controller.Doctor', {
                     });
 
 
-                } )(message)  ;
+                } )(message,me.messageid)  ;
+                me.messageid++;
 
             }
 

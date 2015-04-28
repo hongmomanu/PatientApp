@@ -104,10 +104,11 @@ Ext.define('PatientApp.controller.Village', {
     receiveQuickApplyingProcess:function(recommend,e){
         var me=this;
         try {
-
+            var doctorController=me.getApplication().getController('Doctor');
             //Ext.Msg.alert('test', cordova.plugins.notification.local.schedule , Ext.emptyFn);
             cordova.plugins.notification.local.schedule({
-                id: recommend._id ,
+                //id: recommend._id ,
+                id:doctorController.messageid,
                 title: "急救申请消息",
                 text: "时间:"+recommend.applytime,
                 //firstAt: monday_9_am,
@@ -116,6 +117,7 @@ Ext.define('PatientApp.controller.Village', {
                 //icon: "http://icons.com/?cal_id=1",
                 data: { data:recommend,type:'quickapplying' }
             });
+            doctorController.messageid++;
 
             /*cordova.plugins.notification.local.on("click", function (notification) {
 

@@ -567,7 +567,11 @@ Ext.define('PatientApp.controller.Patient', {
 
 
         }finally{
-            doctorController.sendMessageControler(doctorController.getSendmessagebtn());
+            var view=doctorController.messageView[recommend._id];
+            var btn=view.down('#sendmessage');
+
+            //doctorController.sendMessageControler(doctorController.getSendmessagebtn());
+            doctorController.sendMessageControler(btn);
         }
 
     }
