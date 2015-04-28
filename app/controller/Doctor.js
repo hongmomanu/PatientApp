@@ -970,8 +970,12 @@ Ext.define('PatientApp.controller.Doctor', {
                 }
             }
             if(flag){
-                message.userinfo.realname="<div style='color: #176982'>(New)</div>"+message.userinfo.realname;
-                store.insert(0,[message]);
+                //message.userinfo.realname="<div style='color: #176982'>(New)</div>"+message.userinfo.realname;
+                //store.insert(0,[message]);
+                index=store.data.items.length;
+                message._id=message.fromid;
+                store.add(message);
+
             }
 
 
