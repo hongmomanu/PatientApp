@@ -258,6 +258,14 @@ Ext.define('PatientApp.controller.Village', {
                                 //form.getValues();
                             },
                             text:'确定'
+                        },{
+                            xtype:'button',
+                            ui:'decline',
+                            handler:function(btn){
+                                overlay.hide();
+                            },
+                            text:'取消'
+
                         }
                     ]
                 }
