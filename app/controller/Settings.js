@@ -171,6 +171,12 @@ Ext.define('PatientApp.controller.Settings', {
 
     },
 
+    showUnionpayView:function(btn){
+
+
+
+    },
+
 
     makePushFire:function(){
         //res.data 86400000

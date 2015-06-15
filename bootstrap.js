@@ -656,11 +656,35 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
+  "PatientApp.controller.Doctor": [],
   "PatientApp.controller.Login": [],
+  "PatientApp.controller.Main": [],
+  "PatientApp.controller.Patient": [],
+  "PatientApp.controller.Register": [],
+  "PatientApp.controller.Settings": [],
+  "PatientApp.controller.Village": [],
+  "PatientApp.model.doctor.Doctor": [],
+  "PatientApp.model.doctor.DoctorMessage": [],
   "PatientApp.model.login.Login": [],
+  "PatientApp.model.patient.Patient": [],
+  "PatientApp.model.patient.PatientMessage": [],
+  "PatientApp.model.register.Register": [],
+  "PatientApp.model.village.VillageDoctor": [],
+  "PatientApp.store.doctor.DoctorMessages": [],
+  "PatientApp.store.doctor.Doctors": [],
+  "PatientApp.store.patient.PatientMessages": [],
+  "PatientApp.store.patient.Patients": [],
+  "PatientApp.store.village.VillageDoctors": [],
   "PatientApp.view.Main": [],
+  "PatientApp.view.doctor.Doctors": [],
+  "PatientApp.view.doctor.DoctorsMessage": [],
   "PatientApp.view.login.Login": [],
-  "PatientApp.view.register.Register": []
+  "PatientApp.view.patient.Patients": [],
+  "PatientApp.view.patient.PatientsMessage": [],
+  "PatientApp.view.register.Register": [],
+  "PatientApp.view.setting.AddMoneyForm": [],
+  "PatientApp.view.setting.Settings": [],
+  "PatientApp.view.village.Village": []
 });
 
 Ext.ClassManager.addNameAliasMappings({
@@ -1381,18 +1405,57 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
+  "PatientApp.controller.Doctor": [],
   "PatientApp.controller.Login": [],
+  "PatientApp.controller.Main": [],
+  "PatientApp.controller.Patient": [],
+  "PatientApp.controller.Register": [],
+  "PatientApp.controller.Settings": [],
+  "PatientApp.controller.Village": [],
+  "PatientApp.model.doctor.Doctor": [],
+  "PatientApp.model.doctor.DoctorMessage": [],
   "PatientApp.model.login.Login": [],
+  "PatientApp.model.patient.Patient": [],
+  "PatientApp.model.patient.PatientMessage": [],
+  "PatientApp.model.register.Register": [],
+  "PatientApp.model.village.VillageDoctor": [],
+  "PatientApp.store.doctor.DoctorMessages": [],
+  "PatientApp.store.doctor.Doctors": [],
+  "PatientApp.store.patient.PatientMessages": [],
+  "PatientApp.store.patient.Patients": [],
+  "PatientApp.store.village.VillageDoctors": [],
   "PatientApp.view.Main": [
     "widget.main"
+  ],
+  "PatientApp.view.doctor.Doctors": [
+    "widget.doctors"
+  ],
+  "PatientApp.view.doctor.DoctorsMessage": [
+    "widget.doctormessagelist"
   ],
   "PatientApp.view.login.Login": [
     "widget.LoginPanel",
     "widget.loginform"
   ],
+  "PatientApp.view.patient.Patients": [
+    "widget.patients"
+  ],
+  "PatientApp.view.patient.PatientsMessage": [
+    "widget.patientmessagelist"
+  ],
   "PatientApp.view.register.Register": [
     "widget.RegisterPanel",
     "widget.registerform"
+  ],
+  "PatientApp.view.setting.AddMoneyForm": [
+    "widget.AddMoneyForm",
+    "widget.addmoneyform"
+  ],
+  "PatientApp.view.setting.Settings": [
+    "widget.settingsform"
+  ],
+  "PatientApp.view.village.Village": [
+    "widget.village"
   ]
 });
 
