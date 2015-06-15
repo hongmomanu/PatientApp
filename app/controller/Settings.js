@@ -92,7 +92,9 @@ Ext.define('PatientApp.controller.Settings', {
                             });
 
                         }else{
+
                             Ext.Msg.alert('提示', res.message, Ext.emptyFn);
+
                         }
                         //view.pop();
 
