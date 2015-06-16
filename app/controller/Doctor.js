@@ -341,17 +341,16 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
     alipay:function(btn){
-        //Ext.Msg.alert('提示');
-        var listview=btn.up('list');
+
+        var settingsController=this.getApplication().getController('Settings');
+        settingsController.showAddMoneyForm(btn);
+       /* var listview=btn.up('list');
         var myinfo= listview.mydata;
-        //Ext.Msg.alert('提示2');
 
         var toinfo=listview.data;
         var me=this;
 
         Ext.Msg.alert('提示', '这里模拟支付宝支付接口', function(){
-                //makemoneybyuserid
-
             var successFunc = function (response, action) {
                 var res=JSON.parse(response.responseText);
                 if(res.success){
@@ -383,7 +382,7 @@ Ext.define('PatientApp.controller.Doctor', {
             };
             CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
 
-        });
+        });*/
 
     },
     applyforpay:function(myinfo,toinfo,btn){
