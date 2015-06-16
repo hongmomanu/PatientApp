@@ -186,6 +186,11 @@ Ext.define('PatientApp.controller.Settings', {
         navView.push(view);
         var framedom=Ext.get('payframe').dom;
         framedom.src=Globle_Variable.serverurl+"pay/unionpay?money="+money*1000;
+        Ext.Viewport.mask({ xtype: 'loadmask',
+            message: "加载数据中..." });
+        setTimeout(function(){
+            Ext.Viewport.unmask();
+        },2000);
 
 
 
