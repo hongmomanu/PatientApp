@@ -7,6 +7,7 @@ Ext.define('PatientApp.controller.Settings', {
     config: {
         views: [
             'setting.Settings',
+            'setting.AliPayView',
             'setting.AddMoneyForm'
         ],
         models: [
@@ -30,7 +31,8 @@ Ext.define('PatientApp.controller.Settings', {
               'tap':'logoutFunc'
             },
             addmoneyconfirmbtn:{
-                'tap':'showAlipayView'
+                //'tap':'showAlipayView'
+                'tap':'showUnionpayView'
             },
             patientCodepicSmallView:{
                 'tap':'showBigCode'
@@ -174,6 +176,16 @@ Ext.define('PatientApp.controller.Settings', {
     },
 
     showUnionpayView:function(btn){
+
+        var form=btn.up('formpanel');
+        var money=form.getValues().money;
+
+        var navView=this.getSettingnavview();
+        var view=Ext.widget('AliPayView');
+        view.money=money;
+        navView.push(view);
+        var framedom=Ext.get('payframe').dom;
+        framedom.src=Globle_Variable.serverurl+"pay/unionpay?money="+money*1000;
 
 
 
