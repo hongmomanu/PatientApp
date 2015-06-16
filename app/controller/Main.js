@@ -88,6 +88,7 @@ Ext.define('PatientApp.controller.Main', {
             var doctorController=me.getApplication().getController('Doctor');
             var villageController=me.getApplication().getController('Village');
             var patientController=me.getApplication().getController('Patient');
+            var settingsController=me.getApplication().getController('Settings');
             if(data.type=='doctorchat'){
                 //聊天咨询
                 console.log("doctorchat");
@@ -126,6 +127,9 @@ Ext.define('PatientApp.controller.Main', {
                 console.log('recommendconfirm');
                 me.hideloadingimg(data.data)
 
+            }else if(data.type=='payfinish'){
+                console.log('payfinish');
+                settingsController.payfinish(data.data);
             }
 
 
