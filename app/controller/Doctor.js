@@ -296,7 +296,7 @@ Ext.define('PatientApp.controller.Doctor', {
         var toinfo=listview.data;
         var me=this;
 
-        Ext.Msg.alert('提示', '这里模拟支付宝退款接口', function(){
+        //Ext.Msg.alert('提示', '这里模拟支付宝退款接口', function(){
             //makemoneybyuserid
 
             var successFunc = function (response, action) {
@@ -333,7 +333,7 @@ Ext.define('PatientApp.controller.Doctor', {
             };
             CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
 
-        });
+        //});
 
 
     },
