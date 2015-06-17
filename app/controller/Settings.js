@@ -31,7 +31,6 @@ Ext.define('PatientApp.controller.Settings', {
               'tap':'logoutFunc'
             },
             addmoneyconfirmbtn:{
-                //'tap':'showAlipayView'
                 'tap':'showUnionpayView'
             },
             patientCodepicSmallView:{
@@ -185,7 +184,6 @@ Ext.define('PatientApp.controller.Settings', {
         //var nav=this.getSettingnavview();
         var nav=this.getMainview().getActiveItem().down('navigationview');
         nav.pop(nav.getInnerItems().length - 1);
-        console.log(data);
         var me=this;
         if(data.success){
             var money=data.amount;
@@ -221,12 +219,13 @@ Ext.define('PatientApp.controller.Settings', {
         var money=form.getValues().money;
         var me=this;
 
-        /*var navView=this.getSettingnavview();
-        var view=Ext.widget('AliPayView');
+       /* var navView=this.getSettingnavview();
+        var view=Ext.widget('alipayView');
         view.money=money;
         navView.push(view);
         var framedom=Ext.get('payframe').dom;
-        framedom.src=Globle_Variable.serverurl+"pay/unionpay?money="+money*100;*/
+        //framedom.src=Globle_Variable.serverurl+"pay/unionpay?money="+money*100;
+        framedom.src="http://192.168.2.100:3002/";*/
 
         /*Ext.Viewport.mask({ xtype: 'loadmask',
             message: "加载数据中..." });
@@ -252,10 +251,10 @@ Ext.define('PatientApp.controller.Settings', {
             // Set the width and height of the panel
             width: '100%',
             height: '100%',
-            masked: {
+            /*masked: {
                 xtype: 'loadmask',
                 message: '加载数据中....'
-            },
+            },*/
             // Here we specify the #id of the element we created in `index.html`
             contentEl: 'content',
 
@@ -268,16 +267,20 @@ Ext.define('PatientApp.controller.Settings', {
                 {
                     //docked: 'top',
                     xtype: 'panel',
-                    html:'<iframe id="payframe" style="height: '+(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"   src="'+Globle_Variable.serverurl+"pay/unionpay?money="+money*100+'&patientid='+Globle_Variable.user._id+'">Your device does not support iframes.</iframe>',
+                    html:'<iframe id="payframe" style="height: '+(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"   src="'+Globle_Variable.serverurl+"pay/unionpay?money="+money*1000+'&patientid='+Globle_Variable.user._id+'">Your device does not support iframes.</iframe>',
                     title: '银联在线支付'
                 }
             ]
         });
         this.overlay.showBy(btn);
 
-        setTimeout(function(){
+        /*setTimeout(function(){
             me.overlay.setMask(false)
-        },2000);
+        },2000);*/
+
+        /*setTimeout(function(){
+            me.overlay.setMask(false)
+        },2000);*/
 
 
 
