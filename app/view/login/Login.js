@@ -49,7 +49,7 @@ Ext.define('PatientApp.view.login.Login', {
                                     {
                                         xtype:'panel',
                                         html:'<div style="height: 250px;text-align: center;vertical-align: middle;">' +
-                                        '<img class="circletag"  src="http://192.168.2.100:3000/files/14297601919596512"/></div>'
+                                        '<img   class="circletag"  src="http://192.168.2.100:3000/files/14297601919596512"/></div>'
 
                                     },
                                     {
