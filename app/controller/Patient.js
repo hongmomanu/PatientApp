@@ -130,7 +130,7 @@ Ext.define('PatientApp.controller.Patient', {
                     xtype: 'panel',
                     html:'<iframe name="chatframe" id="chatframe" style="height: '
                     +(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"  src="'
-                    +videorurl+'?handle='+myinfo.username+'&touser='+toinfo.get("patientinfo").username+'">Your device does not support iframes.</iframe>',
+                    +videorurl+'?handle='+myinfo._id+'&touser='+toinfo.get("patientinfo")._id+'">Your device does not support iframes.</iframe>',
                     title: '聊天'
                 },
                 {
@@ -165,8 +165,8 @@ Ext.define('PatientApp.controller.Patient', {
         socket.send(JSON.stringify({
             type:"videochat",
             from:myinfo._id,
-            fromuser:myinfo.username,
-            touser:toinfo.get("patientinfo").username,
+            fromuser:myinfo._id,
+            touser:toinfo.get("patientinfo")._id,
             to :toinfo.get("patientinfo")._id
         }));
 

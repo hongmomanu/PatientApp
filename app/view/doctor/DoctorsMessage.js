@@ -61,7 +61,11 @@ Ext.define('PatientApp.view.doctor.DoctorsMessage', {
             docked: 'bottom',
             items: [
 
-
+                {
+                    xtype:'button',
+                    itemId:'makevideo',
+                    iconCls:'video'
+                },
                         {
                             xtype:'button',
                             iconCls:'voice',

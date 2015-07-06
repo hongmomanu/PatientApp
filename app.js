@@ -49,6 +49,7 @@ Ext.application({
 
     launch: function() {
         // Destroy the #appLoadingIndicator element
+        Globle_Variable.app=this;
         Ext.fly('appLoadingIndicator').destroy();
 
         Ext.override(Ext.MessageBox, {

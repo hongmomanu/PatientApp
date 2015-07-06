@@ -62,6 +62,16 @@ Ext.define('PatientApp.controller.Main', {
 
 
     },
+    showvideoreject:function(data){
+
+        Ext.Msg.alert("提示","对方已拒绝!",function(){
+
+            var btn=Ext.Viewport.down('#closechatwin');
+            btn._handler();
+
+        });
+
+    },
     showvideochatend:function(data){
 
         var me=this;
@@ -81,10 +91,10 @@ Ext.define('PatientApp.controller.Main', {
         var ischating=data.ischating;
         var touser=data.touser;
         chatframe.autoconnect.hideloading();
+        //chatframe.autoconnect.setparentobject(window);
         if(ischating){
             Ext.Msg.alert("提示","对方忙,请稍后再试!",function(){
                 //
-
                 var patientController=me.getApplication().getController('Patient');
                 Ext.Viewport.remove(me.overlay);
                 Ext.Viewport.remove(patientController.overlay);
@@ -182,6 +192,8 @@ Ext.define('PatientApp.controller.Main', {
 
         setTimeout(function(){
 
+
+
             me.socket.send(JSON.stringify({
                 type:"videochatresult",
                 from:from,
@@ -275,6 +287,10 @@ Ext.define('PatientApp.controller.Main', {
             }else if(data.type=='videochatend'){
                 console.log('videochatend');
                 me.showvideochatend(data.data)
+
+            }else if(data.type=='videoreject'){
+                console.log('videoreject');
+                me.showvideoreject(data.data)
 
             }else if(data.type=='chatsuc'){
                 console.log('recommendconfirm');
