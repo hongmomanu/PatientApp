@@ -192,6 +192,11 @@ Ext.define('PatientApp.controller.Doctor', {
 
     makevideobtn:function(btn){
 
+
+        var me=this;
+        var patientController=this.getApplication().getController('Patient');
+        me.applyfordoctor(btn,Ext.bind(patientController.makevideobtn, me));
+
     },
     doImgCLick: function (item) {
         var list=item.up('list');

@@ -130,7 +130,7 @@ Ext.define('PatientApp.controller.Patient', {
                     xtype: 'panel',
                     html:'<iframe name="chatframe" id="chatframe" style="height: '
                     +(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"  src="'
-                    +videorurl+'?handle='+myinfo._id+'&touser='+toinfo.get("patientinfo")._id+'">Your device does not support iframes.</iframe>',
+                    +videorurl+'?handle='+myinfo._id+'&touser='+(toinfo.get("patientinfo")?toinfo.get("patientinfo")._id:toinfo.get("_id"))+'">Your device does not support iframes.</iframe>',
                     title: '聊天'
                 },
                 {
@@ -166,9 +166,11 @@ Ext.define('PatientApp.controller.Patient', {
             type:"videochat",
             from:myinfo._id,
             fromuser:myinfo._id,
-            touser:toinfo.get("patientinfo")._id,
-            to :toinfo.get("patientinfo")._id
+            touser:toinfo.get("patientinfo")?toinfo.get("patientinfo")._id:toinfo.get("_id"),
+            to :toinfo.get("patientinfo")?toinfo.get("patientinfo")._id:toinfo.get("_id")
         }));
+
+
 
         //alert(1);
 
