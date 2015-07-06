@@ -84,9 +84,13 @@ Ext.define('PatientApp.controller.Patient', {
 
         var toinfo=listview.data;
 
-        console.log(myinfo);
+        //console.log(myinfo);
 
         var videorurl=Globle_Variable.serverurl.replace(/(:\d+)/g,":4450");
+
+        var mainController=this.getApplication().getController('Main');
+
+        var socket=mainController.socket;
 
 
         var me=this;
@@ -126,16 +130,27 @@ Ext.define('PatientApp.controller.Patient', {
                     xtype: 'panel',
                     html:'<iframe name="chatframe" id="chatframe" style="height: '
                     +(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"  src="'
-                    +videorurl+'?handle='+myinfo.username+'">Your device does not support iframes.</iframe>',
+                    +videorurl+'?handle='+myinfo.username+'&touser='+toinfo.get("patientinfo").username+'">Your device does not support iframes.</iframe>',
                     title: '聊天'
                 },
                 {
                     docked: 'bottom',
+                    itemId:'closechatwin',
                     xtype: 'button',
                     handler:function(){
                         //me.overlay.hide();
 
                         Ext.Viewport.remove(me.overlay);
+                        Ext.Viewport.remove(mainController.overlay);
+
+                        socket.send(JSON.stringify({
+                            type:"videochatend",
+                            /*from:from,
+                             fromuser:fromuser,
+                             touser:touser,*/
+                            userid :toinfo.get("patientinfo")._id
+                        }));
+
 
                     },
                     text:'关闭'
@@ -144,9 +159,7 @@ Ext.define('PatientApp.controller.Patient', {
         });
         this.overlay.showBy(item);
 
-        var mainController=this.getApplication().getController('Main');
 
-        var socket=mainController.socket;
 
 
         socket.send(JSON.stringify({

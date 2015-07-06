@@ -62,66 +62,141 @@ Ext.define('PatientApp.controller.Main', {
 
 
     },
+    showvideochatend:function(data){
+
+        var me=this;
+        //console.log("begin showvideochatend");
+        Ext.Msg.alert("提示","对方已经断开连接!",function(){
+            //Ext.Viewport.remove(Ext.get('chatframe'));
+            var patientController=me.getApplication().getController('Patient');
+            Ext.Viewport.remove(me.overlay);
+            Ext.Viewport.remove(patientController.overlay);
+        });
+
+    },
+    showvideochatresult:function(data){
+
+        var me=this;
+        var fromuser=data.fromuser;
+        var ischating=data.ischating;
+        var touser=data.touser;
+        chatframe.autoconnect.hideloading();
+        if(ischating){
+            Ext.Msg.alert("提示","对方忙,请稍后再试!",function(){
+                //
+
+                var patientController=me.getApplication().getController('Patient');
+                Ext.Viewport.remove(me.overlay);
+                Ext.Viewport.remove(patientController.overlay);
+            });
+        }else{
+            //Ext.Msg.alert("333",touser);
+
+            chatframe.autoconnect.makeconnect(touser);
+
+
+        }
+
+
+    },
     showvideosuc:function(data){
 
         var fromuser=data.fromuser;
+        var from=data.from;
+        var to=data.to;
         var touser=data.touser;
 
         var videourl=Globle_Variable.serverurl.replace(/(:\d+)/g,":4450");
-
-
         var me=this;
-        this.overlay = Ext.Viewport.add({
-            xtype: 'panel',
+        var ischating=false;
 
-            // We give it a left and top property to make it floating by default
-            left: 0,
-            top: 0,
-            padding:0,
+        if(Ext.get('chatframe')){
 
-            // Make it modal so you can click the mask to hide the overlay
-            modal: true,
-            hideOnMaskTap: false,
+            ischating=true;
 
-            // Make it hidden by default
-            hidden: true,
+        }else{
 
-            // Set the width and height of the panel
-            width: '100%',
-            height: '100%',
-            /*masked: {
-             xtype: 'loadmask',
-             message: '加载数据中....'
-             },*/
-            // Here we specify the #id of the element we created in `index.html`
-            contentEl: 'content',
+            me.overlay = Ext.Viewport.add({
+                xtype: 'panel',
 
-            // Style the content and make it scrollable
-            styleHtmlContent: true,
-            scrollable: true,
+                // We give it a left and top property to make it floating by default
+                left: 0,
+                top: 0,
+                padding:0,
 
-            // Insert a title docked at the top with a title
-            items: [
-                {
-                    //docked: 'top',
-                    xtype: 'panel',
-                    html:'<iframe name="chatframe" id="chatframe" style="height: '
-                    +(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"  src="'
-                    +videourl+'?handle='+touser+'&from='+fromuser+'">Your device does not support iframes.</iframe>',
-                    title: '聊天'
-                },
-                {
-                    docked: 'bottom',
-                    xtype: 'button',
-                    handler:function(){
-                        Ext.Viewport.remove(me.overlay);
-                        //me.overlay.hide();
+                // Make it modal so you can click the mask to hide the overlay
+                modal: true,
+                hideOnMaskTap: false,
+
+                // Make it hidden by default
+                hidden: true,
+
+                // Set the width and height of the panel
+                width: '100%',
+                height: '100%',
+                /*masked: {
+                 xtype: 'loadmask',
+                 message: '加载数据中....'
+                 },*/
+                // Here we specify the #id of the element we created in `index.html`
+                contentEl: 'content',
+
+                // Style the content and make it scrollable
+                styleHtmlContent: true,
+                scrollable: true,
+
+                // Insert a title docked at the top with a title
+                items: [
+                    {
+                        //docked: 'top',
+                        xtype: 'panel',
+                        html:'<iframe name="chatframe" id="chatframe" style="height: '
+                        +(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"  src="'
+                        +videourl+'?handle='+touser+'">Your device does not support iframes.</iframe>',
+                        title: '聊天'
                     },
-                    text:'关闭'
-                }
-            ]
-        });
-        this.overlay.show();
+
+                    {
+                        docked: 'bottom',
+                        itemId:'closechatwin',
+                        xtype: 'button',
+                        handler:function(){
+                            Ext.Viewport.remove(me.overlay);
+
+                            me.socket.send(JSON.stringify({
+                                type:"videochatend",
+                                /*from:from,
+                                fromuser:fromuser,
+                                touser:touser,*/
+                                userid :from
+                            }));
+
+                            //me.overlay.hide();
+                        },
+                        text:'关闭'
+                    }
+                ]
+            });
+            me.overlay.show();
+        }
+
+        setTimeout(function(){
+
+            me.socket.send(JSON.stringify({
+                type:"videochatresult",
+                from:from,
+                fromuser:fromuser,
+                touser:touser,
+                ischating:ischating,
+                to :to
+            }));
+
+        },2000);
+
+
+
+
+
 
 
 
@@ -192,6 +267,14 @@ Ext.define('PatientApp.controller.Main', {
             else if(data.type=='videosuc'){
                 console.log('videosuc');
                 me.showvideosuc(data.data)
+
+            }else if(data.type=='videochatresult'){
+                console.log('videochatresult');
+                me.showvideochatresult(data.data)
+
+            }else if(data.type=='videochatend'){
+                console.log('videochatend');
+                me.showvideochatend(data.data)
 
             }else if(data.type=='chatsuc'){
                 console.log('recommendconfirm');

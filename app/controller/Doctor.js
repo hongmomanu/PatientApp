@@ -56,6 +56,9 @@ Ext.define('PatientApp.controller.Doctor', {
             ,
             choosepicbtn:{
                 tap:'doImgCLick'
+            },
+            makevideobtn:{
+                tap:'makevideobtn'
             }
 
         },
@@ -66,6 +69,7 @@ Ext.define('PatientApp.controller.Doctor', {
             messagecontent: '#doctorsnavigationview #messagecontent',
             choosepicbtn: '#doctorsnavigationview #choosepic',
             sendmessagebtn: '#doctorsnavigationview #sendmessage',
+            makevideobtn: '#doctorsnavigationview #makevideo',
             patientsview: '#patientsnavigationview #patientlist',
             doctorsnavview:'main #doctorsnavigationview'
         }
@@ -186,6 +190,9 @@ Ext.define('PatientApp.controller.Doctor', {
 
     },
 
+    makevideobtn:function(btn){
+
+    },
     doImgCLick: function (item) {
         var list=item.up('list');
         var btn=list.down('#sendmessage');
