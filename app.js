@@ -15,7 +15,6 @@ Ext.application({
 
     requires: [
         'Ext.MessageBox',
-        'Ext.MessageBox',
         'Ext.util.DelayedTask'
     ],
 
@@ -51,6 +50,24 @@ Ext.application({
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
+
+        Ext.override(Ext.MessageBox, {
+
+            hide:  function () {
+
+                if ( this .activeAnimation && this .activeAnimation._onEnd) {
+
+                    this .activeAnimation._onEnd();
+
+                }
+
+                return this .callParent(arguments);
+
+            }
+
+        });
+
+
 
         // Initialize the main view
         //Ext.Viewport.add(Ext.create('PatientApp.view.Main'));

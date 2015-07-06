@@ -62,6 +62,72 @@ Ext.define('PatientApp.controller.Main', {
 
 
     },
+    showvideosuc:function(data){
+
+        var fromuser=data.fromuser;
+        var touser=data.touser;
+
+        var videourl=Globle_Variable.serverurl.replace(/(:\d+)/g,":4450");
+
+
+        var me=this;
+        this.overlay = Ext.Viewport.add({
+            xtype: 'panel',
+
+            // We give it a left and top property to make it floating by default
+            left: 0,
+            top: 0,
+            padding:0,
+
+            // Make it modal so you can click the mask to hide the overlay
+            modal: true,
+            hideOnMaskTap: false,
+
+            // Make it hidden by default
+            hidden: true,
+
+            // Set the width and height of the panel
+            width: '100%',
+            height: '100%',
+            /*masked: {
+             xtype: 'loadmask',
+             message: '加载数据中....'
+             },*/
+            // Here we specify the #id of the element we created in `index.html`
+            contentEl: 'content',
+
+            // Style the content and make it scrollable
+            styleHtmlContent: true,
+            scrollable: true,
+
+            // Insert a title docked at the top with a title
+            items: [
+                {
+                    //docked: 'top',
+                    xtype: 'panel',
+                    html:'<iframe name="chatframe" id="chatframe" style="height: '
+                    +(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"  src="'
+                    +videourl+'?handle='+touser+'&from='+fromuser+'">Your device does not support iframes.</iframe>',
+                    title: '聊天'
+                },
+                {
+                    docked: 'bottom',
+                    xtype: 'button',
+                    handler:function(){
+                        Ext.Viewport.remove(me.overlay);
+                        //me.overlay.hide();
+                    },
+                    text:'关闭'
+                }
+            ]
+        });
+        this.overlay.show();
+
+
+
+
+
+    },
     hideloadingimg:function(data){
         //console.log(imgid);
         var doctorController=this.getApplication().getController('Doctor');
@@ -123,7 +189,11 @@ Ext.define('PatientApp.controller.Main', {
 
 
             }
-            else if(data.type=='chatsuc'){
+            else if(data.type=='videosuc'){
+                console.log('videosuc');
+                me.showvideosuc(data.data)
+
+            }else if(data.type=='chatsuc'){
                 console.log('recommendconfirm');
                 me.hideloadingimg(data.data)
 

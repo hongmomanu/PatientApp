@@ -180,7 +180,8 @@ Ext.define('PatientApp.controller.Settings', {
     },
 
     payfinish:function(data){
-        this.overlay.hide();
+        //this.overlay.hide();
+        Ext.Viewport.remove(this.overlay);
         //var nav=this.getSettingnavview();
         var nav=this.getMainview().getActiveItem().down('navigationview');
         nav.pop(nav.getInnerItems().length - 1);
@@ -267,7 +268,7 @@ Ext.define('PatientApp.controller.Settings', {
                 {
                     //docked: 'top',
                     xtype: 'panel',
-                    html:'<iframe id="payframe" style="height: '+(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"   src="'+Globle_Variable.serverurl+"pay/unionpay?money="+money*1000+'&patientid='+Globle_Variable.user._id+'">Your device does not support iframes.</iframe>',
+                    html:'<iframe id="payframe" style="height: '+(Ext.getBody().getHeight()-15)+'px;width: 100%;"  width="100%" height="100%"   src="'+Globle_Variable.serverurl+"pay/unionpay?money="+money*100+'&patientid='+Globle_Variable.user._id+'">Your device does not support iframes.</iframe>',
                     title: '银联在线支付'
                 }
             ]
