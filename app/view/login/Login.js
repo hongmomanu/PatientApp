@@ -16,7 +16,7 @@ Ext.define('PatientApp.view.login.Login', {
 
 
         //scrollable: false,
-        scrollable: 'vertical',
+        //scrollable: 'vertical',
         style: {
             'padding': '1px'
         },
@@ -27,7 +27,7 @@ Ext.define('PatientApp.view.login.Login', {
                 xtype:'formpanel',
                 itemId:'loginformcontent',
                 layout: 'fit',
-                scrollable:true,
+                //scrollable:true,
                 items: [
                     {
                         xtype: 'container',
@@ -37,23 +37,31 @@ Ext.define('PatientApp.view.login.Login', {
                             {
                                 xtype: 'fieldset',
                                 centered: true,
+
                                 //title: '医生登录',
                                 instructions: '请填写信息',
                                 defaults: {
-                                    labelWidth: '150px'
+                                    //labelWidth: '350px',
+                                    labelAlign: 'top'
                                 },
                                 items: [
+
+                                    {
+                                        xtype:'panel',
+                                        html:'<div style="height: 250px;text-align: center;vertical-align: middle;">' +
+                                        '<img class="circletag"  src="http://192.168.2.100:3000/files/14297601919596512"/></div>'
+
+                                    },
                                     {
                                         xtype: 'textfield',
+                                        width:300,
                                         name: 'username',
                                         label: '用户名',
                                         placeHolder: '请输入用户名',
                                         required: true,
-                                        clearIcon: true,
+                                        clearIcon: true
 
 
-
-                                        labelAlign: 'left'
                                     },
                                     {
                                         xtype: 'passwordfield',

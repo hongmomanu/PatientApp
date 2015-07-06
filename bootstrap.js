@@ -683,6 +683,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "PatientApp.view.patient.PatientsMessage": [],
   "PatientApp.view.register.Register": [],
   "PatientApp.view.setting.AddMoneyForm": [],
+  "PatientApp.view.setting.AliPayView": [],
   "PatientApp.view.setting.Settings": [],
   "PatientApp.view.village.Village": []
 });
@@ -1450,6 +1451,10 @@ Ext.ClassManager.addNameAliasMappings({
   "PatientApp.view.setting.AddMoneyForm": [
     "widget.AddMoneyForm",
     "widget.addmoneyform"
+  ],
+  "PatientApp.view.setting.AliPayView": [
+    "widget.alipayView",
+    "widget.alipayview"
   ],
   "PatientApp.view.setting.Settings": [
     "widget.settingsform"

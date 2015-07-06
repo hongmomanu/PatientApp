@@ -166,6 +166,7 @@
     "resources": [
         "resources/images",
         "resources/icons",
+        "resources/css",
         "resources/startup"
     ],
 
@@ -190,8 +191,19 @@
 
     "builds": {
 
+        "web": {"default": true},
         "native": { // This can be any build target name you desire (eg myApp, apple, etc)
-            "packager": "phonegap", // phonegap Specify that we are using cordova to package the app
+
+          "packager": "cordova",
+          "cordova" : {
+            "config": {
+              "platforms": "android",
+              "name": "PatientApp",  // app name which appears under the icon on device
+              "id": "com.domain.PatientApp"
+            }
+          }
+
+          /*"packager": "phonegap", // phonegap Specify that we are using cordova to package the app
             "phonegap" : { // configuration for cordova build
                 "config": {
                     "id": "com.domain.PatientApp",  // namespace of application (required)
@@ -199,7 +211,7 @@
                     "remote": false,
                     "platform": "android" // add platform(s) here
                 }
-            }
+            }*/
         }
     },
 

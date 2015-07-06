@@ -148,7 +148,7 @@ Ext.define('PatientApp.controller.Patient', {
                             /*from:from,
                              fromuser:fromuser,
                              touser:touser,*/
-                            userid :toinfo.get("patientinfo")._id
+                            userid :(toinfo.get("patientinfo")?toinfo.get("patientinfo")._id:toinfo.get("_id"))
                         }));
 
 
