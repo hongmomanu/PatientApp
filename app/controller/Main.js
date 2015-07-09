@@ -20,8 +20,8 @@ Ext.define('PatientApp.controller.Main', {
         ],
         control: {
             nav: {
-                initialize: 'initRender',
-                mapinit: 'initMap'
+                initialize: 'initRender'
+
             },
             navigationview: {
                 push: 'onMainPush'

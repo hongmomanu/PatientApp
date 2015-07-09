@@ -22,22 +22,48 @@ Ext.define('PatientApp.view.login.Login', {
         },
 
         items: [
+            /*{
+                xtype: 'panel',
+
+                items:[
+
+                    {
+
+                        xtype: 'image',
+                        widht:30,
+                        height:30,
+                        baseCls  :'circletag',
+                        itemId: 'personpic',
+                        name:'personpic',
+                        //label:'个人照片',
+
+                        src: 'http://192.168.2.100:3000/files/14297601919596512'
+
+                    }
+                ]
+            },*/
             {
                 title: '个人登录',
                 xtype:'formpanel',
                 itemId:'loginformcontent',
                 layout: 'fit',
+                //border:0,
+                fullscreen: true,
                 //scrollable:true,
                 items: [
+
                     {
                         xtype: 'container',
+                        //flex:3,
                         layout: 'fit',
                         //scrollable:true,
                         items:[
+
                             {
                                 xtype: 'fieldset',
-                                centered: true,
 
+                                //centered: true,
+                                //flex:2,
                                 //title: '医生登录',
                                 instructions: '请填写信息',
                                 defaults: {
@@ -46,15 +72,42 @@ Ext.define('PatientApp.view.login.Login', {
                                 },
                                 items: [
 
-                                    {
-                                        xtype:'panel',
-                                        html:'<div style="height: 250px;text-align: center;vertical-align: middle;">' +
-                                        '<img   class="circletag"  src="http://192.168.2.100:3000/files/14297601919596512"/></div>'
 
+                                   /* {
+                                        xtype:'panel',
+
+                                        html:'' +
+                                        '<img   class="circletag"  src="http://192.168.2.100:3000/files/14297601919596512"/>'
+
+                                    },*/
+
+                                    /*{
+                                        xtype:'panel',
+                                        items:[
+
+                                            {
+
+                                                xtype: 'image',
+                                                baseCls  :'circletag',
+                                                itemId: 'personpic',
+                                                name:'personpic',
+                                                //label:'个人照片',
+                                                flex:10,
+                                                src: 'http://192.168.2.100:3000/files/14297601919596512'
+
+                                            }
+                                        ]
+                                    },*/
+
+                                    {
+                                        xtype:'label',
+                                        html:'<div style="text-align: center;vertical-align: middle;padding: 20px;"><div style="margin:0 auto" class="circletagnew"><img width="80px;" height="80px;" src="resources/icons/user.png"></div></div>'
                                     },
+
+
                                     {
                                         xtype: 'textfield',
-                                        width:300,
+                                       // width:300,
                                         name: 'username',
                                         label: '用户名',
                                         placeHolder: '请输入用户名',

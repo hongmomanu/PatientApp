@@ -17,3 +17,6 @@ This folder contains the stores
 # ./form
 
 This folder contains the forms
+
+
+# remove com.knowledgecode.cordova.websocket

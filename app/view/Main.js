@@ -1,20 +1,25 @@
-Ext.define('PatientApp.view.Main', {
+Ext.define('PatientApp.view.Main',
+
+
+
+
+
+    {
     extend: 'Ext.tab.Panel',
     xtype: 'main',
     requires: [
-        'Ext.TitleBar',
-
-        'Ext.Video'
+        'Ext.TitleBar'
     ],
     config: {
         tabBarPosition: 'bottom',
 
         items: [
+
             {
                 title: '患友圈',
                 iconCls: 'users',
 
-                styleHtmlContent: true,
+                //styleHtmlContent: true,
                 scrollable: false,
                 layout: 'fit',
                 items: [
@@ -121,4 +126,7 @@ Ext.define('PatientApp.view.Main', {
             }
         ]
     }
-});
+}
+
+
+);
