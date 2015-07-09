@@ -840,7 +840,7 @@ Ext.define('PatientApp.controller.Doctor', {
         //this.getDoctorsnavview().deselectAll();
     },
     listShow:function(){
-        //this.initPatientList();
+        this.initDoctorList();
         //Ext.Msg.alert('侧额额', 'cess 说', Ext.emptyFn);
     },
     messageView:{},

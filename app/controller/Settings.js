@@ -302,17 +302,11 @@ Ext.define('PatientApp.controller.Settings', {
 
     viewactived: function (view, item) {
 
-        this.makeUserinfo();
+        //this.makeUserinfo();
 
-        //alert(111);
-        /*var pic_view=this.getDoctorCodepicSmallView();
-        console.log(pic_view);*/
-        /*$('#doctorCodepicSmall').html('');
-        $('#doctorCodepicSmall').qrcode({
-            text	: "http://jetienne.com",
-            width		: 64,
-            height		: 64
-        });*/
+        this.initSetting();
+
+
     },
 
     initSetting:function(){

@@ -568,7 +568,7 @@ Ext.define('PatientApp.controller.Patient', {
         this.getPatientssview().deselectAll();
     },
     listShow:function(){
-        //this.initPatientList();
+        this.initPatientList();
     },
     messageView:{},
     onPatientSelect: function (list, index, node, record) {

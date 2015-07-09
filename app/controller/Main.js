@@ -24,28 +24,32 @@ Ext.define('PatientApp.controller.Main', {
                 initialize: 'initRender'
 
             },
-            navigationview: {
-                push: 'onMainPush'
+            mainlistview: {
+                itemtap:'onTitleSelect'
             }
 
         },
         refs: {
             nav: 'main',
-            navigationview: 'main #navigationview'
+            mainlistview:'mainlist'
         }
     },
 
-    onMainPush: function (view, item) {
-        //this.getContacts().deselectAll();
-        /*var editButton = this.getEditButton();
+    onTitleSelect:function(list,index,node,record){
 
-         if (item.xtype == "contact-show") {
-         this.getContacts().deselectAll();
+        //alert(11);
+        if(record.get('type')==0){
+            if(!this.patientView){
+                this.patientView=Ext.create('PatientApp.view.patient.Patients');
+            }
+            this.patientView.setValues(record.get('title'));
+            this.getNav().push(this.patientView);
 
-         this.showEditButton();
-         } else {
-         this.hideEditButton();
-         }*/
+        }
+
+        /**/
+
+
     },
 
     initRender: function () {
