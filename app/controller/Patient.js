@@ -68,12 +68,12 @@ Ext.define('PatientApp.controller.Patient', {
             patientmessagelistview:'patientmessagelist',
             doctorsview: 'main #doctorlist',
 
-            choosepicbtn: 'main #choosepic',
-            makevideobtn: 'main #makevideo',
+            choosepicbtn: 'patientmessagelist #choosepic',
+            makevideobtn: 'patientmessagelist #makevideo',
 
             mainview:'main',
-            sendmessagebtn: 'main #sendmessage',
-            messagecontent: 'main #messagecontent',
+            sendmessagebtn: 'patientmessagelist #sendmessage',
+            messagecontent: 'patientmessagelist #messagecontent',
             patientsnavview:'main #patientsnavigationview'
         }
     },
