@@ -681,9 +681,7 @@ Ext.define('PatientApp.controller.Patient', {
             }
             var doctorController=this.getApplication().getController('Doctor');
             try{
-                console.log(2);
                 doctorController.showDoctosView({fromid:recommend._id});
-                console.log(3);
             }catch (err){
 
 

@@ -863,13 +863,15 @@ Ext.define('PatientApp.controller.Doctor', {
     onDoctorSelect: function (list, index, node, record) {
 
         if (!list.lastTapHold || ( new Date()-list.lastTapHold  > 1000)) {
-            console.log(record);
+            console.log(record.get('_id'));
 
             if (!this.messageView[record.get('_id')]){
                 this.messageView[record.get('_id')] =Ext.create('PatientApp.view.doctor.DoctorsMessage');
 
             }
             var selectview=this.messageView[record.get('_id')];
+
+            console.log(selectview);
             testobj=this;
 
             selectview.setTitle(record.get('userinfo').realname);
@@ -980,7 +982,22 @@ Ext.define('PatientApp.controller.Doctor', {
             var mainlist=mainView.down('mainlist');
 
             console.log(message.fromtype);
+
+
         var mainController=this.getApplication().getController('Main');
+
+        if(mainView.getActiveItem().data&&message.fromid!=(mainView.getActiveItem().data.get('_id')?mainView.getActiveItem().data.get('_id'):mainView.getActiveItem().data.get('patientinfo')._id)){
+
+            mainView.pop(mainView.getInnerItems().length - 1);
+
+            //nav.pop();
+            mainController.selectindex=-1;
+
+        }
+
+
+
+
             if(message.fromtype==0){
 
                 console.log("pa");
@@ -1060,14 +1077,20 @@ Ext.define('PatientApp.controller.Doctor', {
                  listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);*/
 
 
-                if(nav.getInnerItems().length==4&&message.fromid!=(message.fromtype==1?nav.getActiveItem().data.get('_id'):nav.getActiveItem().data.get('patientinfo')._id)){
-                    nav.pop();
+                /*if(nav.getActiveItem().data&&message.fromid!=(nav.getActiveItem().data.get('_id')?nav.getActiveItem().data.get('_id'):nav.getActiveItem().data.get('patientinfo')._id)){
 
-                }
+                    nav.pop(nav.getInnerItems().length - 1);
+
+                    //nav.pop();
+                    mainController.selectindex=-1;
+
+                }*/
 
                 setTimeout(function(){
                     try{
+                        //alert(11);
                         listView.select(index);
+
                         listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);
 
                     }catch(err){
@@ -1092,7 +1115,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
     },
     filterReceiveIndex:function(data,store){
-        alert("filter");
+        //alert("filter");
         console.log(data);
         console.log(store);
         var listdata=store.data.items;
