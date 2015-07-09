@@ -40,9 +40,11 @@ Ext.define('PatientApp.controller.Main', {
         //alert(11);
         if(record.get('type')==0){
             if(!this.patientView){
-                this.patientView=Ext.create('PatientApp.view.patient.Patients');
+                this.patientView=Ext.create('PatientApp.view.patient.Patients',{title:record.get('title')});
             }
-            this.patientView.setValues(record.get('title'));
+
+            testobj=this.patientView;
+            //this.patientView.setTitle(record.get('title'));
             this.getNav().push(this.patientView);
 
         }
