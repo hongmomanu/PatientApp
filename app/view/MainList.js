@@ -14,10 +14,10 @@ Ext.define('PatientApp.view.MainList', {
 
         //indexBar:true,
         data: [
-            { title: '患友圈' ,cls:"fa fa-user fa-2x fa-color-blue"},
-            { title: '我的医生' ,cls:"fa fa-stethoscope fa-2x fa-color-blue"},
-            { title: '社区急救' ,cls:"fa fa-ambulance fa-2x fa-color-blue"},
-            { title: '关于我' ,cls:"fa fa-info-circle fa-2x fa-color-blue"}
+            { title: '患友圈' ,cls:"fa fa-user fa-2x "},
+            { title: '我的医生' ,cls:"fa fa-stethoscope fa-2x "},
+            { title: '社区急救' ,cls:"fa fa-ambulance fa-2x "},
+            { title: '关于我' ,cls:"fa fa-info-circle fa-2x "}
         ],
 
         onItemDisclosure : {//若配置该项，list每一项的右侧都会出现一个小图标。其他功能请查看api
@@ -38,7 +38,7 @@ Ext.define('PatientApp.view.MainList', {
         items: [],
         itemTpl: [
             '<div class="headshot">',
-            '<div></div><i class="{cls}"></i>{title}',
+            '<div style="float: left;text-align: center;width: 50px;"><i class="{cls}"></i></div><div style="float: left;text-align: center;">{title}</div>',
             '</div>'
         ].join('')
     }
