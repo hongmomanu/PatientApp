@@ -63,7 +63,8 @@ Ext.define('PatientApp.controller.Settings', {
 
         //var navView=this.getSettingnavview();
 
-        var navView=this.getMainview().getActiveItem().down('navigationview');
+        /*var navView=this.getMainview().getActiveItem().down('navigationview');*/
+        var navView=this.getMainview();
 
 
         var form=Ext.widget('AddMoneyForm');
@@ -156,7 +157,9 @@ Ext.define('PatientApp.controller.Settings', {
                      var res=JSON.parse(response.responseText);
                      if(res.success){
                          Ext.Msg.alert('充值成功', '总金额:'+res.message, function(){
-                             var navView=me.getSettingnavview();
+                             //var navView=me.getSettingnavview();
+                             var navView=this.getMainview();
+                             
                              navView.pop();
                              me.getMoneyInfo().setValue(res.message);
                          });
@@ -183,7 +186,8 @@ Ext.define('PatientApp.controller.Settings', {
         //this.overlay.hide();
         Ext.Viewport.remove(this.overlay);
         //var nav=this.getSettingnavview();
-        var nav=this.getMainview().getActiveItem().down('navigationview');
+        //var nav=this.getMainview().getActiveItem().down('navigationview');
+        var nav=this.getMainview();
         nav.pop(nav.getInnerItems().length - 1);
         var me=this;
         if(data.success){
@@ -358,7 +362,8 @@ Ext.define('PatientApp.controller.Settings', {
     },
 
     confirmPush:function(btn){
-        var navView=this.getSettingnavview();
+        //var navView=this.getSettingnavview();
+        var navView=this.getMainview();
         var form=btn.up('formpanel');
 
         var values=form.getValues();

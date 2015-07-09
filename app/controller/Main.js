@@ -57,6 +57,12 @@ Ext.define('PatientApp.controller.Main', {
             }
             this.getNav().push(this.villageView);
 
+        }else if(record.get('type')==3){
+            if(!this.settingView){
+                this.settingView=Ext.create('PatientApp.view.setting.Settings',{title:record.get('title')});
+            }
+            this.getNav().push(this.settingView);
+
         }
 
         /**/

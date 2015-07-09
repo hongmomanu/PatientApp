@@ -64,6 +64,7 @@ Ext.define('PatientApp.controller.Patient', {
 
         },
         refs: {
+
             patientssview: 'main #patientlist',
             patientmessagelistview:'patientmessagelist',
             doctorsview: 'main #doctorlist',
