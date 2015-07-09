@@ -551,7 +551,7 @@ Ext.define('PatientApp.controller.Doctor', {
     },
 
     showDoctosView:function(message){
-        var mainView=this.getMainview();
+        /*var mainView=this.getMainview();
         mainView.pop(mainView.getInnerItems().length - 1);
         var mainlist=mainView.down('mainlist');
         mainlist.select(1);
@@ -561,14 +561,14 @@ Ext.define('PatientApp.controller.Doctor', {
             mainlist.fireEvent('itemtap',mainlist,1,mainlist.getActiveItem(),mainlist.getStore().getAt(1));
         }catch(e){
 
-        }finally{
+        }finally{*/
             var listView=this.getDoctorsview();
             var store=listView.getStore();
             var index =this.filterReceiveIndex(message,store);
             listView.select(index);
             listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index));
 
-        }
+        //}
         //mainView.setActiveItem(1);
 
 
@@ -856,7 +856,7 @@ Ext.define('PatientApp.controller.Doctor', {
         //this.getDoctorsnavview().deselectAll();
     },
     listShow:function(){
-        this.initDoctorList();
+        //this.initDoctorList();
         //Ext.Msg.alert('侧额额', 'cess 说', Ext.emptyFn);
     },
     messageView:{},
@@ -879,8 +879,10 @@ Ext.define('PatientApp.controller.Doctor', {
             console.log("this.getMainview().getItems()");
             console.log(this.getMainview().getItems());
             testobj=this.getMainview();
+            console.log("ok");
 
             this.getMainview().push(selectview);
+            console.log(12121)
 
 
         }
@@ -982,9 +984,6 @@ Ext.define('PatientApp.controller.Doctor', {
             if(message.fromtype==0){
 
                 console.log("pa");
-
-
-
 
                 //mainView.setActiveItem(0);
 

@@ -666,6 +666,10 @@ Ext.define('PatientApp.controller.Patient', {
             //console.log(store.data);
             for(var i=0;i<store.data.items.length;i++){
 
+                console.log(i);
+                console.log(store.data.items);
+                console.log(recommend._id);
+
                 if(recommend._id==store.data.items[i].get("_id")){
                     flag=false;
                     break;
@@ -677,8 +681,9 @@ Ext.define('PatientApp.controller.Patient', {
             }
             var doctorController=this.getApplication().getController('Doctor');
             try{
-
+                console.log(2);
                 doctorController.showDoctosView({fromid:recommend._id});
+                console.log(3);
             }catch (err){
 
 
