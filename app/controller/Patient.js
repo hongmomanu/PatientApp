@@ -569,7 +569,7 @@ Ext.define('PatientApp.controller.Patient', {
         this.getPatientssview().deselectAll();
     },
     listShow:function(){
-        this.initPatientList();
+        //this.initPatientList();
     },
     messageView:{},
     onPatientSelect: function (list, index, node, record) {
@@ -646,36 +646,56 @@ Ext.define('PatientApp.controller.Patient', {
     receiveQuickAcceptShow:function(recommend,e){
        //Ext.Msg.alert("sss","sss");
         var mainView=this.getMainview();
-        mainView.setActiveItem(1);
-        var list=this.getDoctorsview();
-        var store=list.getStore();
-        var flag=true;
-        //console.log(store.data);
-        for(var i=0;i<store.data.items.length;i++){
+        mainView.pop(mainView.getInnerItems().length - 1);
+        var mainlist=mainView.down('mainlist');
 
-            if(recommend._id==store.data.items[i].get("_id")){
-                flag=false;
-                break;
-            }
-        }
-        if(flag){
-            recommend.userinfo.sectionname="临时急救---"+recommend.userinfo.sectionname;
-            store.add(recommend);
-        }
-        var doctorController=this.getApplication().getController('Doctor');
+
+        var store=mainlist.getStore();
+        mainlist.select(1);
+
         try{
 
-            doctorController.showDoctosView({fromid:recommend._id});
-        }catch (err){
-
+            mainlist.fireEvent('itemtap',mainlist,1,mainlist.getActiveItem(),store.getAt(1));
+        }catch(e){
 
         }finally{
-            var view=doctorController.messageView[recommend._id];
-            var btn=view.down('#sendmessage');
 
-            //doctorController.sendMessageControler(doctorController.getSendmessagebtn());
-            doctorController.sendMessageControler(btn);
+            var list=this.getDoctorsview();
+            var store=list.getStore();
+            var flag=true;
+            //console.log(store.data);
+            for(var i=0;i<store.data.items.length;i++){
+
+                if(recommend._id==store.data.items[i].get("_id")){
+                    flag=false;
+                    break;
+                }
+            }
+            if(flag){
+                recommend.userinfo.sectionname="临时急救---"+recommend.userinfo.sectionname;
+                store.add(recommend);
+            }
+            var doctorController=this.getApplication().getController('Doctor');
+            try{
+
+                doctorController.showDoctosView({fromid:recommend._id});
+            }catch (err){
+
+
+            }finally{
+                var view=doctorController.messageView[recommend._id];
+                var btn=view.down('#sendmessage');
+
+                //doctorController.sendMessageControler(doctorController.getSendmessagebtn());
+                doctorController.sendMessageControler(btn);
+            }
+
+
         }
+
+
+        //mainView.setActiveItem(1);
+
 
     }
 

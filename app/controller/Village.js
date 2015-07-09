@@ -95,7 +95,12 @@ Ext.define('PatientApp.controller.Village', {
     applywaitinginfoShow:function(message){
 
         var mainView=this.getMainview();
-        mainView.setActiveItem(2);
+
+        mainView.pop(mainView.getInnerItems().length - 1);
+        var mainlist=mainView.down('mainlist');
+        mainlist.select(2);
+
+        //mainView.setActiveItem(2);
         this.applywaitinginfo(message.applytime);
     },
 

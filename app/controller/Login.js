@@ -235,12 +235,12 @@ Ext.define('PatientApp.controller.Login', {
 
                     localStorage.user=JSON.stringify(res.user);
                     Globle_Variable.user=res.user;
-                    /*var patientCotroller=me.getApplication().getController('Patient');
+                    var patientCotroller=me.getApplication().getController('Patient');
                     var doctorCotroller=me.getApplication().getController('Doctor');
                     var settingCotroller=me.getApplication().getController('Settings');
                     patientCotroller.initPatientList();
                     doctorCotroller.initDoctorList();
-                    settingCotroller.initSetting();*/
+                    settingCotroller.initSetting();
 
 
                 }else{

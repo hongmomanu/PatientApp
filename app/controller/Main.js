@@ -35,15 +35,21 @@ Ext.define('PatientApp.controller.Main', {
         }
     },
 
+    selectindex:-1,
+
     onTitleSelect:function(list,index,node,record){
 
         //alert(11);
+        //console.log()
+        this.selectindex=index;
+        testobjs=this;
         if(record.get('type')==0){
             if(!this.patientView){
                 this.patientView=Ext.create('PatientApp.view.patient.Patients',{title:record.get('title')});
             }
 
             this.getNav().push(this.patientView);
+
 
         }else if(record.get('type')==1){
             if(!this.doctorView){

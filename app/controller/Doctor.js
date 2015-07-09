@@ -552,13 +552,26 @@ Ext.define('PatientApp.controller.Doctor', {
 
     showDoctosView:function(message){
         var mainView=this.getMainview();
-        mainView.setActiveItem(1);
+        mainView.pop(mainView.getInnerItems().length - 1);
+        var mainlist=mainView.down('mainlist');
+        mainlist.select(1);
 
-        var listView=this.getDoctorsview();
-        var store=listView.getStore();
-        var index =this.filterReceiveIndex(message,store);
-        listView.select(index);
-        listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index));
+        try{
+
+            mainlist.fireEvent('itemtap',mainlist,1,mainlist.getActiveItem(),mainlist.getStore().getAt(1));
+        }catch(e){
+
+        }finally{
+            var listView=this.getDoctorsview();
+            var store=listView.getStore();
+            var index =this.filterReceiveIndex(message,store);
+            listView.select(index);
+            listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index));
+
+        }
+        //mainView.setActiveItem(1);
+
+
 
     },
 
@@ -708,8 +721,11 @@ Ext.define('PatientApp.controller.Doctor', {
 
     receiverecommendConfirmShow:function(recommend, e){
         var mainView = this.getMainview();
-        mainView.setActiveItem(1);
-       this.initDoctorList();
+        mainView.pop(mainView.getInnerItems().length - 1);
+        var mainlist=mainView.down('mainlist');
+        mainlist.select(1);
+        //mainView.setActiveItem(1);
+       //this.initDoctorList();
     },
 
     receiveRecommendProcess:function(data,e){
@@ -951,54 +967,105 @@ Ext.define('PatientApp.controller.Doctor', {
     },
     receiveMessageShow:function(message,e){
         var me=this;
-        try{
+
 
             var mainView=this.getMainview();
             var listView=null;
+            testobjss=mainView;
             var messagestore=null;
+            //mainView.pop(mainView.getInnerItems().length - 1);
 
+            var mainlist=mainView.down('mainlist');
+
+            console.log(message.fromtype);
+        var mainController=this.getApplication().getController('Main');
             if(message.fromtype==0){
 
-                mainView.setActiveItem(0);
-                listView=this.getPatientsview();
+                console.log("pa");
+
+
+
+
+                //mainView.setActiveItem(0);
+
+
+                mainlist.select(0);
+                try{
+
+                    if(mainController.selectindex!=0||mainView.getInnerItems().length==1)mainlist.fireEvent('itemtap',mainlist,0,mainlist.getActiveItem(),mainlist.getStore().getAt(0));
+                }catch(e){
+
+                }finally{
+                    listView=this.getPatientsview();
+
+                }
+
 
 
             }else{
-                mainView.setActiveItem(1);
-                listView=this.getDoctorsview();
-            }
-            var store=listView.getStore();
+                //mainView.setActiveItem(1);
+                console.log("doc");
+                mainlist.select(1);
+                try{
 
-            var flag=true;
-            //console.log(store.data);
-            var index=0;
-            for(var i=0;i<store.data.items.length;i++){
-                var fromid=message.fromtype==1?store.data.items[i].get('_id'):store.data.items[i].get('patientinfo')._id
-                if(message.fromid==fromid){
-                    flag=false;
-                    index=i;
-                    break;
+                    if(mainController.selectindex!=1||mainView.getInnerItems().length==1) mainlist.fireEvent('itemtap',mainlist,1,mainlist.getActiveItem(),mainlist.getStore().getAt(1));
+                }catch(e){
+
+                }finally{
+                    listView=this.getDoctorsview();
                 }
-            }
-            if(flag){
-                //message.userinfo.realname="<div style='color: #176982'>(New)</div>"+message.userinfo.realname;
-                //store.insert(0,[message]);
-                //index=store.data.items.length;
-                message._id=message.fromid;
-                store.add(message);
-                index =me.filterReceiveIndex(message,store);
 
             }
 
 
 
-            //var index =this.filterReceiveIndex(message,store);
-            var nav =listView.getParent();
 
 
 
-            if(nav.getItems().length==3&&message.fromid!=(message.fromtype==1?nav.getActiveItem().data.get('_id'):nav.getActiveItem().data.get('patientinfo')._id)){
-                nav.pop();
+                var store=listView.getStore();
+
+
+                var flag=true;
+                console.log(store.data);
+                var index=0;
+                for(var i=0;i<store.data.items.length;i++){
+                    var fromid=message.fromtype==1?store.data.items[i].get('_id'):store.data.items[i].get('patientinfo')._id
+                    if(message.fromid==fromid){
+                        flag=false;
+                        index=i;
+                        break;
+                    }
+                }
+
+
+
+                if(flag){
+                    //message.userinfo.realname="<div style='color: #176982'>(New)</div>"+message.userinfo.realname;
+                    //store.insert(0,[message]);
+                    //index=store.data.items.length;
+                    message._id=message.fromid;
+                    store.add(message);
+                    index =me.filterReceiveIndex(message,store);
+
+                }
+
+
+
+
+                //var index =this.filterReceiveIndex(message,store);
+                // var nav =listView.getParent();
+                var nav =mainView;
+
+                //console.log()
+                /*listView.select(index);
+                 listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);*/
+
+
+                if(nav.getInnerItems().length==4&&message.fromid!=(message.fromtype==1?nav.getActiveItem().data.get('_id'):nav.getActiveItem().data.get('patientinfo')._id)){
+                    nav.pop();
+
+                }
+
                 setTimeout(function(){
                     try{
                         listView.select(index);
@@ -1012,22 +1079,23 @@ Ext.define('PatientApp.controller.Doctor', {
                     }
 
                 },500);
-            }
-            else{
-                listView.select(index);
-                listView.fireEvent('itemtap',listView,index,listView.getActiveItem(),store.getAt(index),e);
 
-            }
+
+
+
+
+
+
+
+
             //alert(1);
 
-        }catch(err) {
 
-        }finally{
-            this.messageshowfinal(message);
-
-        }
     },
     filterReceiveIndex:function(data,store){
+        alert("filter");
+        console.log(data);
+        console.log(store);
         var listdata=store.data.items;
         var index=0;
         for(var i=0;i<listdata.length;i++){
