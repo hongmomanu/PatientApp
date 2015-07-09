@@ -89,11 +89,21 @@
     /*border-top:1px solid #ff0000;*/
 
 }
+.mainlist .x-item-selected {
+
+    background-image:none;
+    background:#2D2F3B!important;
+
+    background-color:#2D2F3B!important;
+
+    /*border-top:1px solid #ff0000;*/
+
+}
 .mainlist .x-list-disclosure{
 
     -webkit-mask: 0 0 url(../icons/chevron-right_ffffff_32.png);
     -webkit-mask-size:100%;
-    overflow: visible;
+    overflow:hidden;
     background-color:White;
     background-image:none;
 
