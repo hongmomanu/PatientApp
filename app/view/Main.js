@@ -46,7 +46,7 @@ Ext.define('PatientApp.view.Main', {
 
             {
 
-                title:'医医通',
+                title:'e医通',
 
                 layout : 'fit',
                 xtype: 'container',
