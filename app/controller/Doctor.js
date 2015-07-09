@@ -63,14 +63,14 @@ Ext.define('PatientApp.controller.Doctor', {
 
         },
         refs: {
-            doctorsview: '#doctorsnavigationview #doctorlist',
+            doctorsview: 'main #doctorlist',
             mainview: 'main',
             doctormessagelistview:'doctormessagelist',
-            messagecontent: '#doctorsnavigationview #messagecontent',
-            choosepicbtn: '#doctorsnavigationview #choosepic',
-            sendmessagebtn: '#doctorsnavigationview #sendmessage',
-            makevideobtn: '#doctorsnavigationview #makevideo',
-            patientsview: '#patientsnavigationview #patientlist',
+            messagecontent: 'main #messagecontent',
+            choosepicbtn: 'main #choosepic',
+            sendmessagebtn: 'main #sendmessage',
+            makevideobtn: 'main #makevideo',
+            patientsview: 'main #patientlist',
             doctorsnavview:'main #doctorsnavigationview'
         }
     },
@@ -860,11 +860,11 @@ Ext.define('PatientApp.controller.Doctor', {
             selectview.data=record;
             selectview.mydata=Globle_Variable.user;
 
-            console.log("this.getDoctorsnavview().getItems()");
-            console.log(this.getDoctorsnavview().getItems());
-            testobj=this.getDoctorsnavview();
+            console.log("this.getMainview().getItems()");
+            console.log(this.getMainview().getItems());
+            testobj=this.getMainview();
 
-            this.getDoctorsnavview().push(selectview);
+            this.getMainview().push(selectview);
 
 
         }

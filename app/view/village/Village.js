@@ -29,7 +29,8 @@ Ext.define('PatientApp.view.village.Village', {
 
                 {
                     xtype: 'selectfield',
-                    label: '急救范围',
+                    label: '范围',
+                    width:150,
                     itemId:'distance',
                     options: [
                         {text: '500米',  value: 500},
@@ -49,8 +50,9 @@ Ext.define('PatientApp.view.village.Village', {
                 {
                     xtype: 'button',
                     itemId: 'sendquick',
-                    ui: 'action',
+                    ui: 'decline',
                     iconCls:'action',
+
                     //flex: 1,
                     text: '求救'
                 },{

@@ -43,9 +43,19 @@ Ext.define('PatientApp.controller.Main', {
                 this.patientView=Ext.create('PatientApp.view.patient.Patients',{title:record.get('title')});
             }
 
-            testobj=this.patientView;
-            //this.patientView.setTitle(record.get('title'));
             this.getNav().push(this.patientView);
+
+        }else if(record.get('type')==1){
+            if(!this.doctorView){
+                this.doctorView=Ext.create('PatientApp.view.doctor.Doctors',{title:record.get('title')});
+            }
+            this.getNav().push(this.doctorView);
+
+        }else if(record.get('type')==2){
+            if(!this.villageView){
+                this.villageView=Ext.create('PatientApp.view.village.Village',{title:record.get('title')});
+            }
+            this.getNav().push(this.villageView);
 
         }
 

@@ -42,11 +42,11 @@ Ext.define('PatientApp.controller.Village', {
 
         },
         refs: {
-            villageview: '#villagenavigationview #villagequickdoctors',
+            villageview: 'main #villagequickdoctors',
             mainview: 'main',
-            sendbtn: '#villagenavigationview #sendquick',
-            applytimeinfo: '#villagenavigationview #applytimeinfo',
-            distanceBox: '#villagenavigationview #distance',
+            sendbtn: 'main #sendquick',
+            applytimeinfo: 'main #applytimeinfo',
+            distanceBox: 'main #distance',
             villagenavview:'main #villagenavigationview'
         }
     },
