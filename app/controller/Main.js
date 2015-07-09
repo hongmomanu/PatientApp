@@ -7,7 +7,8 @@ Ext.define('PatientApp.controller.Main', {
 
     config: {
         views: [
-            'Main'
+            'Main',
+            'MainList'
 
 
 

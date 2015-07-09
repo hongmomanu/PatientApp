@@ -53,6 +53,53 @@
     transition: all 0.5s;
 }
 
+.x-tab .x-button-icon.fa::before, .x-button .x-button-icon.fa::before{
+    font-family:FontAwesome;
+}
+
+.fa-color-blue{
+    color: #2A6A6B;
+}
+
+.circletagnew {
+    display: block;
+
+    width: 100px;
+    height: 100px;
+    background: #E6E7ED;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    /*background-image: url(../icons/user.png);*/
+    background-position:50% 50%;
+    background-repeat:no-repeat;
+}
+
+.circular {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    background: url(../icons/user.png) no-repeat;
+}
+
+.mainlist .x-list-item{
+    color:White;
+
+    /*border-top:1px solid #ff0000;*/
+
+}
+.mainlist .x-list-disclosure{
+
+    -webkit-mask: 0 0 url(../icons/chevron-right_ffffff_32.png);
+    -webkit-mask-size:100%;
+    overflow: visible;
+    background-color:White;
+    background-image:none;
+
+}
+
+
 .x-tab .x-button-icon.picture:before,.x-button .x-button-icon.picture:before{position:absolute;top:0;right:0;bottom:0;left:0;text-align:center;font-family:"pictos";content:"P"}
 .x-tab .x-button-icon.voice:before,.x-button .x-button-icon.voice:before{position:absolute;top:0;right:0;bottom:0;left:0;text-align:center;font-family:"pictos";content:"m"}
 .x-tab .x-button-icon.video:before,.x-button .x-button-icon.video:before{position:absolute;top:0;right:0;bottom:0;left:0;text-align:center;font-family:"pictos";content:"V"}

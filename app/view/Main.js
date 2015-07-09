@@ -1,132 +1,111 @@
-Ext.define('PatientApp.view.Main',
-
-
-
-
-
-    {
-    extend: 'Ext.tab.Panel',
+Ext.define('PatientApp.view.Main', {
+    extend: 'Ext.NavigationView',
     xtype: 'main',
     requires: [
-        'Ext.TitleBar'
+        'Ext.TitleBar',
+        'Ext.Ajax',
+        'Ext.Video'
     ],
     config: {
-        tabBarPosition: 'bottom',
+
+
+        fullscreen: true,
+        centered: true,
+        autoDestroy: false,
+        //scrollable: 'vertical',
+
+        scrollable:false,
+
+        height: '100%',
+        width: '100%',
+        style: {
+            'padding': '1px'
+        },
+
+        //title:'我的工厂',
+
+        /*navigationBar : {
+
+            /!*backButton: {
+             iconCls: 'fa fa-arrow-circle-o-left',
+             ui: 'plain'
+             },*!/
+            docked : 'top',
+            items : [
+
+                {
+                    xtype:'mainmenu',
+                    iconCls:'fa fa-cog'
+                }
+
+            ]
+        },*/
 
         items: [
 
-            {
-                title: '患友圈',
-                iconCls: 'users',
 
-                //styleHtmlContent: true,
-                scrollable: false,
-                layout: 'fit',
+            {
+
+                title:'医医通',
+
+                layout : 'fit',
+                xtype: 'container',
+                /*listeners: {
+                    painted: function(){
+                        var item=this.up('navigationview');
+
+                        item.fireEvent('viewshow', item);
+                        //alert(1);
+                    }
+                },*/
                 items: [
 
-                    {
-                        xtype: 'navigationview',
-                        autoDestroy: false,
-                        //fullscreen: true,
-                        itemId: 'patientsnavigationview',
-                        //inside this first item we are going to add a button
-                        items: [
-                            {
-                                xtype: 'patients',
-                                title: '患友圈'
-                            }
-                        ]
 
-
-                    }
-
-                ]
-            },
-            {
-                title: '我的医生',
-                iconCls: 'doctors',
-
-                styleHtmlContent: true,
-                scrollable: false,
-                layout: 'fit',
-                items: [
 
                     {
-                        xtype: 'navigationview',
-                        autoDestroy: false,
+                        title: '首页',
+                        iconCls: 'home',
+                        //xtype:'navigationview',
+                        styleHtmlContent: true,
+                        scrollable: true,
+                        padding:40,
+                        style: 'background-color: #1C1F26;',
+                        /*itemId: 'homepage',
+                        //styleHtmlContent: true,*/
+                        layout: 'vbox',
 
-                        //fullscreen: true,
-                        itemId: 'doctorsnavigationview',
-                        //inside this first item we are going to add a button
+
                         items: [
                             {
-                                xtype: 'doctors',
-                                title: '我的医生'
-                            }
-                        ]
 
+                                flex:1,
+                                xtype:'container',
 
-                    }
+                                html:'<div style="color:white;width:100%;height:100%;text-align: center;vertical-align: middle; "><div  style="margin:0 auto;vertical-align: middle;text-align: center;" class="circletagnew">' +
+                                '<img width="80px"   height="80px " src="resources/icons/user.png"></div><div style="padding-top:20px;">王小明</div></div>'
 
-                ]
-            },
-            {
-                title: '社区急救',
-                iconCls: 'quick',
-                styleHtmlContent: true,
-                scrollable: false,
-                layout: 'fit',
-                items: [
-
-                    {
-                        xtype: 'navigationview',
-                        autoDestroy: false,
-
-                        //fullscreen: true,
-                        itemId: 'villagenavigationview',
-                        //inside this first item we are going to add a button
-                        items: [
+                            },
                             {
-                                xtype: 'village',
-                                title: '社区急救'
+
+                                flex:1.2,
+                                style: 'background-color: #1C1F26;',
+
+                                xtype:'mainlist'
+
                             }
+
                         ]
-
-
                     }
-
                 ]
-            },
-            {
-                title: '我的设定',
-                iconCls: 'action',
-                //styleHtmlContent: true,
-                scrollable: false,
-                layout: 'fit',
-                items: [
 
-                    {
-                        xtype: 'navigationview',
-                        autoDestroy: false,
-
-                        //fullscreen: true,
-                        itemId: 'settingnavigationview',
-                        //inside this first item we are going to add a button
-                        items: [
-                            {
-                                xtype: 'settingsform',
-                                title: '我的设定'
-                            }
-                        ]
-
-
-                    }
-
-                ]
             }
+
+
         ]
+
+
+
+
+
     }
-}
-
-
-);
+});
