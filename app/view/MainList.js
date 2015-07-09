@@ -14,7 +14,7 @@ Ext.define('PatientApp.view.MainList', {
 
         //indexBar:true,
         data: [
-            { title: '患友圈' ,cls:"fa fa-user fa-2x ",type:0},
+            { title: '同病相联' ,cls:"fa fa-user fa-2x ",type:0},
             { title: '我的医生' ,cls:"fa fa-stethoscope fa-2x ",type:1},
             { title: '社区急救' ,cls:"fa fa-ambulance fa-2x ",type:2},
             { title: '关于我' ,cls:"fa fa-info-circle fa-2x ",type:3}
