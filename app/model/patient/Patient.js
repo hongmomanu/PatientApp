@@ -5,6 +5,7 @@ Ext.define('PatientApp.model.patient.Patient', {
 
             'patientinfo',
             '_id',
+            'relations',
             'doctorinfo'
         ]
     }

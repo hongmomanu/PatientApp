@@ -124,7 +124,45 @@ Ext.define('PatientApp.controller.Settings', {
 
 
                 }else{
-                    Ext.Msg.alert('提示', '病人无扫码功能', Ext.emptyFn);
+                    var successFunc = function (response, action) {
+
+                        var res=JSON.parse(response.responseText);
+                        if(res.success){
+                            Ext.Msg.alert('成功', '添加患友:'+realname+'成功', function(){
+
+                                //var navView=me.getMainview();
+                                var patientCotroller=me.getApplication().getController('Patient');
+                                patientCotroller.initPatientList();
+
+                                //Ext.Msg.alert('22',JSON.stringify(params));
+                                /*var doctorCotroller=me.getApplication().getController('Doctor');
+                                 var mainView = doctorCotroller.getMainview();
+                                 mainView.setActiveItem(1);
+                                 doctorCotroller.initDoctorList();*/
+                            });
+
+                        }else{
+
+                            Ext.Msg.alert('提示', res.message, Ext.emptyFn);
+
+                        }
+                        //view.pop();
+
+                    };
+                    var failFunc=function(response, action){
+                        Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+                        //Ext.Msg.alert('test', 'test', Ext.emptyFn);
+                        //view.pop();
+
+                    }
+                    var url="patient/addpatientbyid";
+
+                    var params={
+                        frompatientid:Globle_Variable.user._id,
+                        topatientid:userid
+
+                    };
+                    CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
 
                 }
 

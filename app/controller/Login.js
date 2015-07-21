@@ -60,14 +60,14 @@ Ext.define('PatientApp.controller.Login', {
         //cordova.plugins.autoStart.disable();
         this.autoLogin();
 
-        this.makeLocationListener();
-        this.makeBackGroundListener();
+        //this.makeLocationListener();
+        /*this.makeBackGroundListener();
         this.pauseListener();
         this.resumeListener();
 
         this.backbuttonListener();
 
-        this.initNotificationClick(e);
+        this.initNotificationClick(e);*/
 
 
 
@@ -109,7 +109,7 @@ Ext.define('PatientApp.controller.Login', {
 
 
 
-            ///Ext.Msg.alert('clicked event0', 'is clicked');
+            //Ext.Msg.alert('clicked event0', 'is clicked');
 
             var doctorController=this.getApplication().getController('Doctor');
             var villageController=this.getApplication().getController('Village');
@@ -165,7 +165,7 @@ Ext.define('PatientApp.controller.Login', {
 
 
     },
-    loginsucinit:function(){
+    loginsucinit:function(e){
       try{
           this.makeLocationListener();
           this.makeBackGroundListener();
@@ -175,7 +175,7 @@ Ext.define('PatientApp.controller.Login', {
           this.backbuttonListener();
 
           this.initNotificationClick(e);
-      } catch(e){
+      } catch(err){
 
       }
     },
@@ -282,7 +282,7 @@ Ext.define('PatientApp.controller.Login', {
             var successFunc = function (response, action) {
                 var res=JSON.parse(response.responseText);
                 if(res.success){
-                    //me.loginsucinit();
+                    me.loginsucinit(action);
 
                     Ext.Viewport.removeAt(0);
                     Ext.Viewport.add(Ext.create('PatientApp.view.Main'));
