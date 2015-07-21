@@ -219,7 +219,7 @@ Ext.define('PatientApp.controller.Village', {
                                                     var actionSheet = Ext.create('Ext.ActionSheet', {
                                                         items: [
                                                             {
-                                                                text: '支付宝支付',
+                                                                text: '银联支付',
                                                                 handler:function(){
                                                                     me.addMoney(btn);
                                                                     actionSheet.hide();

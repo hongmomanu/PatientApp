@@ -2,7 +2,7 @@
  * Created by jack on 15-03-27.
  * main Controller used by Terminal app
  */
-Ext.define('PatientApp.controller.Village', {
+Ext.define('PatientApp.controller.VillageOld', {
     extend: 'Ext.app.Controller',
     requires: [
         'Ext.field.Number'
@@ -214,7 +214,7 @@ Ext.define('PatientApp.controller.Village', {
                                                     var actionSheet = Ext.create('Ext.ActionSheet', {
                                                         items: [
                                                             {
-                                                                text: '支付宝支付',
+                                                                text: '银联支付',
                                                                 handler:function(){
                                                                     me.addMoney(btn);
                                                                     actionSheet.hide();

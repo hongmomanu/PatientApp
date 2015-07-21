@@ -92,10 +92,10 @@ Ext.define('PatientApp.controller.Settings', {
                         if(res.success){
                             Ext.Msg.alert('成功', '添加医生:'+realname+'成功', function(){
                                 //Ext.Msg.alert('22',JSON.stringify(params));
-                                var doctorCotroller=me.getApplication().getController('Doctor');
+                                /*var doctorCotroller=me.getApplication().getController('Doctor');
                                 var mainView = doctorCotroller.getMainview();
                                 mainView.setActiveItem(1);
-                                doctorCotroller.initDoctorList();
+                                doctorCotroller.initDoctorList();*/
                             });
 
                         }else{
@@ -143,7 +143,8 @@ Ext.define('PatientApp.controller.Settings', {
             if(buttonid=='yes'){
                 Globle_Variable.user=null;
                 localStorage.user="";
-                window.location.reload();
+                //window.location.reload();
+                window.location.href="index.html";
             }
         });
     },
@@ -159,7 +160,7 @@ Ext.define('PatientApp.controller.Settings', {
                          Ext.Msg.alert('充值成功', '总金额:'+res.message, function(){
                              //var navView=me.getSettingnavview();
                              var navView=this.getMainview();
-                             
+
                              navView.pop();
                              me.getMoneyInfo().setValue(res.message);
                          });

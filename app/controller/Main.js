@@ -76,6 +76,12 @@ Ext.define('PatientApp.controller.Main', {
 
     },
 
+    initUsername:function(){
+
+        setTimeout(function(){
+            Ext.get('username').setHtml(Globle_Variable.user.realname);
+        },100);
+    },
     initRender: function () {
 
         //this.initLocation();
@@ -83,6 +89,9 @@ Ext.define('PatientApp.controller.Main', {
         //alert(1);
         //this.makeLonlat();
         this.websocketInit();
+        this.initUsername();
+
+
         //testobj = this;
     },
 

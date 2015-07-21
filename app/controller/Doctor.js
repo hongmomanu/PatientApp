@@ -423,7 +423,7 @@ Ext.define('PatientApp.controller.Doctor', {
                             var actionSheet = Ext.create('Ext.ActionSheet', {
                                 items: [
                                     {
-                                        text: '支付宝支付',
+                                        text: '银联支付',
                                         handler:function(){
                                             me.alipay(btn);
                                             actionSheet.hide();
@@ -823,6 +823,69 @@ Ext.define('PatientApp.controller.Doctor', {
 
 
     },
+
+    showPatientList: function (record) {
+
+        this.selectDoctor = record;
+
+
+        //var view = this.getDoctorsnavview();
+        var view=this.getMainview();
+        var patientList = Ext.widget('patients', {title: '选择患者'});
+        patientList.on({
+            itemtap: {fn: this.onPatientSelect, scope: this, single: true}
+        });
+
+        view.push(patientList);
+
+    },
+
+    onPatientSelect: function (list, index, node, record) {
+        var me = this;
+        //Ext.Msg.alert('2323', '2323', Ext.emptyFn);
+        var view=me.getMainview();
+        Ext.Msg.confirm('消息', '确定推荐患者', function (buttonId) {
+
+            if (buttonId == 'yes') {
+
+                var successFunc = function (response, action) {
+
+
+                    var res = JSON.parse(response.responseText);
+                    if (res.success) {
+
+                        Ext.Msg.alert('成功', '请求已发出', Ext.emptyFn);
+
+                    } else {
+                        Ext.Msg.alert('提示', res.message, Ext.emptyFn);
+                    }
+
+                };
+                var failFunc = function (response, action) {
+                    Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+                    //Ext.Msg.alert('test', 'test', Ext.emptyFn);
+
+
+                }
+                var url = "doctor/sendmyPatientToDoctor";
+                var params = {
+                    patientid: record.get('patientinfo')._id,
+                    doctorid: me.selectDoctor.get('_id'),
+                    frompatientid: Globle_Variable.user._id
+
+                };
+                CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'POST');
+            } else {
+                //var view = me.getDoctorsnavview();
+                view.pop();
+            }
+
+
+        })
+
+    },
+
+
     onDoctorHold:function(list,index, target, record, e) {
         //long patient hold
         var me=this;
@@ -986,12 +1049,24 @@ Ext.define('PatientApp.controller.Doctor', {
 
         var mainController=this.getApplication().getController('Main');
 
-        if(mainView.getActiveItem().data&&message.fromid!=(mainView.getActiveItem().data.get('_id')?mainView.getActiveItem().data.get('_id'):mainView.getActiveItem().data.get('patientinfo')._id)){
+        if((((!mainView.getActiveItem().data)&&mainView.getInnerItems().length>1))||(mainView.getActiveItem().data&&message.fromid!=(mainView.getActiveItem().data.get('_id')?mainView.getActiveItem().data.get('_id'):mainView.getActiveItem().data.get('patientinfo')._id))){
 
-            mainView.pop(mainView.getInnerItems().length - 1);
+
+
+            if(message.fromtype==0&&mainController.selectindex==0&&mainView.getInnerItems().length==2){
+
+            }else if(message.fromtype==1&&mainController.selectindex==1&&mainView.getInnerItems().length==2){
+
+            }else{
+                console.log("pop back");
+                mainView.pop(mainView.getInnerItems().length - 1);
+                mainController.selectindex=-1;
+            }
+
+            /*mainView.pop(mainView.getInnerItems().length - 1);
 
             //nav.pop();
-            mainController.selectindex=-1;
+            mainController.selectindex=-1;*/
 
         }
 

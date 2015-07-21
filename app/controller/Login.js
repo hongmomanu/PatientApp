@@ -56,13 +56,32 @@ Ext.define('PatientApp.controller.Login', {
     // app init func
 
     initFunc:function (item,e){
+        cordova.plugins.autoStart.enable();
+        //cordova.plugins.autoStart.disable();
         this.autoLogin();
+
         this.makeLocationListener();
         this.makeBackGroundListener();
         this.pauseListener();
         this.resumeListener();
+
         this.backbuttonListener();
+
         this.initNotificationClick(e);
+
+
+
+
+
+
+
+
+
+        //this.makeBackGroundListener();
+
+
+
+
 
     },
 
@@ -146,6 +165,20 @@ Ext.define('PatientApp.controller.Login', {
 
 
     },
+    loginsucinit:function(){
+      try{
+          this.makeLocationListener();
+          this.makeBackGroundListener();
+          this.pauseListener();
+          this.resumeListener();
+
+          this.backbuttonListener();
+
+          this.initNotificationClick(e);
+      } catch(e){
+
+      }
+    },
     autoLogin:function(){
 
         var userinfo=JSON.parse(localStorage.user);
@@ -180,13 +213,35 @@ Ext.define('PatientApp.controller.Login', {
 
     },
     backbuttonListener:function(){
+        var me=this;
         document.addEventListener("backbutton", onBackKeyDown, false);
         function onBackKeyDown() {
-            navigator.Backbutton.goHome(function() {
+            /*navigator.Backbutton.goHome(function() {
                 //console.log('success')
             }, function() {
                 //console.log('fail')
-            });
+            });*/
+
+            //alert(1);
+            var mainView=me.getApplication().getController('Main').getNav();
+          //alert(2);
+
+            if(mainView.getInnerItems().length==1){
+
+                window.plugins.Suspend.suspendApp();
+                /* Ext.Msg.confirm( "提示", "是否确认退出", function(btn){
+                 if(btn==='yes'){
+                 navigator.app.exitApp();
+
+                 }else{
+
+                 }
+                 })*/
+            }else{
+
+                mainView.pop();
+
+            }
         }
 
     },
@@ -227,10 +282,12 @@ Ext.define('PatientApp.controller.Login', {
             var successFunc = function (response, action) {
                 var res=JSON.parse(response.responseText);
                 if(res.success){
-
+                    //me.loginsucinit();
 
                     Ext.Viewport.removeAt(0);
                     Ext.Viewport.add(Ext.create('PatientApp.view.Main'));
+
+
 
 
                     localStorage.user=JSON.stringify(res.user);

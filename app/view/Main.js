@@ -82,7 +82,7 @@ Ext.define('PatientApp.view.Main', {
                                 xtype:'container',
 
                                 html:'<div style="color:white;width:100%;height:100%;text-align: center;vertical-align: middle; "><div  style="margin:0 auto;vertical-align: middle;text-align: center;" class="circletagnew">' +
-                                '<img width="80px"   height="80px " src="resources/icons/user.png"></div><div style="padding-top:20px;">王小明</div></div>'
+                                '<img width="80px"   height="80px " src="resources/icons/user.png"></div><div id="username" style="padding-top:20px;"></div></div>'
 
                             },
                             {

@@ -48,18 +48,27 @@ Ext.define('PatientApp.controller.Register', {
                 var res=JSON.parse(response.responseText);
                 if(res.success){
 
-                    Ext.Viewport.removeAt(0);
-                    Ext.Viewport.add(Ext.create('PatientApp.view.Main'));
+                    Ext.Msg.alert('注册成功',"成功", function(){
+                        localStorage.user=JSON.stringify(res.message);
+                        Globle_Variable.user=res.message;
+                        window.location.reload();
 
-                    localStorage.user=JSON.stringify(res.message);
-                    Globle_Variable.user=res.message;
-                    var patientCotroller=me.getApplication().getController('Patient');
+
+                    });
+
+
+                    /*Ext.Viewport.removeAt(0);
+                    Ext.Viewport.add(Ext.create('PatientApp.view.Main'));*/
+
+
+                   /* var patientCotroller=me.getApplication().getController('Patient');
                     var doctorCotroller=me.getApplication().getController('Doctor');
                     var settingCotroller=me.getApplication().getController('Settings');
                     patientCotroller.initPatientList();
                     doctorCotroller.initDoctorList();
                     settingCotroller.initSetting();
-
+*/
+                   // window.location.reload();
 
                 }else{
                     Ext.Msg.alert('注册失败',res.message, Ext.emptyFn);

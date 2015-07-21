@@ -16,32 +16,16 @@ Ext.define('PatientApp.view.login.Login', {
 
 
         //scrollable: false,
-        //scrollable: 'vertical',
+        scrollable: 'vertical',
+        height: '100%',
+        width: '100%',
         style: {
             'padding': '1px'
         },
+        centered: true,
 
         items: [
-            /*{
-                xtype: 'panel',
 
-                items:[
-
-                    {
-
-                        xtype: 'image',
-                        widht:30,
-                        height:30,
-                        baseCls  :'circletag',
-                        itemId: 'personpic',
-                        name:'personpic',
-                        //label:'个人照片',
-
-                        src: 'http://192.168.2.100:3000/files/14297601919596512'
-
-                    }
-                ]
-            },*/
             {
                 title: '个人登录',
                 xtype:'formpanel',
@@ -73,31 +57,7 @@ Ext.define('PatientApp.view.login.Login', {
                                 items: [
 
 
-                                   /* {
-                                        xtype:'panel',
 
-                                        html:'' +
-                                        '<img   class="circletag"  src="http://192.168.2.100:3000/files/14297601919596512"/>'
-
-                                    },*/
-
-                                    /*{
-                                        xtype:'panel',
-                                        items:[
-
-                                            {
-
-                                                xtype: 'image',
-                                                baseCls  :'circletag',
-                                                itemId: 'personpic',
-                                                name:'personpic',
-                                                //label:'个人照片',
-                                                flex:10,
-                                                src: 'http://192.168.2.100:3000/files/14297601919596512'
-
-                                            }
-                                        ]
-                                    },*/
 
                                     {
                                         xtype:'label',
