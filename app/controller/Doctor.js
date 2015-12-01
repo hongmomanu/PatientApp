@@ -779,7 +779,7 @@ Ext.define('PatientApp.controller.Doctor', {
         //alert(1);
         //console.log(recommend);
         Ext.Msg.confirm('消息','是否添加'+ (recommend.rectype==1?"医生:"+recommend.frominfo.userinfo.realname+"推荐":
-        "患者:"+recommend.frominfo.realname+"推荐")+"的医生:"+recommend.doctorinfo.userinfo.realname,function(buttonId){
+        "患者:"+recommend.frominfo.realname+"推荐")+"的医生或患友:"+recommend.doctorinfo.userinfo.realname,function(buttonId){
 
             if(buttonId=='yes'){
 
@@ -791,7 +791,7 @@ Ext.define('PatientApp.controller.Doctor', {
 
                         Ext.Msg.show({
                             title:'成功',
-                            message: (recommend.isdoctoraccepted||recommend.ispatientaccepted)?'已成功添加医生':
+                            message: (recommend.isdoctoraccepted||recommend.ispatientaccepted)?'已成功添加':
                                 '已接受推荐，等待对方同意',
                             buttons: Ext.MessageBox.OK,
                             fn:Ext.emptyFn
@@ -809,7 +809,8 @@ Ext.define('PatientApp.controller.Doctor', {
                 }
                 var url="patient/acceptrecommend";
                 var params={
-                    rid:recommend._id
+                    rid:recommend._id,
+                    type:(recommend.doctorinfo._id==Globle_Variable.user._id?1:0)
                 };
                 CommonUtil.ajaxSend(params,url,successFunc,failFunc,'POST');
             }else{
@@ -1205,6 +1206,7 @@ Ext.define('PatientApp.controller.Doctor', {
     },
     initDoctorList:function(){
 
+        //alert(1);
         var store=Ext.getStore('Doctors');
         store.load({
             //define the parameters of the store:
@@ -1213,7 +1215,7 @@ Ext.define('PatientApp.controller.Doctor', {
             },
             scope: this,
             callback : function(records, operation, success) {
-
+                    //alert(2);
             }});
 
     }

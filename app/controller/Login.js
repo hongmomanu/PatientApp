@@ -56,7 +56,7 @@ Ext.define('PatientApp.controller.Login', {
     // app init func
 
     initFunc:function (item,e){
-        cordova.plugins.autoStart.enable();
+        //cordova.plugins.autoStart.enable();
         //cordova.plugins.autoStart.disable();
         this.autoLogin();
 
@@ -180,13 +180,16 @@ Ext.define('PatientApp.controller.Login', {
       }
     },
     autoLogin:function(){
-
-        var userinfo=JSON.parse(localStorage.user);
-
+       console.log(0);
+        var userinfo=localStorage.user?JSON.parse(localStorage.user):null;
+       console.log(1);
         if(userinfo){
             var formpanel=this.getLoginformcontent();
+            console.log(formpanel);
             formpanel.setValues(userinfo);
+          console.log(2);
             this.doPatientLogin();
+          console.log(3);
 
         }
 

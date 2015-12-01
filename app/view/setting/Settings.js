@@ -68,7 +68,7 @@ Ext.define('PatientApp.view.setting.Settings', {
                             },
                             {
                                 xtype: 'textfield',
-                                label: '我的余额',
+                                label: '我的布袋',
                                 name:'money',
                                 readOnly:true,
                                 //disabled:true,

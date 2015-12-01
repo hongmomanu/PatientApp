@@ -284,7 +284,11 @@ Ext.define('PatientApp.controller.Main', {
                 //聊天咨询
                 console.log("doctorchat");
                 console.log(data.data);
-                doctorController.receiveMessageProcess(data.data,event);
+                patientController.initPatientList(function(){
+
+                    doctorController.receiveMessageProcess(data.data,event);
+                })
+
             }
             else if(data.type=='recommend'){
                 //推荐

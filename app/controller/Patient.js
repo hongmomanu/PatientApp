@@ -575,16 +575,71 @@ Ext.define('PatientApp.controller.Patient', {
     onPatientSelect: function (list, index, node, record) {
         if (!list.lastTapHold || ( new Date()-list.lastTapHold  > 1000)) {
 
-            if (!this.messageView[record.get('patientinfo')._id]){
-                this.messageView[record.get('patientinfo')._id] =Ext.create('PatientApp.view.patient.PatientsMessage');
 
+
+            var relations=record.get('relations');
+            var isrelationed=false;
+            for(var i=0;i<relations.length;i++){
+                if(relations[i].frompatientid==Globle_Variable.user._id||relations[i].topatientid==Globle_Variable.user._id){
+                    isrelationed=true;
+                    break;
+                }
             }
-            var selectview=this.messageView[record.get('patientinfo')._id];
-            //var messageView=Ext.create('DoctorApp.view.doctors.DoctorMessage');
-            selectview.setTitle(record.get('patientinfo').realname);
-            selectview.data=record;
-            selectview.mydata=Globle_Variable.user;
-            this.getMainview().push(selectview);
+
+            if(isrelationed){
+                if (!this.messageView[record.get('patientinfo')._id]){
+                    this.messageView[record.get('patientinfo')._id] =Ext.create('PatientApp.view.patient.PatientsMessage');
+
+                }
+                var selectview=this.messageView[record.get('patientinfo')._id];
+                //var messageView=Ext.create('DoctorApp.view.doctors.DoctorMessage');
+                selectview.setTitle(record.get('patientinfo').realname);
+                selectview.data=record;
+                selectview.mydata=Globle_Variable.user;
+                this.getMainview().push(selectview);
+
+            }else{
+                Ext.Msg.confirm('消息', '确定添加患友', function (buttonId) {
+
+                    if (buttonId == 'yes') {
+
+                        var successFunc = function (response, action) {
+
+
+                            var res = JSON.parse(response.responseText);
+                            if (res.success) {
+
+                                //Ext.Msg.alert('成功', '请求已发出', Ext.emptyFn);
+
+                            } else {
+                                Ext.Msg.alert('提示', res.message, Ext.emptyFn);
+                            }
+
+                        };
+                        var failFunc = function (response, action) {
+                            Ext.Msg.alert('失败', '服务器连接异常，请稍后再试', Ext.emptyFn);
+                            //Ext.Msg.alert('test', 'test', Ext.emptyFn);
+
+
+                        }
+                        var url = "patient/sendmyPatientToPatient";
+                        var params = {
+                            frompatientid: Globle_Variable.user._id,
+                            topatientid: record.get('patientinfo')._id
+
+                        };
+                        CommonUtil.ajaxSend(params, url, successFunc, failFunc, 'POST');
+                    } else {
+                        //var view = me.getDoctorsnavview();
+                        //view.pop();
+                    }
+
+
+                })
+            }
+
+
+
 
         }
         // Push the show contact view into the navigation view
@@ -592,7 +647,7 @@ Ext.define('PatientApp.controller.Patient', {
 
 
 
-    initPatientList:function(){
+    initPatientList:function(func){
 
         var store=Ext.getStore('Patients');
         store.load({
@@ -602,7 +657,7 @@ Ext.define('PatientApp.controller.Patient', {
             },
             scope: this,
             callback : function(records, operation, success) {
-
+                if(func) func();
             }});
 
     },

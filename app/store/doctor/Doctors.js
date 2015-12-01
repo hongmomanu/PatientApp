@@ -3,7 +3,7 @@ Ext.define('PatientApp.store.doctor.Doctors', {
     config: {
         model: 'PatientApp.model.doctor.Doctor',
         autoLoad: false,
-        //sorters: '_id',
+        sorters: '_id',
         grouper: {
             groupFn: function(record) {
                 return record.get('userinfo').sectionname;
